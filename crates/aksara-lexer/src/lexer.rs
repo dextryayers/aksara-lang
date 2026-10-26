@@ -308,7 +308,6 @@ impl<'a> Lexer<'a> {
             self.pos += 1;
         }
 
-        let raw = prefix.contains('r');
         let is_bytes = prefix.contains('b');
         let is_fstring = prefix.contains('f');
         if is_bytes && is_fstring {

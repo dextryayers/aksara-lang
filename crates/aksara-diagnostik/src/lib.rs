@@ -383,7 +383,7 @@ mod tests {
         let source = SourceFile::new("uji.aks", "nama = \"Ani\"\ncetak(nama)\n");
         assert_eq!(source.line_col(0), (1, 1));
         assert_eq!(source.line_col(7), (1, 8));
-        assert_eq!(source.line_col(12), (2, 1));
+        assert_eq!(source.line_col(13), (2, 1));
     }
 
     #[test]

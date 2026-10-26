@@ -124,6 +124,14 @@ pub fn walk_stmt<V: Visitor + ?Sized>(visitor: &mut V, stmt: &Stmt) {
             for base in &def.bases {
                 visitor.visit_expr(base);
             }
+            for keyword in &def.keywords {
+                match keyword {
+                    Arg::Keyword { value, .. }
+                    | Arg::Star(value)
+                    | Arg::KwStar(value) => visitor.visit_expr(value),
+                    Arg::Positional(value) => visitor.visit_expr(value),
+                }
+            }
             for stmt in &def.body {
                 visitor.visit_stmt(stmt);
             }
@@ -336,6 +344,11 @@ pub fn walk_expr<V: Visitor + ?Sized>(visitor: &mut V, expr: &Expr) {
                 }
             }
         }
+        ExprKind::StringConcat(parts) => {
+            for part in parts {
+                visitor.visit_expr(part);
+            }
+        }
         ExprKind::Starred(value) => visitor.visit_expr(value),
         ExprKind::ListComp { elt, clauses }
         | ExprKind::SetComp { elt, clauses }
@@ -370,7 +383,7 @@ fn walk_clauses<V: Visitor + ?Sized>(visitor: &mut V, clauses: &[CompClause]) {
 pub fn walk_pattern<V: Visitor + ?Sized>(visitor: &mut V, pattern: &Pattern) {
     match pattern {
         Pattern::Literal(expr) => visitor.visit_expr(expr),
-        Pattern::Wildcard | Pattern::Capture(_) => {}
+        Pattern::Wildcard | Pattern::Capture(_) | Pattern::Star(_) => {}
         Pattern::Sequence(patterns) => {
             for pattern in patterns {
                 visitor.visit_pattern(pattern);

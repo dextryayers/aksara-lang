@@ -92,7 +92,6 @@ pub enum StmtKind {
     },
     Import {
         modules: Vec<ImportAlias>,
-        python: bool,
     },
     FromImport {
         module: String,
@@ -127,6 +126,7 @@ pub struct FunctionDef {
 pub struct ClassDef {
     pub name: String,
     pub bases: Vec<Expr>,
+    pub keywords: Vec<Arg>,
     pub body: Vec<Stmt>,
     pub decorators: Vec<Expr>,
 }
@@ -209,6 +209,8 @@ pub struct WithItem {
 pub struct ImportAlias {
     pub name: String,
     pub asname: Option<String>,
+    /// Benar bila alias menunjuk modul Python melalui `impor python "..."`.
+    pub python: bool,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -304,6 +306,8 @@ pub enum ExprKind {
         from: bool,
     },
     FString(Vec<FStringPart>),
+    /// Gabungan literal teks yang bersebelahan, misalnya `"a" f"{b}"`.
+    StringConcat(Vec<Expr>),
     Starred(Box<Expr>),
     ListComp {
         elt: Box<Expr>,
@@ -427,6 +431,8 @@ pub enum Pattern {
     Literal(Expr),
     Wildcard,
     Capture(String),
+    /// Pola bintang pada urutan, misalnya `[kepala, *ekor]`.
+    Star(Option<String>),
     Sequence(Vec<Pattern>),
     Mapping {
         items: Vec<(Expr, Pattern)>,
