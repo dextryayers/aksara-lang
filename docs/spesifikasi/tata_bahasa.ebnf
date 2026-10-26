@@ -1,0 +1,216 @@
+# Tata Bahasa Aksara
+
+Dokumen ini memakai EBNF. Simbol `{ x }` berarti nol atau lebih, `[ x ]` berarti opsional, dan `x | y` berarti alternatif.
+
+## Program
+
+```ebnf
+program        = { statement } EOF ;
+statement      = decorators ( function_def | class_def )
+               | if_stmt
+               | while_stmt
+               | for_stmt
+               | try_stmt
+               | with_stmt
+               | import_stmt
+               | from_import
+               | global_stmt
+               | nonlocal_stmt
+               | assert_stmt
+               | delete_stmt
+               | raise_stmt
+               | return_stmt
+               | yield_stmt
+               | break_stmt
+               | continue_stmt
+               | pass_stmt
+               | match_stmt
+               | simple_stmt ;
+
+simple_stmt    = assignment | expression_stmt ;
+```
+
+## Dekorator, fungsi, dan kelas
+
+```ebnf
+decorators     = { "@" expression NEWLINE } ;
+function_def   = [ "asinkron" ] "fungsi" IDENTIFIER "(" [ parameters ] ")"
+                 [ "->" expression ] ":" suite ;
+class_def      = "kelas" IDENTIFIER [ "(" [ arguments ] ")" ] ":" suite ;
+
+parameters     = parameter { "," parameter } [ "," ] ;
+parameter      = NAME [ ":" expression ] [ "=" expression ]
+               | "*" [ NAME [ ":" expression ] ]
+               | "**" NAME [ ":" expression ]
+               | "/" ;
+```
+
+## Percabangan dan perulangan
+
+```ebnf
+if_stmt        = "jika" expression ":" suite
+                 { "lainnya" "jika" expression ":" suite }
+                 [ "lainnya" ":" suite ] ;
+while_stmt     = "selama" expression ":" suite [ "lainnya" ":" suite ] ;
+for_stmt       = [ "asinkron" ] "untuk" target for_source ":" suite
+                 [ "lainnya" ":" suite ] ;
+for_source     = "dalam" expression
+               | "setiap" expression
+               | "sebanyak" expression
+               | "dari" expression "sampai" expression
+                 [ "langkah" expression ] ;
+target         = expression ;
+```
+
+`setiap`, `sebanyak`, `sampai`, dan `langkah` adalah kata kunci kontekstual. Parser hanya mengenalinya pada posisi di atas.
+
+## Eksepsi dan context manager
+
+```ebnf
+try_stmt       = "coba" ":" suite
+                 { "tangkap" [ expression [ "sebagai" NAME ] ] ":" suite }
+                 [ "lainnya" ":" suite ]
+                 [ "akhirnya" ":" suite ] ;
+with_stmt      = [ "asinkron" ] "dengan" with_item { "," with_item } ":" suite ;
+with_item      = expression [ "sebagai" target ] ;
+raise_stmt     = "lempar" [ expression [ "dari" expression ] ] ;
+```
+
+## Impor
+
+```ebnf
+import_stmt    = "impor" import_target { "," import_target } ;
+import_target  = python_target | dotted_name [ "sebagai" NAME ] ;
+python_target  = "python" STRING [ "sebagai" NAME ] ;
+
+from_import    = "dari" ( python_target | relative_module ) "impor"
+                 ( "*" | import_name { "," import_name } ) ;
+import_name    = NAME [ "sebagai" NAME ] ;
+relative_module = { "." } dotted_name ;
+dotted_name    = NAME { "." NAME } ;
+```
+
+## Pernyataan sederhana
+
+```ebnf
+assignment     = target_list ( "=" target_list )* "=" expression_list
+               | target ":" expression [ "=" expression ]
+               | target aug_op expression ;
+aug_op         = "+=" | "-=" | "*=" | "/=" | "//=" | "%=" | "**=" | "@="
+               | "&=" | "|=" | "^=" | "<<=" | ">>=" | "??=" ;
+expression_stmt = expression_list ;
+target_list    = target { "," target } [ "," ] ;
+expression_list = expression { "," expression } [ "," ] ;
+
+global_stmt    = "global" NAME { "," NAME } ;
+nonlocal_stmt  = "nonlokal" NAME { "," NAME } ;
+assert_stmt    = "pastikan" expression [ "," expression ] ;
+delete_stmt    = "hapus" target { "," target } ;
+return_stmt    = "kembalikan" [ expression ] ;
+yield_stmt     = "hasilkan" [ "dari" ] [ expression ] ;
+break_stmt     = "hentikan" ;
+continue_stmt  = "lanjutkan" ;
+pass_stmt      = "lewati" ;
+```
+
+## Pencocokan pola
+
+```ebnf
+match_stmt     = "cocokkan" expression ":" NEWLINE INDENT
+                 { "kasus" pattern [ "jika" expression ] ":" suite }
+                 DEDENT ;
+pattern        = or_pattern ;
+or_pattern     = closed_pattern { "|" closed_pattern } ;
+closed_pattern = literal_pattern
+               | wildcard_pattern
+               | capture_pattern
+               | sequence_pattern
+               | mapping_pattern
+               | class_pattern ;
+literal_pattern = NUMBER | STRING | "benar" | "salah" | "kosong" ;
+wildcard_pattern = "_" ;
+capture_pattern = NAME ;
+sequence_pattern = "[" [ pattern { "," pattern } [ "," ] ] "]"
+                 | "(" [ pattern { "," pattern } [ "," ] ] ")" ;
+mapping_pattern = "{" [ mapping_item { "," mapping_item } [ "," ] ] "}" ;
+mapping_item    = expression ":" pattern | "**" NAME ;
+class_pattern   = NAME "(" [ pattern { "," pattern } ]
+                  { NAME "=" pattern } ")" ;
+```
+
+## Suite dan pernyataan sederhana
+
+```ebnf
+suite          = ":" ( NEWLINE INDENT { statement } DEDENT
+                    | simple_stmt { ";" simple_stmt } NEWLINE ) ;
+```
+
+## Ekspresi
+
+Prioritas dari rendah ke tinggi:
+
+```ebnf
+expression     = lambda_expr | walrus_expr | ternary_expr ;
+lambda_expr    = "lambda" [ parameters ] ":" expression ;
+walrus_expr    = ternary_expr [ ":=" expression ] ;
+ternary_expr   = null_coalesce [ "jika" null_coalesce "lainnya" expression ] ;
+null_coalesce  = or_expr { "??" or_expr } ;
+or_expr        = and_expr { "atau" and_expr } ;
+and_expr       = not_expr { "dan" not_expr } ;
+not_expr       = "bukan" not_expr | comparison ;
+comparison     = bit_or { compare_op bit_or } ;
+compare_op     = "==" | "!=" | "<" | "<=" | ">" | ">="
+               | "dalam" | "bukan" "dalam"
+               | "adalah" | "bukan" "adalah"
+               | "antara" bit_or "dan" bit_or
+               | "bukan" "antara" bit_or "dan" bit_or ;
+bit_or         = bit_xor { "|" bit_xor } ;
+bit_xor        = bit_and { "^" bit_and } ;
+bit_and        = shift { "&" shift } ;
+shift          = sum { ( "<<" | ">>" ) sum } ;
+sum            = term { ( "+" | "-" ) term } ;
+term           = factor { ( "*" | "/" | "//" | "%" | "@" ) factor } ;
+factor         = ( "+" | "-" | "~" ) factor | power ;
+power          = await_expr [ "**" factor ] ;
+await_expr     = "tunggu" await_expr | postfix ;
+postfix        = primary { call | subscript | attribute } ;
+```
+
+## Primary
+
+```ebnf
+primary        = NAME
+               | NUMBER
+               | STRING
+               | "benar" | "salah" | "kosong"
+               | "..." 
+               | "(" [ expression_list | comprehension ] ")"
+               | "[" [ expression_list | comprehension ] "]"
+               | "{" [ dict_or_set ] "}" ;
+
+call           = "(" [ arguments ] ")" | "?(" [ arguments ] ")" ;
+arguments      = argument { "," argument } [ "," ] ;
+argument       = expression
+               | NAME "=" expression
+               | "*" expression
+               | "**" expression ;
+
+subscript      = "[" subscript_item "]" | "?[" subscript_item "]" ;
+subscript_item = expression | slice | expression_list ;
+slice          = [ expression ] ":" [ expression ] [ ":" [ expression ] ] ;
+
+attribute      = "." NAME | "?." NAME ;
+
+comprehension  = expression "untuk" comp_for { comp_clause } ;
+comp_for       = [ "asinkron" ] "untuk" target "dalam" expression ;
+comp_clause    = comp_for | "jika" expression ;
+```
+
+## Aturan tambahan
+
+- `antara` tidak dapat dirangkai dengan perbandingan lain tanpa tanda kurung.
+- `??` hanya memeriksa `kosong`, bukan nilai salah.
+- `?.`, `?[]`, dan `?()` hanya melindungi penerima langsung.
+- Penugasan adalah pernyataan, bukan ekspresi.
+- `:=` mengikat nama di scope sekitarnya.
+- Koma di akhir selalu diizinkan pada daftar, argumen, parameter, dan pola.

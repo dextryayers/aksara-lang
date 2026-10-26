@@ -1,0 +1,13 @@
+[package]
+name = "aksara-parser"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+aksara-ast = { path = "../aksara-ast" }
+aksara-diagnostik = { path = "../aksara-diagnostik" }
+aksara-lexer = { path = "../aksara-lexer" }
+serde.workspace = true
+serde_json.workspace = true
