@@ -365,14 +365,31 @@ impl Parser {
 
     fn parse_for(&mut self, is_async: bool, start: aksara_ast::Span) -> Stmt {
         self.expect(&TokenKind::Untuk, "`untuk`");
-        let target = self.parse_expression_list();
+        let setiap = if self.at_name_text("setiap") {
+            self.bump();
+            true
+        } else {
+            false
+        };
+        let target = self.parse_target_list();
         self.validate_target(&target, "perulangan");
 
         let iter = if self.eat(&TokenKind::Dalam) {
-            ForIter::In(self.parse_expression())
-        } else if self.at_name_text("setiap") {
-            self.bump();
-            ForIter::Each(self.parse_expression())
+            let iterable = self.parse_expression();
+            if setiap {
+                ForIter::Each(iterable)
+            } else {
+                ForIter::In(iterable)
+            }
+        } else if setiap {
+            let span = self.current().span;
+            self.error_help(
+                "E-SINTAKS",
+                "`dalam` diharapkan setelah `untuk setiap`",
+                span,
+                "tulis `untuk setiap nama dalam iterable`",
+            );
+            ForIter::In(self.missing_expression("iterable"))
         } else if self.at_name_text("sebanyak") {
             self.bump();
             ForIter::Times(self.parse_expression())
@@ -602,7 +619,7 @@ impl Parser {
             .expect_name("fungsi")
             .unwrap_or_else(|| ("<rusak>".to_string(), start));
         self.expect(&TokenKind::LParen, "`(` setelah nama fungsi");
-        let params = self.parse_parameters(&TokenKind::RParen);
+        let params = self.parse_parameters(&TokenKind::RParen, true);
         self.expect(&TokenKind::RParen, "`)` penutup parameter");
         let returns = if self.eat(&TokenKind::Arrow) {
             Some(self.parse_expression())
@@ -682,7 +699,11 @@ impl Parser {
         )
     }
 
-    pub(crate) fn parse_parameters(&mut self, terminator: &TokenKind) -> Parameters {
+    pub(crate) fn parse_parameters(
+        &mut self,
+        terminator: &TokenKind,
+        allow_annotations: bool,
+    ) -> Parameters {
         let mut params = Parameters::empty();
         let mut in_kwonly = false;
         let mut seen_slash = false;
@@ -757,7 +778,7 @@ impl Parser {
                     Some(value) => value,
                     None => break,
                 };
-                let annotation = if self.eat(&TokenKind::Colon) {
+                let annotation = if allow_annotations && self.eat(&TokenKind::Colon) {
                     Some(self.parse_expression())
                 } else {
                     None
@@ -793,7 +814,7 @@ impl Parser {
                     Some(value) => value,
                     None => break,
                 };
-                let annotation = if self.eat(&TokenKind::Colon) {
+                let annotation = if allow_annotations && self.eat(&TokenKind::Colon) {
                     Some(self.parse_expression())
                 } else {
                     None
@@ -824,7 +845,7 @@ impl Parser {
                 Some(value) => value,
                 None => break,
             };
-            let annotation = if self.eat(&TokenKind::Colon) {
+            let annotation = if allow_annotations && self.eat(&TokenKind::Colon) {
                 Some(self.parse_expression())
             } else {
                 None

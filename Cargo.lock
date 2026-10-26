@@ -13,6 +13,7 @@ dependencies = [
 name = "aksara-cli"
 version = "0.1.0"
 dependencies = [
+ "aksara-ast",
  "aksara-diagnostik",
  "aksara-lexer",
  "aksara-parser",

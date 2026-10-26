@@ -104,6 +104,7 @@ fn periksa(args: Vec<String>) -> Result<ExitCode, String> {
 
     let warna = opsi.warna.enabled();
     let mut hasil_berkas = Vec::new();
+    let mut ast_berkas: Vec<(String, serde_json::Value)> = Vec::new();
     let mut total_error = 0usize;
     let mut total_peringatan = 0usize;
     let mut total_berkas = 0usize;
@@ -149,7 +150,9 @@ fn periksa(args: Vec<String>) -> Result<ExitCode, String> {
             hasil_berkas.push(item);
         } else {
             if opsi.ast {
-                cetak_ast(&parsed.module, &source.name, opsi.berkas.len())?;
+                let value = serde_json::to_value(&parsed.module)
+                    .map_err(|error| format!("gagal menserialkan AST: {error}"))?;
+                ast_berkas.push((source.name.clone(), value));
             }
             if !parsed.diagnostics.is_empty() {
                 let rendered = if opsi.ringkas {
@@ -190,6 +193,10 @@ fn periksa(args: Vec<String>) -> Result<ExitCode, String> {
         );
     }
 
+    if !opsi.json && opsi.ast {
+        cetak_ast(&ast_berkas)?;
+    }
+
     Ok(if gagal {
         ExitCode::from(1)
     } else {
@@ -222,23 +229,21 @@ fn baca_berkas(path: &str) -> Result<(String, String), String> {
     Ok((path.to_string(), isi))
 }
 
-fn cetak_ast(module: &aksara_ast::Module, name: &str, jumlah_berkas: usize) -> Result<(), String> {
-    let value = serde_json::to_value(module)
-        .map_err(|error| format!("gagal menserialkan AST: {error}"))?;
-    if jumlah_berkas == 1 {
-        println!(
-            "{}",
-            serde_json::to_string_pretty(&value)
-                .map_err(|error| format!("gagal menulis AST: {error}"))?
-        );
+fn cetak_ast(modules: &[(String, serde_json::Value)]) -> Result<(), String> {
+    let value = if modules.len() == 1 {
+        modules[0].1.clone()
     } else {
-        let value = json!({ name: value });
-        println!(
-            "{}",
-            serde_json::to_string_pretty(&value)
-                .map_err(|error| format!("gagal menulis AST: {error}"))?
-        );
-    }
+        let mut map = serde_json::Map::new();
+        for (name, module) in modules {
+            map.insert(name.clone(), module.clone());
+        }
+        serde_json::Value::Object(map)
+    };
+    println!(
+        "{}",
+        serde_json::to_string_pretty(&value)
+            .map_err(|error| format!("gagal menulis AST: {error}"))?
+    );
     Ok(())
 }
 

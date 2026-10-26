@@ -183,6 +183,12 @@ pub enum ColorMode {
     Never,
 }
 
+impl Default for ColorMode {
+    fn default() -> Self {
+        ColorMode::Auto
+    }
+}
+
 impl ColorMode {
     pub fn enabled(self) -> bool {
         match self {

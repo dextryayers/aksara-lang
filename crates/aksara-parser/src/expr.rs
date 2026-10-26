@@ -760,6 +760,87 @@ impl Parser {
         self.make_expr(start.merge(end), ExprKind::Tuple(items))
     }
 
+    /// Membaca daftar target penugasan tanpa menelan operator perbandingan.
+    ///
+    /// Target perulangan seperti `untuk x dalam data` tidak boleh membaca
+    /// `dalam data` sebagai perbandingan, sehingga target dibatasi pada nama,
+    /// atribut, indeks, dan pola tuple/daftar.
+    pub(crate) fn parse_target_list(&mut self) -> Expr {
+        let first = self.parse_target_item();
+        if !self.at(&TokenKind::Comma) {
+            return first;
+        }
+
+        let start = first.span;
+        let mut items = vec![first];
+        while self.eat(&TokenKind::Comma) {
+            if self.at_expression_list_end() {
+                break;
+            }
+            items.push(self.parse_target_item());
+        }
+        let end = items
+            .last()
+            .map(|expr| expr.span)
+            .unwrap_or(start);
+        self.make_expr(start.merge(end), ExprKind::Tuple(items))
+    }
+
+    fn parse_target_item(&mut self) -> Expr {
+        if self.at(&TokenKind::Star) {
+            let start = self.bump().span;
+            let value = self.parse_target_item();
+            let span = start.merge(value.span);
+            return self.make_expr(span, ExprKind::Starred(Box::new(value)));
+        }
+
+        if self.at(&TokenKind::LParen) {
+            let open = self.bump().span;
+            if self.eat(&TokenKind::RParen) {
+                let span = open.merge(self.previous_span());
+                return self.make_expr(span, ExprKind::Tuple(Vec::new()));
+            }
+            let first = self.parse_target_item();
+            let mut items = vec![first];
+            let mut saw_comma = false;
+            while self.eat(&TokenKind::Comma) {
+                saw_comma = true;
+                if self.at(&TokenKind::RParen) {
+                    break;
+                }
+                items.push(self.parse_target_item());
+            }
+            self.expect(&TokenKind::RParen, "`)` penutup target");
+            let span = open.merge(self.previous_span());
+            if !saw_comma && items.len() == 1 {
+                let mut expr = items.pop().expect("satu target");
+                expr.span = span;
+                return expr;
+            }
+            return self.make_expr(span, ExprKind::Tuple(items));
+        }
+
+        if self.at(&TokenKind::LBracket) {
+            let open = self.bump().span;
+            if self.eat(&TokenKind::RBracket) {
+                let span = open.merge(self.previous_span());
+                return self.make_expr(span, ExprKind::List(Vec::new()));
+            }
+            let mut items = vec![self.parse_target_item()];
+            while self.eat(&TokenKind::Comma) {
+                if self.at(&TokenKind::RBracket) {
+                    break;
+                }
+                items.push(self.parse_target_item());
+            }
+            self.expect(&TokenKind::RBracket, "`]` penutup target");
+            let span = open.merge(self.previous_span());
+            return self.make_expr(span, ExprKind::List(items));
+        }
+
+        self.parse_postfix()
+    }
+
     fn at_expression_list_end(&self) -> bool {
         matches!(
             self.current().kind,
@@ -810,7 +891,7 @@ impl Parser {
             };
 
             if self.eat(&TokenKind::Untuk) {
-                let target = self.parse_expression_list();
+                let target = self.parse_target_list();
                 self.validate_target(&target, "perulangan comprehension");
                 self.expect(&TokenKind::Dalam, "`dalam` pada comprehension");
                 let iter = self.parse_null_coalesce();
@@ -855,7 +936,7 @@ impl Parser {
 
     fn parse_lambda(&mut self) -> Expr {
         let start = self.bump().span;
-        let params = self.parse_parameters(&TokenKind::Colon);
+        let params = self.parse_parameters(&TokenKind::Colon, false);
         self.expect(&TokenKind::Colon, "`:` setelah parameter lambda");
         let body = self.parse_expression();
         let span = start.merge(body.span);
