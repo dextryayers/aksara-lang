@@ -14,6 +14,16 @@ const BP_TERM: u8 = 60;
 
 impl Parser {
     pub(crate) fn parse_expression(&mut self) -> Expr {
+        let span = self.current().span;
+        if !self.enter_depth(span) {
+            return self.make_expr(span, ExprKind::None);
+        }
+        let expr = self.parse_expression_inner();
+        self.exit_depth();
+        expr
+    }
+
+    fn parse_expression_inner(&mut self) -> Expr {
         if self.at(&TokenKind::Lambda) {
             return self.parse_lambda();
         }
@@ -121,26 +131,39 @@ impl Parser {
     }
 
     fn parse_not(&mut self) -> Expr {
-        if self.at(&TokenKind::Bukan) {
-            let start = self.bump().span;
-            let operand = self.parse_not();
-            let span = start.merge(operand.span);
-            return self.make_expr(
+        let mut starts = Vec::new();
+        while self.at(&TokenKind::Bukan) {
+            starts.push(self.bump().span);
+        }
+        let mut expr = self.parse_comparison();
+        for start in starts.into_iter().rev() {
+            let span = start.merge(expr.span);
+            expr = self.make_expr(
                 span,
                 ExprKind::Unary {
                     op: UnaryOp::Not,
-                    operand: Box::new(operand),
+                    operand: Box::new(expr),
                 },
             );
         }
-        self.parse_comparison()
+        expr
     }
 
     fn parse_comparison(&mut self) -> Expr {
         let left = self.parse_bit_or();
+
+        if self.at(&TokenKind::Bukan) && self.nth_is(1, &TokenKind::Antara) {
+            self.bump();
+            self.bump();
+            return self.parse_between(left, true);
+        }
+        if self.at(&TokenKind::Antara) {
+            self.bump();
+            return self.parse_between(left, false);
+        }
+
         let mut ops = Vec::new();
         let mut comparators = Vec::new();
-        let mut between: Option<Expr> = None;
 
         loop {
             let op = match self.current().kind {
@@ -176,41 +199,27 @@ impl Parser {
                     comparators.push(self.parse_bit_or());
                     continue;
                 }
-                if self.nth_is(1, &TokenKind::Antara) {
-                    self.bump();
-                    self.bump();
-                    between = Some(self.parse_between(left.clone(), true));
-                    break;
-                }
-                break;
-            }
-
-            if self.at(&TokenKind::Antara) {
-                self.bump();
-                between = Some(self.parse_between(left.clone(), false));
                 break;
             }
             break;
         }
 
-        if let Some(expr) = between {
-            if !ops.is_empty() {
-                self.error_help(
-                    "E-SINTAKS",
-                    "`antara` tidak dapat dirangkai dengan perbandingan lain",
-                    expr.span,
-                    "gunakan tanda kurung untuk memisahkan perbandingan",
-                );
-            }
-            if self.at_comparison_operator() {
-                self.error_help(
-                    "E-SINTAKS",
-                    "`antara` tidak dapat dirangkai dengan perbandingan lain",
-                    self.current().span,
-                    "gunakan tanda kurung untuk memisahkan perbandingan",
-                );
-            }
-            return expr;
+        if self.at(&TokenKind::Antara)
+            || (self.at(&TokenKind::Bukan) && self.nth_is(1, &TokenKind::Antara))
+        {
+            self.error_help(
+                "E-SINTAKS",
+                "`antara` tidak dapat dirangkai dengan perbandingan lain",
+                self.current().span,
+                "gunakan tanda kurung untuk memisahkan perbandingan",
+            );
+        } else if self.at_comparison_operator() {
+            self.error_help(
+                "E-SINTAKS",
+                "operator perbandingan tidak dapat dirangkai pada posisi ini",
+                self.current().span,
+                "gunakan tanda kurung untuk memperjelas urutan perbandingan",
+            );
         }
 
         if ops.is_empty() {
@@ -306,52 +315,66 @@ impl Parser {
     }
 
     fn parse_factor(&mut self) -> Expr {
-        let op = match self.current().kind {
-            TokenKind::Plus => Some(UnaryOp::Pos),
-            TokenKind::Minus => Some(UnaryOp::Neg),
-            TokenKind::Tilde => Some(UnaryOp::Invert),
-            _ => None,
-        };
-        if let Some(op) = op {
+        let mut ops = Vec::new();
+        loop {
+            let op = match self.current().kind {
+                TokenKind::Plus => UnaryOp::Pos,
+                TokenKind::Minus => UnaryOp::Neg,
+                TokenKind::Tilde => UnaryOp::Invert,
+                _ => break,
+            };
             let start = self.bump().span;
-            let operand = self.parse_factor();
-            let span = start.merge(operand.span);
-            return self.make_expr(
+            ops.push((op, start));
+        }
+        let mut expr = self.parse_power();
+        for (op, start) in ops.into_iter().rev() {
+            let span = start.merge(expr.span);
+            expr = self.make_expr(
                 span,
                 ExprKind::Unary {
                     op,
-                    operand: Box::new(operand),
+                    operand: Box::new(expr),
                 },
             );
         }
-        self.parse_power()
+        expr
     }
 
     fn parse_power(&mut self) -> Expr {
+        let span = self.current().span;
+        if !self.enter_depth(span) {
+            return self.parse_await();
+        }
         let left = self.parse_await();
-        if self.eat(&TokenKind::StarStar) {
+        let expr = if self.eat(&TokenKind::StarStar) {
             let right = self.parse_factor();
             let span = left.span.merge(right.span);
-            return self.make_expr(
+            self.make_expr(
                 span,
                 ExprKind::Binary {
                     left: Box::new(left),
                     op: BinOp::Pow,
                     right: Box::new(right),
                 },
-            );
-        }
-        left
+            )
+        } else {
+            left
+        };
+        self.exit_depth();
+        expr
     }
 
     fn parse_await(&mut self) -> Expr {
-        if self.at(&TokenKind::Tunggu) {
-            let start = self.bump().span;
-            let operand = self.parse_await();
-            let span = start.merge(operand.span);
-            return self.make_expr(span, ExprKind::Await(Box::new(operand)));
+        let mut starts = Vec::new();
+        while self.at(&TokenKind::Tunggu) {
+            starts.push(self.bump().span);
         }
-        self.parse_postfix()
+        let mut expr = self.parse_postfix();
+        for start in starts.into_iter().rev() {
+            let span = start.merge(expr.span);
+            expr = self.make_expr(span, ExprKind::Await(Box::new(expr)));
+        }
+        expr
     }
 
     fn parse_postfix(&mut self) -> Expr {
@@ -787,6 +810,16 @@ impl Parser {
     }
 
     fn parse_target_item(&mut self) -> Expr {
+        let span = self.current().span;
+        if !self.enter_depth(span) {
+            return self.parse_postfix();
+        }
+        let expr = self.parse_target_item_inner();
+        self.exit_depth();
+        expr
+    }
+
+    fn parse_target_item_inner(&mut self) -> Expr {
         if self.at(&TokenKind::Star) {
             let start = self.bump().span;
             let value = self.parse_target_item();

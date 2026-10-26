@@ -5,6 +5,16 @@ use crate::parser::Parser;
 
 impl Parser {
     pub(crate) fn parse_pattern(&mut self) -> Pattern {
+        let span = self.current().span;
+        if !self.enter_depth(span) {
+            return Pattern::Wildcard;
+        }
+        let pattern = self.parse_pattern_inner();
+        self.exit_depth();
+        pattern
+    }
+
+    fn parse_pattern_inner(&mut self) -> Pattern {
         let first = self.parse_closed_pattern();
         if !self.at(&TokenKind::Pipe) {
             return first;

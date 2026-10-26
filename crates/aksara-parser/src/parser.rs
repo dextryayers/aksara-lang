@@ -29,11 +29,16 @@ pub fn parse_tokens(tokens: Vec<Token>, diagnostics: Vec<Diagnostic>) -> ParseRe
     }
 }
 
+/// Batas kedalaman struktur bersarang. Batas ini menjaga parser tetap
+/// berhenti dengan diagnostik, bukan menghabiskan tumpukan panggilan.
+pub(crate) const MAX_DEPTH: u32 = 256;
+
 pub struct Parser {
     pub(crate) tokens: Vec<Token>,
     pub(crate) index: usize,
     pub(crate) diagnostics: Vec<Diagnostic>,
     pub(crate) next_id: u32,
+    pub(crate) depth: u32,
 }
 
 impl Parser {
@@ -49,6 +54,7 @@ impl Parser {
             index: 0,
             diagnostics,
             next_id: 0,
+            depth: 0,
         }
     }
 
@@ -140,6 +146,17 @@ impl Parser {
 
     /// Membaca suite setelah titik dua.
     pub(crate) fn parse_suite(&mut self) -> Vec<Stmt> {
+        let span = self.current().span;
+        if !self.enter_depth(span) {
+            self.synchronize_statement();
+            return Vec::new();
+        }
+        let body = self.parse_suite_inner();
+        self.exit_depth();
+        body
+    }
+
+    fn parse_suite_inner(&mut self) -> Vec<Stmt> {
         if self.at(&TokenKind::Newline) {
             self.bump();
             if self.at(&TokenKind::Indent) {
@@ -382,6 +399,25 @@ impl Parser {
         self.diagnostics.push(
             Diagnostic::error(code, message, span).with_help(help),
         );
+    }
+
+    pub(crate) fn enter_depth(&mut self, span: Span) -> bool {
+        if self.depth >= MAX_DEPTH {
+            self.error_help(
+                "E-SINTAKS",
+                "struktur bersarang terlalu dalam",
+                span,
+                "kurangi kedalaman tanda kurung, pola, atau blok",
+            );
+            false
+        } else {
+            self.depth += 1;
+            true
+        }
+    }
+
+    pub(crate) fn exit_depth(&mut self) {
+        self.depth = self.depth.saturating_sub(1);
     }
 
     pub(crate) fn node_id(&mut self) -> NodeId {

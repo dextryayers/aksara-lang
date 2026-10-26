@@ -308,6 +308,20 @@ impl<'a> Lexer<'a> {
             self.pos += 1;
         }
 
+        if !matches!(
+            prefix.as_str(),
+            "" | "r" | "f" | "b" | "fr" | "rf" | "br" | "rb"
+        ) {
+            self.diagnostics.push(
+                Diagnostic::error(
+                    "E-STRING",
+                    format!("prefix teks `{prefix}` tidak valid"),
+                    self.span(start),
+                )
+                .with_help("gunakan `r`, `f`, `b`, `fr`, `rf`, `br`, atau `rb`"),
+            );
+        }
+
         let is_bytes = prefix.contains('b');
         let is_fstring = prefix.contains('f');
         if is_bytes && is_fstring {
@@ -511,6 +525,16 @@ impl<'a> Lexer<'a> {
                     self.span(start),
                 )
                 .with_help("hapus nol di depan atau gunakan awalan `0o` untuk oktal"),
+            );
+        }
+        if has_invalid_separator(&text) {
+            self.diagnostics.push(
+                Diagnostic::error(
+                    "E-ANGKA",
+                    "garis bawah pemisah harus berada di antara digit",
+                    self.span(start),
+                )
+                .with_help("tulis `1_000` atau `0xFF_FF` tanpa garis bawah di ujung"),
             );
         }
         let kind = if is_imaginary {
@@ -751,4 +775,37 @@ fn is_invalid_decimal_prefix(text: &str) -> bool {
         && bytes[0] == b'0'
         && bytes[1].is_ascii_digit()
         && bytes.iter().all(|b| b.is_ascii_digit() || *b == b'_')
+}
+
+fn has_invalid_separator(text: &str) -> bool {
+    let bytes = text.as_bytes();
+    let (radix, body_start) = if bytes.len() >= 2 && bytes[0] == b'0' {
+        match bytes[1] {
+            b'x' | b'X' => (16, 2),
+            b'o' | b'O' => (8, 2),
+            b'b' | b'B' => (2, 2),
+            _ => (10, 0),
+        }
+    } else {
+        (10, 0)
+    };
+    let body = &text[body_start..];
+    let body = body
+        .strip_suffix('j')
+        .or_else(|| body.strip_suffix('J'))
+        .unwrap_or(body);
+    let chars: Vec<char> = body.chars().collect();
+    for (index, ch) in chars.iter().enumerate() {
+        if *ch != '_' {
+            continue;
+        }
+        let previous = index.checked_sub(1).and_then(|i| chars.get(i));
+        let next = chars.get(index + 1);
+        let valid_previous = previous.is_some_and(|ch| ch.is_digit(radix));
+        let valid_next = next.is_some_and(|ch| ch.is_digit(radix));
+        if !valid_previous || !valid_next {
+            return true;
+        }
+    }
+    false
 }
