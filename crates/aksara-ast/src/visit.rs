@@ -126,9 +126,9 @@ pub fn walk_stmt<V: Visitor + ?Sized>(visitor: &mut V, stmt: &Stmt) {
             }
             for keyword in &def.keywords {
                 match keyword {
-                    Arg::Keyword { value, .. }
-                    | Arg::Star(value)
-                    | Arg::KwStar(value) => visitor.visit_expr(value),
+                    Arg::Keyword { value, .. } | Arg::Star(value) | Arg::KwStar(value) => {
+                        visitor.visit_expr(value)
+                    }
                     Arg::Positional(value) => visitor.visit_expr(value),
                 }
             }

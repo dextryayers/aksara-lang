@@ -133,7 +133,7 @@ impl Parser {
     fn parse_not(&mut self) -> Expr {
         let mut starts = Vec::new();
         while self.at(&TokenKind::Bukan) {
-            starts.push(self.bump().span);
+            starts.push(self.bump());
         }
         let mut expr = self.parse_comparison();
         for start in starts.into_iter().rev() {
@@ -341,7 +341,7 @@ impl Parser {
                 TokenKind::Tilde => UnaryOp::Invert,
                 _ => break,
             };
-            let start = self.bump().span;
+            let start = self.bump();
             ops.push((op, start));
         }
         let mut expr = self.parse_power();
@@ -385,7 +385,7 @@ impl Parser {
     fn parse_await(&mut self) -> Expr {
         let mut starts = Vec::new();
         while self.at(&TokenKind::Tunggu) {
-            starts.push(self.bump().span);
+            starts.push(self.bump());
         }
         let mut expr = self.parse_postfix();
         for start in starts.into_iter().rev() {
@@ -440,36 +440,36 @@ impl Parser {
         let kind = self.current().kind.clone();
         match kind {
             TokenKind::Name(name) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Name(name))
             }
             TokenKind::Int(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Int(value))
             }
             TokenKind::Float(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Float(value))
             }
             TokenKind::Imaginary(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Imaginary(value))
             }
             TokenKind::Str(_) => self.parse_string_literal(),
             TokenKind::Benar => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Bool(true))
             }
             TokenKind::Salah => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Bool(false))
             }
             TokenKind::Kosong => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::None)
             }
             TokenKind::Ellipsis => {
-                let span = self.bump().span;
+                let span = self.bump();
                 self.make_expr(span, ExprKind::Ellipsis)
             }
             TokenKind::LParen => self.parse_parenthesized(),
@@ -493,11 +493,8 @@ impl Parser {
 
     pub(crate) fn parse_string_literal(&mut self) -> Expr {
         let mut parts = Vec::new();
-        loop {
-            let (lit, span) = match &self.current().kind {
-                TokenKind::Str(lit) => (lit.clone(), self.current().span),
-                _ => break,
-            };
+        while let TokenKind::Str(lit) = self.current().kind.clone() {
+            let span = self.current().span;
             self.bump();
             parts.push(self.string_expr(lit, span));
         }
@@ -552,7 +549,7 @@ impl Parser {
     }
 
     fn parse_parenthesized(&mut self) -> Expr {
-        let open = self.bump().span;
+        let open = self.bump();
         if self.eat(&TokenKind::RParen) {
             let span = open.merge(self.previous_span());
             return self.make_expr(span, ExprKind::Tuple(Vec::new()));
@@ -613,7 +610,7 @@ impl Parser {
     }
 
     fn parse_list_literal(&mut self) -> Expr {
-        let open = self.bump().span;
+        let open = self.bump();
         if self.eat(&TokenKind::RBracket) {
             let span = open.merge(self.previous_span());
             return self.make_expr(span, ExprKind::List(Vec::new()));
@@ -656,7 +653,7 @@ impl Parser {
     }
 
     fn parse_set_or_dict(&mut self) -> Expr {
-        let open = self.bump().span;
+        let open = self.bump();
         if self.eat(&TokenKind::RBrace) {
             let span = open.merge(self.previous_span());
             return self.make_expr(span, ExprKind::Dict(Vec::new()));
@@ -772,7 +769,7 @@ impl Parser {
 
     fn parse_set_item(&mut self) -> Expr {
         if self.at(&TokenKind::Star) {
-            let start = self.bump().span;
+            let start = self.bump();
             let value = self.parse_expression();
             let span = start.merge(value.span);
             return self.make_expr(span, ExprKind::Starred(Box::new(value)));
@@ -794,10 +791,7 @@ impl Parser {
             }
             items.push(self.parse_maybe_starred());
         }
-        let end = items
-            .last()
-            .map(|expr| expr.span)
-            .unwrap_or(start);
+        let end = items.last().map(|expr| expr.span).unwrap_or(start);
         self.make_expr(start.merge(end), ExprKind::Tuple(items))
     }
 
@@ -820,10 +814,7 @@ impl Parser {
             }
             items.push(self.parse_target_item());
         }
-        let end = items
-            .last()
-            .map(|expr| expr.span)
-            .unwrap_or(start);
+        let end = items.last().map(|expr| expr.span).unwrap_or(start);
         self.make_expr(start.merge(end), ExprKind::Tuple(items))
     }
 
@@ -839,14 +830,14 @@ impl Parser {
 
     fn parse_target_item_inner(&mut self) -> Expr {
         if self.at(&TokenKind::Star) {
-            let start = self.bump().span;
+            let start = self.bump();
             let value = self.parse_target_item();
             let span = start.merge(value.span);
             return self.make_expr(span, ExprKind::Starred(Box::new(value)));
         }
 
         if self.at(&TokenKind::LParen) {
-            let open = self.bump().span;
+            let open = self.bump();
             if self.eat(&TokenKind::RParen) {
                 let span = open.merge(self.previous_span());
                 return self.make_expr(span, ExprKind::Tuple(Vec::new()));
@@ -872,7 +863,7 @@ impl Parser {
         }
 
         if self.at(&TokenKind::LBracket) {
-            let open = self.bump().span;
+            let open = self.bump();
             if self.eat(&TokenKind::RBracket) {
                 let span = open.merge(self.previous_span());
                 return self.make_expr(span, ExprKind::List(Vec::new()));
@@ -923,7 +914,7 @@ impl Parser {
 
     fn parse_maybe_starred(&mut self) -> Expr {
         if self.at(&TokenKind::Star) {
-            let start = self.bump().span;
+            let start = self.bump();
             let value = self.parse_expression();
             let span = start.merge(value.span);
             return self.make_expr(span, ExprKind::Starred(Box::new(value)));
@@ -986,7 +977,7 @@ impl Parser {
     }
 
     fn parse_lambda(&mut self) -> Expr {
-        let start = self.bump().span;
+        let start = self.bump();
         let params = self.parse_parameters(&TokenKind::Colon, false);
         self.expect(&TokenKind::Colon, "`:` setelah parameter lambda");
         let body = self.parse_expression();
@@ -1001,7 +992,7 @@ impl Parser {
     }
 
     fn parse_yield_expression(&mut self) -> Expr {
-        let start = self.bump().span;
+        let start = self.bump();
         let from = self.eat(&TokenKind::Dari);
         let value = if self.at_expression_end() {
             None
@@ -1018,7 +1009,13 @@ impl Parser {
             );
         }
         let span = start.merge(self.previous_span());
-        self.make_expr(span, ExprKind::Yield { value: value.map(Box::new), from })
+        self.make_expr(
+            span,
+            ExprKind::Yield {
+                value: value.map(Box::new),
+                from,
+            },
+        )
     }
 
     pub(crate) fn at_expression_end(&self) -> bool {
@@ -1062,8 +1059,7 @@ impl Parser {
                     let value = self.parse_expression();
                     if args.is_empty()
                         && (self.at(&TokenKind::Untuk)
-                            || (self.at(&TokenKind::Asinkron)
-                                && self.nth_is(1, &TokenKind::Untuk)))
+                            || (self.at(&TokenKind::Asinkron) && self.nth_is(1, &TokenKind::Untuk)))
                     {
                         let clauses = self.parse_comp_clauses();
                         let span = value.span.merge(self.previous_span());
@@ -1155,10 +1151,7 @@ impl Parser {
                 .first()
                 .map(|expr| expr.span)
                 .unwrap_or_else(|| value.span);
-            let end = items
-                .last()
-                .map(|expr| expr.span)
-                .unwrap_or(start);
+            let end = items.last().map(|expr| expr.span).unwrap_or(start);
             self.make_expr(start.merge(end), ExprKind::Tuple(items))
         };
         let span = value.span.merge(self.previous_span());
@@ -1177,7 +1170,7 @@ impl Parser {
             return self.parse_slice(None, self.current().span);
         }
         if self.at(&TokenKind::Star) {
-            let start = self.bump().span;
+            let start = self.bump();
             let value = self.parse_expression();
             let span = start.merge(value.span);
             return self.make_expr(span, ExprKind::Starred(Box::new(value)));
@@ -1202,10 +1195,7 @@ impl Parser {
             Some(Box::new(self.parse_expression()))
         };
         let step = if self.eat(&TokenKind::Colon) {
-            if self.at(&TokenKind::Comma)
-                || self.at(&TokenKind::RBracket)
-                || self.at_eof()
-            {
+            if self.at(&TokenKind::Comma) || self.at(&TokenKind::RBracket) || self.at_eof() {
                 None
             } else {
                 Some(Box::new(self.parse_expression()))
@@ -1244,18 +1234,11 @@ impl Parser {
 
     pub(crate) fn parse_name_list(&mut self) -> Vec<String> {
         let mut names = Vec::new();
-        loop {
-            match self.expect_name("variabel") {
-                Some((name, _)) => names.push(name),
-                None => break,
+        while let Some((name, _)) = self.expect_name("variabel") {
+            names.push(name);
+            if !self.eat(&TokenKind::Comma) || self.at_statement_end() {
+                break;
             }
-            if self.eat(&TokenKind::Comma) {
-                if self.at_statement_end() {
-                    break;
-                }
-                continue;
-            }
-            break;
         }
         names
     }
@@ -1287,9 +1270,9 @@ impl Parser {
     pub(crate) fn is_valid_target(expr: &Expr, allow_starred: bool) -> bool {
         match &expr.kind {
             ExprKind::Name(_) | ExprKind::Attribute { .. } | ExprKind::Subscript { .. } => true,
-            ExprKind::Tuple(items) | ExprKind::List(items) => items
-                .iter()
-                .all(|item| Self::is_valid_target(item, true)),
+            ExprKind::Tuple(items) | ExprKind::List(items) => {
+                items.iter().all(|item| Self::is_valid_target(item, true))
+            }
             ExprKind::Starred(inner) => allow_starred && Self::is_valid_target(inner, false),
             _ => false,
         }

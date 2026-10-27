@@ -3,9 +3,7 @@ use std::io::{self, Read};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-use aksara_diagnostik::{
-    render_all, render_json, render_short, ColorMode, Severity, SourceFile,
-};
+use aksara_diagnostik::{render_all, render_json, render_short, ColorMode, Severity, SourceFile};
 use aksara_lexer::Lexer;
 use aksara_parser::parse_tokens;
 use serde_json::json;
@@ -75,9 +73,9 @@ fn periksa(args: Vec<String>) -> Result<ExitCode, String> {
             "--tanpa-warna" => opsi.warna = ColorMode::Never,
             "--warna" => {
                 index += 1;
-                let mode = args
-                    .get(index)
-                    .ok_or_else(|| "`--warna` membutuhkan nilai auto, selalu, atau tidak".to_string())?;
+                let mode = args.get(index).ok_or_else(|| {
+                    "`--warna` membutuhkan nilai auto, selalu, atau tidak".to_string()
+                })?;
                 opsi.warna = parse_warna(mode)?;
             }
             value if value.starts_with("--warna=") => {

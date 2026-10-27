@@ -42,49 +42,45 @@ impl Parser {
     fn parse_closed_pattern(&mut self) -> Pattern {
         match self.current().kind.clone() {
             TokenKind::Int(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::Int(value)))
             }
             TokenKind::Float(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::Float(value)))
             }
             TokenKind::Imaginary(value) => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::Imaginary(value)))
             }
             TokenKind::Str(_) => Pattern::Literal(self.parse_string_literal()),
             TokenKind::Benar => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::Bool(true)))
             }
             TokenKind::Salah => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::Bool(false)))
             }
             TokenKind::Kosong => {
-                let span = self.bump().span;
+                let span = self.bump();
                 Pattern::Literal(self.make_expr(span, ExprKind::None))
             }
             TokenKind::Minus | TokenKind::Plus => {
-                let token = self.bump();
-                let start = token.span;
-                let op = if matches!(token.kind, TokenKind::Minus) {
-                    UnaryOp::Neg
-                } else {
-                    UnaryOp::Pos
-                };
+                let negatif = matches!(self.current().kind, TokenKind::Minus);
+                let start = self.bump();
+                let op = if negatif { UnaryOp::Neg } else { UnaryOp::Pos };
                 let value = match self.current().kind.clone() {
                     TokenKind::Int(text) => {
-                        let span = self.bump().span;
+                        let span = self.bump();
                         self.make_expr(span, ExprKind::Int(text))
                     }
                     TokenKind::Float(text) => {
-                        let span = self.bump().span;
+                        let span = self.bump();
                         self.make_expr(span, ExprKind::Float(text))
                     }
                     TokenKind::Imaginary(text) => {
-                        let span = self.bump().span;
+                        let span = self.bump();
                         self.make_expr(span, ExprKind::Imaginary(text))
                     }
                     _ => self.missing_expression("bilangan pada pola"),
@@ -104,7 +100,7 @@ impl Parser {
             TokenKind::LParen => self.parse_sequence_pattern(&TokenKind::RParen, true),
             TokenKind::LBrace => self.parse_mapping_pattern(),
             TokenKind::Star => {
-                let span = self.bump().span;
+                let span = self.bump();
                 let name = if self.at_name() {
                     self.expect_name("nama pola bintang").map(|(name, _)| name)
                 } else {
@@ -132,7 +128,7 @@ impl Parser {
     }
 
     fn parse_name_pattern(&mut self, first: String) -> Pattern {
-        let first_span = self.bump().span;
+        let first_span = self.bump();
         if first == "_" && !self.at(&TokenKind::Dot) && !self.at(&TokenKind::LParen) {
             return Pattern::Wildcard;
         }

@@ -1,0 +1,7 @@
+cocokkan nilai:
+    kasus [kepala, *ekor] jika kepala > 0:
+        cetak(kepala, ekor)
+    kasus {"k": v, **sisa}:
+        cetak(v, sisa)
+    kasus _:
+        lewati

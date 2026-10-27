@@ -51,7 +51,9 @@ fn selisih(harapan: &str, aktual: &str) -> String {
                 let kiri = baris_harapan.get(baris).copied().unwrap_or("<tidak ada>");
                 let kanan = baris_aktual.get(baris).copied().unwrap_or("<tidak ada>");
                 let penanda = if kiri == kanan { " " } else { "!" };
-                pesan.push_str(&format!("{penanda} harapan: {kiri}\n{penanda} aktual: {kanan}\n"));
+                pesan.push_str(&format!(
+                    "{penanda} harapan: {kiri}\n{penanda} aktual: {kanan}\n"
+                ));
             }
             return pesan;
         }
@@ -96,8 +98,14 @@ fn ast_emas_stabil_dan_dapat_dideserialisasi() {
             selisih(&harapan, &aktual)
         );
 
-        let module: Module = serde_json::from_str(&harapan)
-            .unwrap_or_else(|error| panic!("JSON emas tidak valid {}: {error}", path_json.display()));
-        assert_eq!(module, result.module, "roundtrip AST gagal untuk {}", path.display());
+        let module: Module = serde_json::from_str(&harapan).unwrap_or_else(|error| {
+            panic!("JSON emas tidak valid {}: {error}", path_json.display())
+        });
+        assert_eq!(
+            module,
+            result.module,
+            "roundtrip AST gagal untuk {}",
+            path.display()
+        );
     }
 }

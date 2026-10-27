@@ -19,7 +19,13 @@ fn parse_ok(source: &str) -> aksara_ast::Module {
 
 fn value_of(source: &str) -> Expr {
     let module = parse_ok(source);
-    match module.body.into_iter().next().expect("satu pernyataan").kind {
+    match module
+        .body
+        .into_iter()
+        .next()
+        .expect("satu pernyataan")
+        .kind
+    {
         StmtKind::Assign { value, .. } => value,
         other => panic!("bukan penugasan: {other:?}"),
     }
@@ -40,10 +46,7 @@ fn prioritas_aritmetika() {
             assert_eq!(op, BinOp::Add);
             assert!(matches!(
                 right.kind,
-                ExprKind::Binary {
-                    op: BinOp::Mul,
-                    ..
-                }
+                ExprKind::Binary { op: BinOp::Mul, .. }
             ));
         }
         other => panic!("bukan penjumlahan: {other:?}"),
@@ -60,10 +63,7 @@ fn pangkat_bersifat_kanan() {
             ..
         } => assert!(matches!(
             right.kind,
-            ExprKind::Binary {
-                op: BinOp::Pow,
-                ..
-            }
+            ExprKind::Binary { op: BinOp::Pow, .. }
         )),
         other => panic!("bukan pangkat: {other:?}"),
     }
@@ -78,10 +78,7 @@ fn uner_negatif_mengikat_lebih_lemah_daripada_pangkat() {
             operand,
         } => assert!(matches!(
             operand.kind,
-            ExprKind::Binary {
-                op: BinOp::Pow,
-                ..
-            }
+            ExprKind::Binary { op: BinOp::Pow, .. }
         )),
         other => panic!("bukan negasi: {other:?}"),
     }
@@ -91,7 +88,9 @@ fn uner_negatif_mengikat_lebih_lemah_daripada_pangkat() {
 fn perbandingan_berantai() {
     let value = value_of("x = 0 < a <= 10\n");
     match value.kind {
-        ExprKind::Compare { ops, comparators, .. } => {
+        ExprKind::Compare {
+            ops, comparators, ..
+        } => {
             assert_eq!(ops, vec![CmpOp::Lt, CmpOp::Le]);
             assert_eq!(comparators.len(), 2);
         }
@@ -118,7 +117,9 @@ fn antara_dan_bukan_antara() {
 fn bukan_adalah_membentuk_perbandingan_identitas_negatif() {
     let value = value_of("x = a bukan adalah b\n");
     match value.kind {
-        ExprKind::Compare { ops, comparators, .. } => {
+        ExprKind::Compare {
+            ops, comparators, ..
+        } => {
             assert_eq!(ops, vec![CmpOp::IsNot]);
             assert_eq!(comparators.len(), 1);
         }
@@ -149,10 +150,7 @@ fn null_coalesce_mengikat_lebih_lemah_daripada_atau() {
             op: BinOp::NullCoalesce,
             right,
             ..
-        } => assert!(matches!(
-            right.kind,
-            ExprKind::BoolOp { .. }
-        )),
+        } => assert!(matches!(right.kind, ExprKind::BoolOp { .. })),
         other => panic!("bukan pengganti kosong: {other:?}"),
     }
 }
@@ -344,9 +342,7 @@ fn parameter_posonly_kwonly_dan_vararg() {
 
 #[test]
 fn pola_pengikat_sebagai() {
-    let module = parse_ok(
-        "cocokkan x:\n    kasus str() sebagai teks:\n        lewati\n",
-    );
+    let module = parse_ok("cocokkan x:\n    kasus str() sebagai teks:\n        lewati\n");
     match &module.body[0].kind {
         StmtKind::Match { cases, .. } => match &cases[0].pattern {
             Pattern::As { pattern, name } => {

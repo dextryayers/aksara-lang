@@ -1,0 +1,47 @@
+{
+  "python": "3.13.5",
+  "implementasi": "CPython",
+  "platform": "Linux-6.12.111+deb13-amd64-x86_64-with-glibc2.41",
+  "program": {
+    "loop_1000": {
+      "median_ms": 0.0889,
+      "min_ms": 0.0881
+    },
+    "fib_20": {
+      "median_ms": 2.6031,
+      "min_ms": 2.3628
+    },
+    "list_sort": {
+      "median_ms": 0.0287,
+      "min_ms": 0.028
+    },
+    "dict_build": {
+      "median_ms": 0.1018,
+      "min_ms": 0.1005
+    },
+    "string_join": {
+      "median_ms": 0.1488,
+      "min_ms": 0.1484
+    },
+    "json_roundtrip": {
+      "median_ms": 0.0363,
+      "min_ms": 0.0323
+    },
+    "class_create": {
+      "median_ms": 0.252,
+      "min_ms": 0.2485
+    },
+    "exception": {
+      "median_ms": 0.2932,
+      "min_ms": 0.2924
+    },
+    "generator": {
+      "median_ms": 0.0529,
+      "min_ms": 0.0521
+    },
+    "regex": {
+      "median_ms": 1.1385,
+      "min_ms": 1.023
+    }
+  }
+}

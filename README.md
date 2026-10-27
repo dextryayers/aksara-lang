@@ -6,10 +6,12 @@ Repositori ini berisi rencana induk, front end Rust, runtime C, standard library
 
 ## Status
 
-Fase 0 dan Fase 1 sedang dibangun:
+Fase 0 selesai dan Fase 1 selesai pada tingkat front end:
 
 - Fase 0: visi, spesifikasi, ADR, kerangka repositori, CI, dan harness uji.
-- Fase 1: lekser, parser, AST, diagnostik, dan CLI `aksara periksa`.
+- Fase 1: lekser, parser, AST, diagnostik, CLI `aksara periksa`, korpus, golden AST, fuzz smoke, dan benchmark.
+
+Seluruh 10 program di `contoh/` dan 8 berkas korpus parser terparse tanpa diagnostik. Suite Rust menjalankan 59 uji, termasuk 1.200 kasus valid yang dihasilkan secara deterministik dan 16.000 kasus fuzz smoke. Benchmark parser pada mesin pengembangan mencatat median 81,85 ms untuk berkas 1 MB. Kampanye fuzz 24 jam tetap dijalankan pada mesin khusus sebelum rilis; target cargo-fuzz sudah tersedia di `uji/fuzz/`.
 
 Bahasa belum siap dipakai untuk produksi. Spesifikasi yang mengikat berada di `docs/spesifikasi/`.
 
@@ -45,9 +47,9 @@ ctest --test-dir build --output-on-failure
 ## Menggunakan CLI
 
 ```bash
-cargo run -p aksara-cli -- periksa contoh/pemula/01_halo.aks
-cargo run -p aksara-cli -- periksa --json contoh/pemula/01_halo.aks
-cargo run -p aksara-cli -- periksa --ast contoh/pemula/01_halo.aks
+cargo run -p aksara-cli -- periksa contoh/01_halo.aks
+cargo run -p aksara-cli -- periksa --json contoh/01_halo.aks
+cargo run -p aksara-cli -- periksa --ast contoh/01_halo.aks
 ```
 
 ## Lisensi

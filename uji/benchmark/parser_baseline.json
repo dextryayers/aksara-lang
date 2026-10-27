@@ -1,0 +1,13 @@
+{
+  "alat": "aksara-parser/bench_parse",
+  "bytes": 1000000,
+  "iterations": 20,
+  "lex_median_ms": 17.942,
+  "min_ms": 80.145,
+  "median_ms": 81.850,
+  "mean_ms": 83.422,
+  "p95_ms": 84.783,
+  "median_mib_per_s": 11.65,
+  "target_ms": 100.0,
+  "passed": true
+}

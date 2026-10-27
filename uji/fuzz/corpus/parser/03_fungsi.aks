@@ -1,0 +1,6 @@
+fungsi hitung(a, b=1, /, *, c=2):
+    kembalikan a + b + c
+
+kelas Titik(Induk):
+    fungsi __init__(diri, x):
+        diri.x = x

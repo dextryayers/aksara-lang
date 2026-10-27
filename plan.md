@@ -509,7 +509,7 @@ Catatan prioritas:
 - `**` mengikat lebih kuat daripada operator uner di sebelah kiri. `-2 ** 2` bernilai `-4`, bukan `4`.
 - `bukan` lebih rendah daripada perbandingan. `bukan x == y` dibaca sebagai `bukan (x == y)`.
 - `antara` lebih rendah daripada `dan` logika. `x antara 1 dan 10 dan y` dibaca sebagai `(x antara 1 dan 10) dan y`.
-- Ternary dan `??` mengikat lebih kuat daripada `atau`. `a ?? b atau c` dibaca sebagai `(a ?? b) atau c`.
+- Ternary dan `??` mengikat lebih lemah daripada `atau`. `a ?? b atau c` dibaca sebagai `a ?? (b atau c)`, dan `a jika c lainnya b atau d` dibaca sebagai `a jika c lainnya (b atau d)`.
 - Operator postfix mengikat paling kuat. `a?.b[0]()` dibaca sebagai `((a?.b)[0])()`.
 
 #### 4.3.8 Contoh operator

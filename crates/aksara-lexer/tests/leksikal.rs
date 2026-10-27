@@ -136,7 +136,9 @@ fn literal_bilangan() {
 
 #[test]
 fn literal_teks_dan_prefix() {
-    let tokens = kinds("'satu' \"dua\" '''tiga''' \"\"\"empat\"\"\" r\"x\" b\"y\" f\"{z}\" fr\"{z}\" rb\"y\"\n");
+    let tokens = kinds(
+        "'satu' \"dua\" '''tiga''' \"\"\"empat\"\"\" r\"x\" b\"y\" f\"{z}\" fr\"{z}\" rb\"y\"\n",
+    );
     let strings = tokens
         .iter()
         .filter_map(|kind| match kind {
@@ -168,10 +170,7 @@ fn fstring_disimpan_mentah() {
 
 #[test]
 fn identifier_unicode() {
-    assert_eq!(
-        names("π = 3.14\nnama_ä = \"Ani\"\n"),
-        vec!["π", "nama_ä"]
-    );
+    assert_eq!(names("π = 3.14\nnama_ä = \"Ani\"\n"), vec!["π", "nama_ä"]);
 }
 
 #[test]
@@ -216,6 +215,9 @@ fn karakter_tidak_dikenal() {
 fn lexer_selalu_menghasilkan_eof() {
     for source in ["", "\n", "# komentar", "jika benar:\n", "\"tidak ditutup"] {
         let tokens = lex(source).tokens;
-        assert_eq!(tokens.last().map(|token| &token.kind), Some(&TokenKind::Eof));
+        assert_eq!(
+            tokens.last().map(|token| &token.kind),
+            Some(&TokenKind::Eof)
+        );
     }
 }

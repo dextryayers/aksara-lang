@@ -1,0 +1,2 @@
+nilai = 42
+cetak(f"Halo {nilai}")

@@ -32,9 +32,19 @@ bench:
     cargo run --release -p aksara-parser --example bench_parse
 
 contoh:
-    cargo run -p aksara-cli -- periksa contoh/pemula/*.aks
-    cargo run -p aksara-cli -- periksa contoh/bahasa/*.aks
-    cargo run -p aksara-cli -- periksa contoh/aplikasi/*.aks
+    cargo run -p aksara-cli -- periksa contoh/*.aks
+
+golden:
+    cargo test -p aksara-parser --test golden
+
+korpus:
+    cargo test -p aksara-parser --test korpus
+
+fuzz-smoke:
+    cargo test -p aksara-parser --test fuzz_smoke
+
+benchmark:
+    cargo run --release -p aksara-parser --example bench_parse -- --bytes 1000000 --iterations 10
 
 bersih:
     cargo clean

@@ -290,7 +290,7 @@ impl Parser {
     }
 
     fn parse_if(&mut self) -> Stmt {
-        let start = self.bump().span;
+        let start = self.bump();
         let condition = self.parse_expression();
         let condition = self.recover_condition_assignment(condition);
         self.expect(&TokenKind::Colon, "`:` setelah kondisi `jika`");
@@ -330,7 +330,7 @@ impl Parser {
         if !self.at(&TokenKind::Lainnya) {
             return Vec::new();
         }
-        let start = self.bump().span;
+        let start = self.bump();
         if self.eat(&TokenKind::Jika) {
             let condition = self.parse_expression();
             self.expect(&TokenKind::Colon, "`:` setelah kondisi `lainnya jika`");
@@ -364,7 +364,7 @@ impl Parser {
     }
 
     fn parse_while(&mut self) -> Stmt {
-        let start = self.bump().span;
+        let start = self.bump();
         let condition = self.parse_expression();
         let condition = self.recover_condition_assignment(condition);
         self.expect(&TokenKind::Colon, "`:` setelah kondisi `selama`");
@@ -456,13 +456,13 @@ impl Parser {
     }
 
     fn parse_try(&mut self) -> Stmt {
-        let start = self.bump().span;
+        let start = self.bump();
         self.expect(&TokenKind::Colon, "`:` setelah `coba`");
         let body = self.parse_suite();
         let mut handlers = Vec::new();
 
         while self.at(&TokenKind::Tangkap) {
-            let handler_start = self.bump().span;
+            let handler_start = self.bump();
             let mut type_ = None;
             let mut name = None;
             if !self.at(&TokenKind::Colon) {
@@ -561,7 +561,7 @@ impl Parser {
     }
 
     fn parse_async_statement(&mut self) -> Vec<Stmt> {
-        let start = self.bump().span;
+        let start = self.bump();
         if self.at(&TokenKind::Fungsi) {
             vec![self.parse_function(Vec::new(), true, start)]
         } else if self.at(&TokenKind::Untuk) {
@@ -595,7 +595,7 @@ impl Parser {
         }
 
         if self.at(&TokenKind::Asinkron) {
-            let async_start = self.bump().span;
+            let async_start = self.bump();
             if self.at(&TokenKind::Fungsi) {
                 return self.parse_function(decorators, true, start.merge(async_start));
             }
@@ -678,7 +678,8 @@ impl Parser {
                     } else if self.eat(&TokenKind::Star) {
                         let value = self.parse_expression();
                         let span = value.span;
-                        let starred = self.make_expr(span, aksara_ast::ExprKind::Starred(Box::new(value)));
+                        let starred =
+                            self.make_expr(span, aksara_ast::ExprKind::Starred(Box::new(value)));
                         bases.push(starred);
                     } else if self.at_name() && self.nth_is(1, &TokenKind::Eq) {
                         let (name, _) = self
@@ -737,7 +738,7 @@ impl Parser {
             }
 
             if self.at(&TokenKind::Slash) {
-                let span = self.bump().span;
+                let span = self.bump();
                 if seen_slash || seen_vararg || seen_kwarg || in_kwonly {
                     self.error_help(
                         "E-PARAMETER",
@@ -773,7 +774,7 @@ impl Parser {
             }
 
             if self.at(&TokenKind::Star) {
-                let span = self.bump().span;
+                let span = self.bump();
                 if seen_vararg || seen_kwarg {
                     self.error_help(
                         "E-PARAMETER",
@@ -818,7 +819,7 @@ impl Parser {
             }
 
             if self.at(&TokenKind::StarStar) {
-                let span = self.bump().span;
+                let span = self.bump();
                 if seen_kwarg {
                     self.error_help(
                         "E-PARAMETER",
@@ -927,7 +928,10 @@ impl Parser {
                 let span = param.span;
                 self.error_help(
                     "E-PARAMETER",
-                    format!("parameter `{}` dideklarasikan lebih dari sekali", param.name),
+                    format!(
+                        "parameter `{}` dideklarasikan lebih dari sekali",
+                        param.name
+                    ),
                     span,
                     "gunakan nama parameter yang berbeda",
                 );
@@ -956,18 +960,11 @@ impl Parser {
     fn parse_import_statement(&mut self, start: aksara_ast::Span) -> Stmt {
         self.bump();
         let mut modules = Vec::new();
-        loop {
-            match self.parse_import_target() {
-                Some(alias) => modules.push(alias),
-                None => break,
+        while let Some(alias) = self.parse_import_target() {
+            modules.push(alias);
+            if !self.eat(&TokenKind::Comma) || self.at_statement_end() {
+                break;
             }
-            if self.eat(&TokenKind::Comma) {
-                if self.at_statement_end() {
-                    break;
-                }
-                continue;
-            }
-            break;
         }
         if modules.is_empty() {
             self.error_help(
@@ -1154,7 +1151,7 @@ impl Parser {
     }
 
     fn parse_match(&mut self) -> Stmt {
-        let start = self.bump().span;
+        let start = self.bump();
         let subject = self.parse_expression();
         self.expect(&TokenKind::Colon, "`:` setelah subjek `cocokkan`");
 
@@ -1201,7 +1198,7 @@ impl Parser {
             if !self.at(&TokenKind::Kasus) {
                 break;
             }
-            let case_start = self.bump().span;
+            let case_start = self.bump();
             let pattern = self.parse_pattern();
             let guard = if self.eat(&TokenKind::Jika) {
                 Some(self.parse_expression())

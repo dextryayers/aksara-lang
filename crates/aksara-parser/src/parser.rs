@@ -189,10 +189,7 @@ impl Parser {
         let start = self.current().span;
 
         loop {
-            if self.at(&TokenKind::Newline)
-                || self.at(&TokenKind::Dedent)
-                || self.at_eof()
-            {
+            if self.at(&TokenKind::Newline) || self.at(&TokenKind::Dedent) || self.at_eof() {
                 break;
             }
             if self.at(&TokenKind::Semi) {
@@ -325,12 +322,13 @@ impl Parser {
         matches!(&self.current().kind, TokenKind::Name(name) if name == text)
     }
 
-    pub(crate) fn bump(&mut self) -> Token {
-        let token = self.current().clone();
+    /// Memajukan satu token dan mengembalikan span-nya tanpa menyalin token.
+    pub(crate) fn bump(&mut self) -> Span {
+        let span = self.current().span;
         if !self.at_eof() {
             self.index += 1;
         }
-        token
+        span
     }
 
     pub(crate) fn eat(&mut self, kind: &TokenKind) -> bool {
@@ -368,7 +366,11 @@ impl Parser {
                 let span = self.current().span;
                 self.error(
                     "E-SINTAKS",
-                    format!("nama {} diharapkan, ditemukan {}", what, self.describe_current()),
+                    format!(
+                        "nama {} diharapkan, ditemukan {}",
+                        what,
+                        self.describe_current()
+                    ),
                     span,
                 );
                 None
@@ -380,19 +382,14 @@ impl Parser {
         match &self.current().kind {
             TokenKind::Name(name) => format!("nama `{name}`"),
             TokenKind::Error(text) => format!("token tidak valid `{text}`"),
-            TokenKind::Int(text)
-            | TokenKind::Float(text)
-            | TokenKind::Imaginary(text) => format!("literal `{text}`"),
+            TokenKind::Int(text) | TokenKind::Float(text) | TokenKind::Imaginary(text) => {
+                format!("literal `{text}`")
+            }
             other => format!("`{}`", other.name()),
         }
     }
 
-    pub(crate) fn error(
-        &mut self,
-        code: &str,
-        message: impl Into<String>,
-        span: Span,
-    ) {
+    pub(crate) fn error(&mut self, code: &str, message: impl Into<String>, span: Span) {
         self.diagnostics
             .push(Diagnostic::error(code, message, span));
     }
@@ -404,9 +401,8 @@ impl Parser {
         span: Span,
         help: impl Into<String>,
     ) {
-        self.diagnostics.push(
-            Diagnostic::error(code, message, span).with_help(help),
-        );
+        self.diagnostics
+            .push(Diagnostic::error(code, message, span).with_help(help));
     }
 
     pub(crate) fn enter_depth(&mut self, span: Span) -> bool {
@@ -434,11 +430,7 @@ impl Parser {
         id
     }
 
-    pub(crate) fn make_expr(
-        &mut self,
-        span: Span,
-        kind: aksara_ast::ExprKind,
-    ) -> aksara_ast::Expr {
+    pub(crate) fn make_expr(&mut self, span: Span, kind: aksara_ast::ExprKind) -> aksara_ast::Expr {
         let id = self.node_id();
         aksara_ast::Expr { id, span, kind }
     }
@@ -456,9 +448,6 @@ impl Parser {
     }
 
     pub(crate) fn span_of_statements(&self, statements: &[Stmt], fallback: Span) -> Span {
-        statements
-            .last()
-            .map(|stmt| stmt.span)
-            .unwrap_or(fallback)
+        statements.last().map(|stmt| stmt.span).unwrap_or(fallback)
     }
 }

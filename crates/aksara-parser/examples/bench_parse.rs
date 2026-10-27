@@ -9,8 +9,10 @@
 //! Keluaran JSON dapat disimpan sebagai baseline.
 
 use std::fmt::Write as _;
+use std::hint::black_box;
 use std::time::Instant;
 
+use aksara_lexer::Lexer;
 use aksara_parser::parse;
 
 fn buat_sumber(target: usize) -> String {
@@ -20,18 +22,12 @@ fn buat_sumber(target: usize) -> String {
     loop {
         let i = blok;
         let mut potongan = String::new();
-        let _ = writeln!(
-            potongan,
-            "\nnilai_{i}: bilangan = {i} + 2 * 3 ** 2"
-        );
+        let _ = writeln!(potongan, "\nnilai_{i}: bilangan = {i} + 2 * 3 ** 2");
         let _ = writeln!(
             potongan,
             "salinan_{i} = nilai_{i} jika nilai_{i} > 0 lainnya 0"
         );
-        let _ = writeln!(
-            potongan,
-            "di_antara_{i} = nilai_{i} antara 0 dan 1000"
-        );
+        let _ = writeln!(potongan, "di_antara_{i} = nilai_{i} antara 0 dan 1000");
         let _ = writeln!(
             potongan,
             "data_{i} = [n * n untuk n dalam rentang(10) jika n % 2 == 0]"
@@ -105,7 +101,10 @@ fn main() {
             .unwrap_or(sumber.len());
         eprintln!(
             "diagnostik pertama: {} pada {}..{}\n{}",
-            diagnostic.message, diagnostic.span.start, diagnostic.span.end, &sumber[start..end]
+            diagnostic.message,
+            diagnostic.span.start,
+            diagnostic.span.end,
+            &sumber[start..end]
         );
     }
     assert!(
@@ -113,6 +112,16 @@ fn main() {
         "sumber benchmark tidak valid: {:#?}",
         awal.diagnostics
     );
+
+    let mut waktu_lex = Vec::with_capacity(iterasi);
+    for _ in 0..iterasi {
+        let mulai = Instant::now();
+        let hasil = Lexer::new(&sumber).tokenize();
+        waktu_lex.push(mulai.elapsed());
+        black_box(hasil.tokens.len());
+    }
+    waktu_lex.sort();
+    let lex_median = waktu_lex[waktu_lex.len() / 2];
 
     let mut waktu = Vec::with_capacity(iterasi);
     for _ in 0..iterasi {
@@ -140,6 +149,7 @@ fn main() {
     println!("  \"alat\": \"aksara-parser/bench_parse\",");
     println!("  \"bytes\": {bytes},");
     println!("  \"iterations\": {iterasi},");
+    println!("  \"lex_median_ms\": {:.3},", ms(lex_median));
     println!("  \"min_ms\": {:.3},", ms(tercepat));
     println!("  \"median_ms\": {:.3},", ms(median));
     println!("  \"mean_ms\": {:.3},", ms(rata));

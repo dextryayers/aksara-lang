@@ -52,8 +52,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - name: Parse semua contoh
-        run: cargo run -p aksara-cli -- periksa contoh/pemula/*.aks contoh/bahasa/*.aks contoh/aplikasi/*.aks
+        run: cargo run -p aksara-cli -- periksa contoh/*.aks
       - name: Uji korpus
         run: cargo test -p aksara-parser --test korpus -- --nocapture
+      - name: Uji AST emas
+        run: cargo test -p aksara-parser --test golden
       - name: Fuzz smoke
         run: cargo test -p aksara-parser --test fuzz_smoke -- --nocapture
+
+  benchmark-parser:
+    name: Benchmark parser 1 MB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Jalankan benchmark
+        run: cargo run --release -p aksara-parser --example bench_parse -- --bytes 1000000 --iterations 10

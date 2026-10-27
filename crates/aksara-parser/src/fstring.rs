@@ -5,11 +5,7 @@ use crate::parser::Parser;
 
 impl Parser {
     /// Memecah literal f-string mentah menjadi bagian teks dan ekspresi.
-    pub(crate) fn parse_fstring_parts(
-        &mut self,
-        lit: &StringLit,
-        span: Span,
-    ) -> Vec<FStringPart> {
+    pub(crate) fn parse_fstring_parts(&mut self, lit: &StringLit, span: Span) -> Vec<FStringPart> {
         let quote_len = match lit.quote {
             Quote::Single | Quote::Double => 1,
             Quote::TripleSingle | Quote::TripleDouble => 3,
@@ -45,7 +41,10 @@ impl Parser {
         let mut text = String::new();
         let mut index = 0usize;
         while index < raw.len() {
-            let ch = raw[index..].chars().next().expect("indeks berada di char boundary");
+            let ch = raw[index..]
+                .chars()
+                .next()
+                .expect("indeks berada di char boundary");
             match ch {
                 '{' => {
                     if raw[index..].starts_with("{{") {

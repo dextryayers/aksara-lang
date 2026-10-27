@@ -176,17 +176,12 @@ pub fn normalize_source(text: &str) -> String {
     out
 }
 
-#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum ColorMode {
+    #[default]
     Auto,
     Always,
     Never,
-}
-
-impl Default for ColorMode {
-    fn default() -> Self {
-        ColorMode::Auto
-    }
 }
 
 impl ColorMode {
@@ -232,11 +227,7 @@ pub fn render_human(diagnostic: &Diagnostic, source: &SourceFile, color: bool) -
         );
     }
     if color {
-        let _ = writeln!(
-            out,
-            "  {BLUE}-->{RESET} {}:{line}:{col}",
-            source.name
-        );
+        let _ = writeln!(out, "  {BLUE}-->{RESET} {}:{line}:{col}", source.name);
     } else {
         let _ = writeln!(out, "  --> {}:{line}:{col}", source.name);
     }
@@ -353,11 +344,7 @@ pub fn render_json(diagnostic: &Diagnostic, source: &SourceFile) -> serde_json::
     })
 }
 
-pub fn render_all(
-    diagnostics: &[Diagnostic],
-    source: &SourceFile,
-    color: bool,
-) -> String {
+pub fn render_all(diagnostics: &[Diagnostic], source: &SourceFile, color: bool) -> String {
     let mut out = String::new();
     let mut sorted: Vec<&Diagnostic> = diagnostics.iter().collect();
     sorted.sort_by_key(|d| (d.span.start, d.span.end, d.code.clone()));

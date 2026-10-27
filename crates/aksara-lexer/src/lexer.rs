@@ -44,10 +44,8 @@ impl<'a> Lexer<'a> {
 
     pub fn tokenize(mut self) -> LexResult {
         while self.pos < self.src.len() {
-            if self.at_line_start && self.bracket_depth == 0 {
-                if self.handle_line_start() {
-                    continue;
-                }
+            if self.at_line_start && self.bracket_depth == 0 && self.handle_line_start() {
+                continue;
             }
 
             let ch = match self.peek() {
@@ -95,7 +93,9 @@ impl<'a> Lexer<'a> {
                 continue;
             }
 
-            if ch.is_ascii_digit() || (ch == '.' && self.peek_next().is_some_and(|c| c.is_ascii_digit())) {
+            if ch.is_ascii_digit()
+                || (ch == '.' && self.peek_next().is_some_and(|c| c.is_ascii_digit()))
+            {
                 self.lex_number();
                 continue;
             }
@@ -117,7 +117,10 @@ impl<'a> Lexer<'a> {
             self.lex_operator(ch);
         }
 
-        if !matches!(self.tokens.last().map(|t| &t.kind), Some(TokenKind::Newline)) {
+        if !matches!(
+            self.tokens.last().map(|t| &t.kind),
+            Some(TokenKind::Newline)
+        ) {
             self.push_newline();
         }
         while self.indent_stack.len() > 1 {
@@ -168,37 +171,41 @@ impl<'a> Lexer<'a> {
         }
 
         let current = *self.indent_stack.last().unwrap_or(&0);
-        if indent > current {
-            if (indent - current) % 4 != 0 {
-                self.diagnostics.push(
-                    Diagnostic::error(
-                        "E-INDENTASI",
-                        "indentasi harus kelipatan 4 spasi",
-                        self.span(start),
-                    )
-                    .with_help("tambahkan atau kurangi spasi agar menjadi kelipatan 4"),
-                );
-            }
-            self.indent_stack.push(indent);
-            self.emit(TokenKind::Indent, self.pos);
-        } else if indent < current {
-            while self.indent_stack.len() > 1
-                && *self.indent_stack.last().unwrap_or(&0) > indent
-            {
-                self.indent_stack.pop();
-                self.emit(TokenKind::Dedent, self.pos);
-            }
-            if *self.indent_stack.last().unwrap_or(&0) != indent {
-                self.diagnostics.push(
-                    Diagnostic::error(
-                        "E-INDENTASI",
-                        "dedentasi tidak cocok dengan level indentasi mana pun",
-                        self.span(start),
-                    )
-                    .with_help("samakan jumlah spasi dengan blok sebelumnya"),
-                );
+        match indent.cmp(&current) {
+            std::cmp::Ordering::Greater => {
+                if (indent - current) % 4 != 0 {
+                    self.diagnostics.push(
+                        Diagnostic::error(
+                            "E-INDENTASI",
+                            "indentasi harus kelipatan 4 spasi",
+                            self.span(start),
+                        )
+                        .with_help("tambahkan atau kurangi spasi agar menjadi kelipatan 4"),
+                    );
+                }
                 self.indent_stack.push(indent);
+                self.emit(TokenKind::Indent, self.pos);
             }
+            std::cmp::Ordering::Less => {
+                while self.indent_stack.len() > 1
+                    && *self.indent_stack.last().unwrap_or(&0) > indent
+                {
+                    self.indent_stack.pop();
+                    self.emit(TokenKind::Dedent, self.pos);
+                }
+                if *self.indent_stack.last().unwrap_or(&0) != indent {
+                    self.diagnostics.push(
+                        Diagnostic::error(
+                            "E-INDENTASI",
+                            "dedentasi tidak cocok dengan level indentasi mana pun",
+                            self.span(start),
+                        )
+                        .with_help("samakan jumlah spasi dengan blok sebelumnya"),
+                    );
+                    self.indent_stack.push(indent);
+                }
+            }
+            std::cmp::Ordering::Equal => {}
         }
 
         self.at_line_start = false;
@@ -206,7 +213,10 @@ impl<'a> Lexer<'a> {
     }
 
     fn push_newline(&mut self) {
-        if matches!(self.tokens.last().map(|t| &t.kind), Some(TokenKind::Newline)) {
+        if matches!(
+            self.tokens.last().map(|t| &t.kind),
+            Some(TokenKind::Newline)
+        ) {
             return;
         }
         self.emit(TokenKind::Newline, self.pos);
@@ -235,11 +245,12 @@ impl<'a> Lexer<'a> {
     fn peek_next(&self) -> Option<char> {
         let bytes = self.src.as_bytes();
         let first = *bytes.get(self.pos)?;
-        let next = self.pos + if first.is_ascii() {
-            1
-        } else {
-            self.src[self.pos..].chars().next()?.len_utf8()
-        };
+        let next = self.pos
+            + if first.is_ascii() {
+                1
+            } else {
+                self.src[self.pos..].chars().next()?.len_utf8()
+            };
         let byte = *bytes.get(next)?;
         if byte.is_ascii() {
             Some(byte as char)
@@ -297,7 +308,10 @@ impl<'a> Lexer<'a> {
     fn string_prefix_len(&self) -> Option<usize> {
         let bytes = self.src[self.pos..].as_bytes();
         let mut len = 0;
-        while len < 2 && len < bytes.len() && matches!(bytes[len], b'r' | b'R' | b'f' | b'F' | b'b' | b'B') {
+        while len < 2
+            && len < bytes.len()
+            && matches!(bytes[len], b'r' | b'R' | b'f' | b'F' | b'b' | b'B')
+        {
             len += 1;
         }
         if len == 0 {

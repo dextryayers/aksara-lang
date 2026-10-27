@@ -289,7 +289,9 @@ fn pernyataan(rng: &mut Rng, depth: u32, lines: &mut Vec<String>) {
         6 => {
             lines.push(format!("{indent}coba:"));
             blok(rng, depth + 1, lines);
-            lines.push(format!("{indent}tangkap (KesalahanNilai, KesalahanTipe) sebagai e:"));
+            lines.push(format!(
+                "{indent}tangkap (KesalahanNilai, KesalahanTipe) sebagai e:"
+            ));
             blok(rng, depth + 1, lines);
             if rng.next() % 2 == 0 {
                 lines.push(format!("{indent}lainnya:"));
@@ -324,7 +326,9 @@ fn pernyataan(rng: &mut Rng, depth: u32, lines: &mut Vec<String>) {
             lines.push(format!("{indent}        lewati"));
             lines.push(format!("{indent}    kasus {{\"k\": v, **sisa}}:"));
             lines.push(format!("{indent}        lewati"));
-            lines.push(format!("{indent}    kasus int() sebagai angka jika angka > 0:"));
+            lines.push(format!(
+                "{indent}    kasus int() sebagai angka jika angka > 0:"
+            ));
             lines.push(format!("{indent}        lewati"));
             lines.push(format!("{indent}    kasus _:"));
             lines.push(format!("{indent}        lewati"));
