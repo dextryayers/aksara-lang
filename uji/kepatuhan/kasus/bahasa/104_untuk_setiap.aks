@@ -1,0 +1,8 @@
+# Untuk setiap
+
+hasil = []
+untuk setiap nama dalam ["Ani", "Budi"]:
+    hasil.tambah(nama.huruf_besar())
+pastikan (hasil) == (['ANI', 'BUDI']), "hasil"
+
+cetak("OK")

@@ -1,0 +1,14 @@
+# Operator aman
+
+objek = kosong
+pastikan (objek?.nama) == (kosong), "objek?.nama"
+pastikan (objek?[0]) == (kosong), "objek?[0]"
+pastikan (objek?()) == (kosong), "objek?()"
+pastikan (objek?.nama ?? "Tamu") == ("Tamu"), "objek?.nama ?? \"Tamu\""
+kelas Orang:
+    fungsi __init__(diri):
+        diri.nama = "Ani"
+orang = Orang()
+pastikan (orang?.nama) == ("Ani"), "orang?.nama"
+
+cetak("OK")

@@ -1,0 +1,6 @@
+# Posisi sumber tersedia
+
+nilai = 10
+pastikan (nilai) == (10), "nilai"
+
+cetak("OK")

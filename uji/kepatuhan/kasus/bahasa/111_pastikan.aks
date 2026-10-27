@@ -1,0 +1,10 @@
+# Pernyataan pastikan
+
+nilai = 10
+pastikan nilai > 0, "positif"
+coba:
+    pastikan nilai < 0, "harus gagal"
+tangkap KesalahanKlaim:
+    pastikan benar, "klaim gagal tertangkap"
+
+cetak("OK")

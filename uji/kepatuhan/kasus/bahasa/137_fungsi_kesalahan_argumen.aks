@@ -1,0 +1,18 @@
+# Kesalahan argumen
+
+fungsi f(a, b):
+    kembalikan a + b
+coba:
+    f(1)
+tangkap KesalahanTipe:
+    pastikan benar, "argumen kurang"
+coba:
+    f(1, 2, 3)
+tangkap KesalahanTipe:
+    pastikan benar, "argumen lebih"
+coba:
+    f(1, 2, c=3)
+tangkap KesalahanTipe:
+    pastikan benar, "kwarg tak dikenal"
+
+cetak("OK")

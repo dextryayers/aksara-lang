@@ -1,0 +1,11 @@
+# Slice teks
+
+pastikan ("abcdef"[1:4]) == ("bcd"), "\"abcdef\"[1:4]"
+pastikan ("abcdef"[:3]) == ("abc"), "\"abcdef\"[:3]"
+pastikan ("abcdef"[3:]) == ("def"), "\"abcdef\"[3:]"
+pastikan ("abcdef"[::2]) == ("ace"), "\"abcdef\"[::2]"
+pastikan ("abcdef"[::-1]) == ("fedcba"), "\"abcdef\"[::-1]"
+pastikan ("abcdef"[-2:]) == ("ef"), "\"abcdef\"[-2:]"
+pastikan ("abcdef"[10:]) == (""), "\"abcdef\"[10:]"
+
+cetak("OK")

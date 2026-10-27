@@ -1,0 +1,9 @@
+# Batas rekursi
+
+fungsi turun(n):
+    jika n == 0:
+        kembalikan 0
+    kembalikan turun(n - 1)
+pastikan (turun(100)) == (0), "turun(100)"
+
+cetak("OK")

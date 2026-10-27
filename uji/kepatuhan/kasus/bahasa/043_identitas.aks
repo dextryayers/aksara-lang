@@ -1,0 +1,12 @@
+# Operator identitas
+
+pastikan (kosong adalah kosong), "kosong adalah kosong"
+pastikan (1 bukan adalah 2), "1 bukan adalah 2"
+a = [1]
+b = a
+c = [1]
+pastikan (a adalah b), "a adalah b"
+pastikan (a bukan adalah c), "a bukan adalah c"
+pastikan (a == c), "a == c"
+
+cetak("OK")

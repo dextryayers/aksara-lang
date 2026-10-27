@@ -1,0 +1,9 @@
+# Parameter campuran
+
+fungsi f(a, b=2, *sisa, c=3, **opsi):
+    kembalikan (a, b, sisa, c, opsi)
+pastikan (f(1)) == ((1, 2, (), 3, {})), "f(1)"
+pastikan (f(1, 5, 6, 7, c=9)) == ((1, 5, (6, 7), 9, {})), "f(1, 5, 6, 7, c=9)"
+pastikan (f(1, c=8, d=10)) == ((1, 2, (), 8, {'d': 10})), "f(1, c=8, d=10)"
+
+cetak("OK")

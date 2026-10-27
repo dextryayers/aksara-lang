@@ -1,0 +1,11 @@
+# Pemisahan teks
+
+pastikan ("a,b,c".split(",")) == (['a', 'b', 'c']), "\"a,b,c\".split(\",\")"
+pastikan ("a b  c".split()) == (['a', 'b', 'c']), "\"a b  c\".split()"
+pastikan ("a,b,c".rsplit(",", 1)) == (['a,b', 'c']), "\"a,b,c\".rsplit(\",\", 1)"
+pastikan ("-".join(["a", "b"])) == ("a-b"), "\"-\".join([\"a\", \"b\"])"
+pastikan ("a=b".partition("=")) == (('a', '=', 'b')), "\"a=b\".partition(\"=\")"
+pastikan ("a=b=c".rpartition("=")) == (('a=b', '=', 'c')), "\"a=b=c\".rpartition(\"=\")"
+pastikan ("a\nb".splitlines()) == (['a', 'b']), "\"a\\nb\".splitlines()"
+
+cetak("OK")

@@ -1,0 +1,7 @@
+# Literal kompleks
+
+pastikan (2j) == (2j), "2j"
+pastikan (kompleks(1, 2)) == (1 + 2j), "kompleks(1, 2)"
+pastikan (abs(3 + 4j) == 5.0), "abs(3 + 4j) == 5.0"
+
+cetak("OK")

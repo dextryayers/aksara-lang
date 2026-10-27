@@ -113,10 +113,6 @@ fn hasil_daftar(nilai: Vec<Nilai>) -> Nilai {
     Nilai::daftar(nilai)
 }
 
-fn hasil_tupel(nilai: Vec<Nilai>) -> Nilai {
-    Nilai::tupel(nilai)
-}
-
 fn hasil_bilangan(nilai: i64) -> Nilai {
     Nilai::Bilangan(nilai)
 }

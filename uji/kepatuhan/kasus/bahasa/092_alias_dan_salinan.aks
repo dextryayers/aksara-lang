@@ -1,0 +1,16 @@
+# Alias dan salinan
+
+a = [1, 2]
+b = a
+b.tambah(3)
+pastikan (a) == ([1, 2, 3]), "a"
+c = a[:]
+c.tambah(4)
+pastikan (a) == ([1, 2, 3]), "a"
+pastikan (c) == ([1, 2, 3, 4]), "c"
+d = {"x": [1]}
+e = d.salin()
+e["x"].tambah(2)
+pastikan (d["x"]) == ([1, 2]), "d[\"x\"]"
+
+cetak("OK")

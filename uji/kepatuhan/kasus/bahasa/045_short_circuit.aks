@@ -1,0 +1,14 @@
+# Short circuit
+
+dipanggil = []
+fungsi catat(n):
+    dipanggil.tambah(n)
+    kembalikan benar
+hasil = salah dan catat(1)
+pastikan (hasil) == (salah), "hasil"
+pastikan (dipanggil) == ([]), "dipanggil"
+hasil = benar atau catat(2)
+pastikan (hasil) == (benar), "hasil"
+pastikan (dipanggil) == ([]), "dipanggil"
+
+cetak("OK")

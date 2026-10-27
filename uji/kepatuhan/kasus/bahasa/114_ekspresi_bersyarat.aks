@@ -1,0 +1,8 @@
+# Ekspresi bersyarat
+
+nilai = 7
+jenis_nilai = "ganjil" jika nilai % 2 == 1 lainnya "genap"
+pastikan (jenis_nilai) == ("ganjil"), "jenis_nilai"
+pastikan (("besar" jika nilai > 5 lainnya "kecil")) == ("besar"), "(\"besar\" jika nilai > 5 lainnya \"kecil\")"
+
+cetak("OK")

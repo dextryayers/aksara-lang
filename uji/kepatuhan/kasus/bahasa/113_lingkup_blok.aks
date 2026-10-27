@@ -1,0 +1,10 @@
+# Lingkup blok
+
+jika benar:
+    di_dalam = 5
+pastikan (di_dalam) == (5), "di_dalam"
+untuk i dalam rentang(2):
+    terakhir = i
+pastikan (terakhir) == (1), "terakhir"
+
+cetak("OK")

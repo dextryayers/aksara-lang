@@ -1,0 +1,12 @@
+# Closure
+
+fungsi buat_penambah(n):
+    fungsi tambah(x):
+        kembalikan x + n
+    kembalikan tambah
+tambah5 = buat_penambah(5)
+pastikan (tambah5(10)) == (15), "tambah5(10)"
+tambah10 = buat_penambah(10)
+pastikan (tambah10(1)) == (11), "tambah10(1)"
+
+cetak("OK")

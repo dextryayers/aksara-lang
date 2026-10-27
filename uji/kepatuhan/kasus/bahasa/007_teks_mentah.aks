@@ -1,0 +1,7 @@
+# Teks mentah
+
+pastikan (r"folder\berkas") == ("folder\\berkas"), "r\"folder\\berkas\""
+pastikan (r"a\nb") == ("a\\nb"), "r\"a\\nb\""
+pastikan (panjang(r"\n")) == (2), "panjang(r\"\\n\")"
+
+cetak("OK")

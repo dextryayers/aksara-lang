@@ -1,0 +1,16 @@
+# Fungsi generator
+
+fungsi urutan(n):
+    untuk i dalam rentang(n):
+        hasilkan i
+pastikan (daftar(urutan(4))) == ([0, 1, 2, 3]), "daftar(urutan(4))"
+g = urutan(3)
+pastikan (next(g)) == (0), "next(g)"
+pastikan (next(g)) == (1), "next(g)"
+pastikan (next(g)) == (2), "next(g)"
+coba:
+    next(g)
+tangkap HentikanIterasi:
+    pastikan benar, "generator habis"
+
+cetak("OK")

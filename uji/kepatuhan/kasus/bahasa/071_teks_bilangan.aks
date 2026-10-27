@@ -1,0 +1,10 @@
+# Konversi teks bilangan
+
+pastikan (hex(255)) == ("0xff"), "hex(255)"
+pastikan (oct(8)) == ("0o10"), "oct(8)"
+pastikan (bin(5)) == ("0b101"), "bin(5)"
+pastikan (bilangan("101", 2)) == (5), "bilangan(\"101\", 2)"
+pastikan (bilangan("0xff", 0)) == (255), "bilangan(\"0xff\", 0)"
+pastikan (str(3.0)) == ("3.0"), "str(3.0)"
+
+cetak("OK")

@@ -1,0 +1,10 @@
+# Bytes
+
+pastikan (b"abc") == (b'abc'), "b\"abc\""
+pastikan (panjang(b"abc")) == (3), "panjang(b\"abc\")"
+pastikan (b"abc"[1]) == (98), "b\"abc\"[1]"
+pastikan (b"abc".decode()) == ("abc"), "b\"abc\".decode()"
+pastikan (panjang("hé".encode())) == (3), "panjang(\"hé\".encode())"
+pastikan ("hé".encode().decode()) == ("hé"), "\"hé\".encode().decode()"
+
+cetak("OK")

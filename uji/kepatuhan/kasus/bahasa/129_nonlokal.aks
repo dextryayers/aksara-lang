@@ -1,0 +1,15 @@
+# Nonlokal
+
+fungsi penghitung():
+    nilai = 0
+    fungsi naik():
+        nonlokal nilai
+        nilai += 1
+        kembalikan nilai
+    kembalikan naik
+naik = penghitung()
+pastikan (naik()) == (1), "naik()"
+pastikan (naik()) == (2), "naik()"
+pastikan (naik()) == (3), "naik()"
+
+cetak("OK")

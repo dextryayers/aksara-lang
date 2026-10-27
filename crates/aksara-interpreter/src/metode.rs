@@ -3,7 +3,7 @@ use std::rc::Rc;
 
 use aksara_ast::Span;
 
-use crate::format::{format_nilai, nilai_ke_repr, nilai_ke_teks, repr_bytes, repr_teks};
+use crate::format::{format_nilai, nilai_ke_repr, nilai_ke_teks};
 use crate::interpreter::Interpreter;
 use crate::nilai::*;
 
@@ -87,7 +87,7 @@ impl Interpreter {
             Nilai::Generator(generator) => {
                 self.metode_generator(generator, nama, args, kwargs, span)
             }
-            Nilai::Kesalahan(kesalahan) => match nama {
+            Nilai::Kesalahan(_) => match nama {
                 "__str__" => Ok(Nilai::teks(nilai_ke_teks(penerima))),
                 "__repr__" => Ok(Nilai::teks(nilai_ke_repr(penerima))),
                 _ => Err(self.metode_tidak_ada(nama, "kesalahan", span)),
@@ -481,10 +481,24 @@ impl Interpreter {
                 Ok(Nilai::Bilangan(teks.matches(&cari).count() as i64))
             }
             "tengah" | "center" | "kiri" | "ljust" | "kanan" | "rjust" => {
-                let lebar = self.arg_i64(&args, nama, span)?.max(0) as usize;
+                if args.is_empty() || args.len() > 2 {
+                    return Err(self.lempar_pesan(
+                        "KesalahanTipe",
+                        format!("`{nama}` menerima satu atau dua argumen"),
+                        span,
+                    ));
+                }
+                let lebar = self.nilai_ke_i64(&args[0], span)?.max(0) as usize;
                 let isi = match args.get(1) {
                     Some(Nilai::Teks(teks)) => teks.chars().next().unwrap_or(' '),
-                    _ => ' ',
+                    None => ' ',
+                    Some(_) => {
+                        return Err(self.lempar_pesan(
+                            "KesalahanTipe",
+                            format!("`{nama}` membutuhkan teks pengisi"),
+                            span,
+                        ))
+                    }
                 };
                 let panjang = teks.chars().count();
                 if panjang >= lebar {

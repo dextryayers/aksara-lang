@@ -1,0 +1,11 @@
+# Konstruktor koleksi
+
+pastikan (daftar()) == ([]), "daftar()"
+pastikan (daftar((1, 2))) == ([1, 2]), "daftar((1, 2))"
+pastikan (daftar("abc")) == (['a', 'b', 'c']), "daftar(\"abc\")"
+pastikan (tupel([1, 2])) == ((1, 2)), "tupel([1, 2])"
+pastikan (susunan([1, 1, 2])) == ({1, 2}), "susunan([1, 1, 2])"
+pastikan (kamus()) == ({}), "kamus()"
+pastikan (kamus(a=1, b=2)) == ({'a': 1, 'b': 2}), "kamus(a=1, b=2)"
+
+cetak("OK")

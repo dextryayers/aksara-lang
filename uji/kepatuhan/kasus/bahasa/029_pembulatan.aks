@@ -1,0 +1,12 @@
+# Pembulatan
+
+pastikan (bulat(2.4)) == (2), "bulat(2.4)"
+pastikan (bulat(2.6)) == (3), "bulat(2.6)"
+pastikan (bulat(2.5)) == (2), "bulat(2.5)"
+pastikan (bulat(3.5)) == (4), "bulat(3.5)"
+pastikan (bulat(-2.5)) == (-2), "bulat(-2.5)"
+pastikan (bulat(2.675, 2)) == (2.68), "bulat(2.675, 2)"
+pastikan (abs(-7)) == (7), "abs(-7)"
+pastikan (abs(-2.5)) == (2.5), "abs(-2.5)"
+
+cetak("OK")

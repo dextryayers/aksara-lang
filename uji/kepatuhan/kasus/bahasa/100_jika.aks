@@ -1,0 +1,15 @@
+# Percabangan jika
+
+nilai = 85
+status = "A" jika nilai >= 90 lainnya ("B" jika nilai >= 80 lainnya "C")
+pastikan (status) == ("B"), "status"
+hasil = []
+jika nilai > 100:
+    hasil.tambah("besar")
+lainnya jika nilai >= 80:
+    hasil.tambah("sedang")
+lainnya:
+    hasil.tambah("kecil")
+pastikan (hasil) == (['sedang']), "hasil"
+
+cetak("OK")

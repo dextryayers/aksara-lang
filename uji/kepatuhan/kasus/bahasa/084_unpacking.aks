@@ -1,0 +1,18 @@
+# Unpacking
+
+a, b = 1, 2
+pastikan ((a, b)) == ((1, 2)), "(a, b)"
+a, b = b, a
+pastikan ((a, b)) == ((2, 1)), "(a, b)"
+kepala, *ekor = [1, 2, 3, 4]
+pastikan (kepala) == (1), "kepala"
+pastikan (ekor) == ([2, 3, 4]), "ekor"
+*awal, akhir = [1, 2, 3]
+pastikan (awal) == ([1, 2]), "awal"
+pastikan (akhir) == (3), "akhir"
+gabung = [0, *[1, 2], 3]
+pastikan (gabung) == ([0, 1, 2, 3]), "gabung"
+kamus_gabung = {**{"a": 1}, **{"b": 2}}
+pastikan (kamus_gabung["b"]) == (2), "kamus_gabung[\"b\"]"
+
+cetak("OK")

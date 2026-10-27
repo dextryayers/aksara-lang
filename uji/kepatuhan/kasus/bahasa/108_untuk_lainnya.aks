@@ -1,0 +1,17 @@
+# Untuk dengan lainnya
+
+selesai = salah
+untuk i dalam rentang(3):
+    lewati
+lainnya:
+    selesai = benar
+pastikan (selesai) == (benar), "selesai"
+selesai = salah
+untuk i dalam rentang(3):
+    jika i == 1:
+        hentikan
+lainnya:
+    selesai = benar
+pastikan (selesai) == (salah), "selesai"
+
+cetak("OK")

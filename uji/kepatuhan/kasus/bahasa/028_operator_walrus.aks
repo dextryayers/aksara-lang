@@ -1,0 +1,8 @@
+# Operator walrus
+
+jika (n := 10) > 5:
+    hasil = n * 2
+pastikan (hasil) == (20), "hasil"
+pastikan (n) == (10), "n"
+
+cetak("OK")

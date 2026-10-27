@@ -1,0 +1,15 @@
+# Metode himpunan
+
+h = {1, 2, 3}
+pastikan (h.gabung({4})) == ({1, 2, 3, 4}), "h.gabung({4})"
+pastikan (h.irisan({2, 3, 4})) == ({2, 3}), "h.irisan({2, 3, 4})"
+pastikan (h.selisih({1})) == ({2, 3}), "h.selisih({1})"
+pastikan (h.selisih_simetris({3, 4})) == ({1, 2, 4}), "h.selisih_simetris({3, 4})"
+s = h.salin()
+s.tambah(9)
+pastikan (9 dalam h) == (salah), "9 dalam h"
+h.perbarui({5, 6})
+pastikan (panjang(h)) == (5), "panjang(h)"
+pastikan (h.ambil() dalam {1, 2, 3, 4, 5, 6}) == (benar), "h.ambil() dalam {1, 2, 3, 4, 5, 6}"
+
+cetak("OK")

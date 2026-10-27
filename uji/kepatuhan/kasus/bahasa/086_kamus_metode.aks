@@ -1,0 +1,17 @@
+# Metode kamus
+
+d = {"a": 1, "b": 2}
+pastikan (d.pop("a")) == (1), "d.pop(\"a\")"
+pastikan (d) == ({'b': 2}), "d"
+d.update({"c": 3})
+pastikan (d["c"]) == (3), "d[\"c\"]"
+d.perbarui({"d": 4})
+pastikan (d["d"]) == (4), "d[\"d\"]"
+s = d.salin()
+s["e"] = 5
+pastikan ("e" dalam d) == (salah), "\"e\" dalam d"
+pastikan (d.popitem()) == (('d', 4)), "d.popitem()"
+d.bersihkan()
+pastikan (d) == ({}), "d"
+
+cetak("OK")

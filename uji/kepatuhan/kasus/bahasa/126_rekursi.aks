@@ -1,0 +1,15 @@
+# Rekursi
+
+fungsi faktorial(n):
+    jika n <= 1:
+        kembalikan 1
+    kembalikan n * faktorial(n - 1)
+pastikan (faktorial(5)) == (120), "faktorial(5)"
+pastikan (faktorial(10)) == (3628800), "faktorial(10)"
+fungsi fib(n):
+    jika n < 2:
+        kembalikan n
+    kembalikan fib(n - 1) + fib(n - 2)
+pastikan (fib(10)) == (55), "fib(10)"
+
+cetak("OK")

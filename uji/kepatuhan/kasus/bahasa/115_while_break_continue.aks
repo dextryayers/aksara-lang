@@ -1,0 +1,14 @@
+# While break continue
+
+i = 0
+hasil = []
+selama benar:
+    i += 1
+    jika i % 2 == 0:
+        lanjutkan
+    jika i > 7:
+        hentikan
+    hasil.tambah(i)
+pastikan (hasil) == ([1, 3, 5, 7]), "hasil"
+
+cetak("OK")

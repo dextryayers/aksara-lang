@@ -1,0 +1,10 @@
+# Objek slice
+
+s = slice(1, 5, 2)
+pastikan (s.mulai) == (1), "s.mulai"
+pastikan (s.akhir) == (5), "s.akhir"
+pastikan (s.langkah) == (2), "s.langkah"
+pastikan ([0, 1, 2, 3, 4, 5][s]) == ([1, 3]), "[0, 1, 2, 3, 4, 5][s]"
+pastikan (daftar(s.indices(10))) == ([1, 5, 2]), "daftar(s.indices(10))"
+
+cetak("OK")

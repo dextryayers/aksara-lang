@@ -1,0 +1,9 @@
+# divmod dan pow
+
+pastikan (divmod(7, 3)) == ((2, 1)), "divmod(7, 3)"
+pastikan (divmod(-7, 3)) == ((-3, 2)), "divmod(-7, 3)"
+pastikan (pow(2, 10)) == (1024), "pow(2, 10)"
+pastikan (pow(2, 10, 1000)) == (24), "pow(2, 10, 1000)"
+pastikan (pow(2, -1)) == (0.5), "pow(2, -1)"
+
+cetak("OK")

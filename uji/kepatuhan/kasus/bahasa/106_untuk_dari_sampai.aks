@@ -1,0 +1,16 @@
+# Untuk dari sampai
+
+naik = []
+untuk i dari 1 sampai 4:
+    naik.tambah(i)
+pastikan (naik) == ([1, 2, 3, 4]), "naik"
+turun = []
+untuk i dari 4 sampai 1:
+    turun.tambah(i)
+pastikan (turun) == ([4, 3, 2, 1]), "turun"
+langkah = []
+untuk i dari 1 sampai 7 langkah 2:
+    langkah.tambah(i)
+pastikan (langkah) == ([1, 3, 5, 7]), "langkah"
+
+cetak("OK")

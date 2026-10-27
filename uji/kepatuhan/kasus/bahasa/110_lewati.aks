@@ -1,0 +1,7 @@
+# Pernyataan lewati
+
+jika benar:
+    lewati
+selama salah:
+    lewati
+cetak("OK")

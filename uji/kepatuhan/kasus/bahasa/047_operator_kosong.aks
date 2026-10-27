@@ -1,0 +1,11 @@
+# Operator kosong
+
+pastikan (kosong ?? 10) == (10), "kosong ?? 10"
+pastikan (0 ?? 10) == (0), "0 ?? 10"
+pastikan (salah ?? 10) == (salah), "salah ?? 10"
+pastikan ("x" ?? "y") == ("x"), "\"x\" ?? \"y\""
+nilai = kosong
+nilai ??= 7
+pastikan (nilai) == (7), "nilai"
+
+cetak("OK")

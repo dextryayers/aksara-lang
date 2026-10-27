@@ -1,0 +1,9 @@
+# Logika dan kosong
+
+pastikan (benar) == (benar), "benar"
+pastikan (salah) == (salah), "salah"
+pastikan (kosong) == (kosong), "kosong"
+pastikan (jenis(benar).__nama__) == ("Logika"), "jenis(benar).__nama__"
+pastikan (jenis(kosong).__nama__) == ("Kosong"), "jenis(kosong).__nama__"
+
+cetak("OK")

@@ -1,0 +1,10 @@
+# Koleksi bersarang
+
+m = [[1, 2], [3, 4]]
+pastikan (m[1][0]) == (3), "m[1][0]"
+pastikan (m[0]) == ([1, 2]), "m[0]"
+m[0][0] = 9
+pastikan (m[0][0]) == (9), "m[0][0]"
+pastikan (m) == ([[9, 2], [3, 4]]), "m"
+
+cetak("OK")

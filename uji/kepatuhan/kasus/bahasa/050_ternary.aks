@@ -1,0 +1,8 @@
+# Ternary
+
+pastikan ("ya" jika benar lainnya "tidak") == ("ya"), "\"ya\" jika benar lainnya \"tidak\""
+pastikan ("ya" jika salah lainnya "tidak") == ("tidak"), "\"ya\" jika salah lainnya \"tidak\""
+pastikan (1 jika 0 lainnya 2) == (2), "1 jika 0 lainnya 2"
+pastikan ((1 jika salah lainnya 2) + 3) == (5), "(1 jika salah lainnya 2) + 3"
+
+cetak("OK")

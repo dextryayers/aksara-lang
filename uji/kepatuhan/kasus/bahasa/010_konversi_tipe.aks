@@ -1,0 +1,13 @@
+# Konversi tipe
+
+pastikan (bilangan("42")) == (42), "bilangan(\"42\")"
+pastikan (bilangan("ff", 16)) == (255), "bilangan(\"ff\", 16)"
+pastikan (bilangan(3.9)) == (3), "bilangan(3.9)"
+pastikan (pecahan("2.5")) == (2.5), "pecahan(\"2.5\")"
+pastikan (teks(42)) == ("42"), "teks(42)"
+pastikan (logika(0)) == (salah), "logika(0)"
+pastikan (logika(1)) == (benar), "logika(1)"
+pastikan (logika("")) == (salah), "logika(\"\")"
+pastikan (logika("x")) == (benar), "logika(\"x\")"
+
+cetak("OK")

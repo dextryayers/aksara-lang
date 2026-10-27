@@ -1,0 +1,9 @@
+# Rekursi bersarang
+
+fungsi jumlah_daftar(items):
+    jika bukan items:
+        kembalikan 0
+    kembalikan items[0] + jumlah_daftar(items[1:])
+pastikan (jumlah_daftar([1, 2, 3, 4])) == (10), "jumlah_daftar([1, 2, 3, 4])"
+
+cetak("OK")

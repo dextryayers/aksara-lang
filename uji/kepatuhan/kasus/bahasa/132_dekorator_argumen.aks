@@ -1,0 +1,17 @@
+# Dekorator berargumen
+
+fungsi ulang(n):
+    fungsi dekorator(f):
+        fungsi pembungkus(*args):
+            hasil = kosong
+            untuk _ dalam rentang(n):
+                hasil = f(*args)
+            kembalikan hasil
+        kembalikan pembungkus
+    kembalikan dekorator
+@ulang(3)
+fungsi ambil():
+    kembalikan 7
+pastikan (ambil()) == (7), "ambil()"
+
+cetak("OK")

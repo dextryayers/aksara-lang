@@ -1,0 +1,16 @@
+# Pembagian nol
+
+coba:
+    x = 1 / 0
+tangkap KesalahanNolPembagian:
+    pastikan benar, "pembagian bulat"
+coba:
+    x = 1 // 0
+tangkap KesalahanNolPembagian:
+    pastikan benar, "pembagian lantai"
+coba:
+    x = 1 % 0
+tangkap KesalahanNolPembagian:
+    pastikan benar, "modulo"
+
+cetak("OK")

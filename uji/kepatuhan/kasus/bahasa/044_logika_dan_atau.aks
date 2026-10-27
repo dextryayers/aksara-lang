@@ -1,0 +1,12 @@
+# Logika dan atau
+
+pastikan (0 atau "nilai") == ("nilai"), "0 atau \"nilai\""
+pastikan ("nilai" atau 0) == ("nilai"), "\"nilai\" atau 0"
+pastikan (1 dan 2) == (2), "1 dan 2"
+pastikan (0 dan 2) == (0), "0 dan 2"
+pastikan (kosong atau 5) == (5), "kosong atau 5"
+pastikan ([] atau [1]) == ([1]), "[] atau [1]"
+pastikan (bukan salah), "bukan salah"
+pastikan (bukan (1 == 2)), "bukan (1 == 2)"
+
+cetak("OK")

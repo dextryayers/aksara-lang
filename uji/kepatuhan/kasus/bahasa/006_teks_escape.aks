@@ -1,0 +1,9 @@
+# Escape teks
+
+pastikan ("a\nb") == ("a\nb"), "\"a\\nb\""
+pastikan ("a\tb") == ("a\tb"), "\"a\\tb\""
+pastikan ("a\\b") == ("a\\b"), "\"a\\\\b\""
+pastikan ("\u00e9") == ("é"), "\"\\u00e9\""
+pastikan (panjang("\u00e9")) == (1), "panjang(\"\\u00e9\")"
+
+cetak("OK")

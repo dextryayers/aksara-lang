@@ -1,0 +1,8 @@
+# Kwargs
+
+fungsi info(**data):
+    kembalikan data
+pastikan (info(nama="Ani", umur=25)) == ({'nama': 'Ani', 'umur': 25}), "info(nama=\"Ani\", umur=25)"
+pastikan (info(**{"a": 1})) == ({'a': 1}), "info(**{\"a\": 1})"
+
+cetak("OK")

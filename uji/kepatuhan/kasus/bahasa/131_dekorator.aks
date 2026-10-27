@@ -1,0 +1,12 @@
+# Dekorator
+
+fungsi dua_kali(f):
+    fungsi pembungkus(x):
+        kembalikan f(f(x))
+    kembalikan pembungkus
+@dua_kali
+fungsi tambah_satu(x):
+    kembalikan x + 1
+pastikan (tambah_satu(5)) == (7), "tambah_satu(5)"
+
+cetak("OK")

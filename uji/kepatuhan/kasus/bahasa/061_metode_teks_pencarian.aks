@@ -1,0 +1,12 @@
+# Pencarian teks
+
+pastikan ("halo".find("l")) == (2), "\"halo\".find(\"l\")"
+pastikan ("halo".rfind("l")) == (2), "\"halo\".rfind(\"l\")"
+pastikan ("halo".count("l")) == (1), "\"halo\".count(\"l\")"
+pastikan ("halo".startswith("ha")) == (benar), "\"halo\".startswith(\"ha\")"
+pastikan ("halo".endswith("lo")) == (benar), "\"halo\".endswith(\"lo\")"
+pastikan ("halo".startswith("lo")) == (salah), "\"halo\".startswith(\"lo\")"
+pastikan ("halo".indeks("a")) == (1), "\"halo\".indeks(\"a\")"
+pastikan ("halo".cari("z")) == (-1), "\"halo\".cari(\"z\")"
+
+cetak("OK")

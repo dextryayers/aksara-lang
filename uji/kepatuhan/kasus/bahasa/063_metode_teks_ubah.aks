@@ -1,0 +1,13 @@
+# Perubahan teks
+
+pastikan ("aaa".replace("a", "b")) == ("bbb"), "\"aaa\".replace(\"a\", \"b\")"
+pastikan ("aaa".replace("a", "b", 2)) == ("bba"), "\"aaa\".replace(\"a\", \"b\", 2)"
+pastikan ("abcdef".removeprefix("abc")) == ("def"), "\"abcdef\".removeprefix(\"abc\")"
+pastikan ("abcdef".removesuffix("def")) == ("abc"), "\"abcdef\".removesuffix(\"def\")"
+pastikan ("a\tb".expandtabs(4)) == ("a   b"), "\"a\\tb\".expandtabs(4)"
+pastikan ("x".center(5)) == ("  x  "), "\"x\".center(5)"
+pastikan ("x".ljust(3)) == ("x  "), "\"x\".ljust(3)"
+pastikan ("x".rjust(3)) == ("  x"), "\"x\".rjust(3)"
+pastikan ("7".zfill(3)) == ("007"), "\"7\".zfill(3)"
+
+cetak("OK")

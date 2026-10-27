@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use aksara_ast::{AugOp, BinOp, CmpOp, Span, UnaryOp};
 
-use crate::format::{nilai_ke_repr, nilai_ke_teks, repr_float};
+use crate::format::{nilai_ke_repr, nilai_ke_teks};
 use crate::interpreter::Interpreter;
 use crate::nilai::*;
 
@@ -194,18 +194,69 @@ impl Interpreter {
                 }
                 Ok(nilai_ke_teks(nilai))
             }
+            Nilai::Daftar(_) | Nilai::Tupel(_) | Nilai::Himpunan(_) | Nilai::Kamus(_) => {
+                self.repr_dalam(nilai, span)
+            }
             _ => Ok(nilai_ke_teks(nilai)),
         }
     }
 
     /// Mengubah nilai menjadi representasi dengan menghormati `__repr__`.
     pub fn repr_nilai(&mut self, nilai: &Nilai, span: Span) -> Hasil<String> {
+        self.repr_dalam(nilai, span)
+    }
+
+    /// Representasi rekursif yang memakai `__repr__` untuk objek pengguna di
+    /// dalam koleksi. Ini menyamakan `cetak([objek])` dengan Python.
+    fn repr_dalam(&mut self, nilai: &Nilai, span: Span) -> Hasil<String> {
         match nilai {
             Nilai::Instance(_) | Nilai::Kesalahan(_) => {
                 if let Some(teks) = self.panggil_dunder_teks(nilai, "__repr__", span)? {
                     return Ok(teks);
                 }
                 Ok(nilai_ke_repr(nilai))
+            }
+            Nilai::Daftar(isi) => {
+                let item = isi.borrow().clone();
+                let mut bagian = Vec::with_capacity(item.len());
+                for nilai in &item {
+                    bagian.push(self.repr_dalam(nilai, span)?);
+                }
+                Ok(format!("[{}]", bagian.join(", ")))
+            }
+            Nilai::Tupel(isi) => {
+                let mut bagian = Vec::with_capacity(isi.len());
+                for nilai in isi.iter() {
+                    bagian.push(self.repr_dalam(nilai, span)?);
+                }
+                if isi.len() == 1 {
+                    Ok(format!("({},)", bagian[0]))
+                } else {
+                    Ok(format!("({})", bagian.join(", ")))
+                }
+            }
+            Nilai::Himpunan(isi) => {
+                let item = isi.borrow().clone();
+                if item.is_empty() {
+                    return Ok("himpunan()".to_string());
+                }
+                let mut bagian = Vec::with_capacity(item.len());
+                for nilai in &item {
+                    bagian.push(self.repr_dalam(nilai, span)?);
+                }
+                Ok(format!("{{{}}}", bagian.join(", ")))
+            }
+            Nilai::Kamus(isi) => {
+                let item = isi.borrow().clone();
+                let mut bagian = Vec::with_capacity(item.len());
+                for (kunci, nilai) in &item {
+                    bagian.push(format!(
+                        "{}: {}",
+                        self.repr_dalam(kunci, span)?,
+                        self.repr_dalam(nilai, span)?
+                    ));
+                }
+                Ok(format!("{{{}}}", bagian.join(", ")))
             }
             _ => Ok(nilai_ke_repr(nilai)),
         }
@@ -319,11 +370,11 @@ impl Interpreter {
                         }
                     }
                     (Nilai::Instance(instance), _) => {
-                        let nama = match op {
-                            CmpOp::Lt => "__lt__",
-                            CmpOp::Le => "__le__",
-                            CmpOp::Gt => "__gt__",
-                            CmpOp::Ge => "__ge__",
+                        let (nama, balik) = match op {
+                            CmpOp::Lt => ("__lt__", "__gt__"),
+                            CmpOp::Le => ("__le__", "__ge__"),
+                            CmpOp::Gt => ("__gt__", "__lt__"),
+                            CmpOp::Ge => ("__ge__", "__le__"),
                             _ => unreachable!(),
                         };
                         if let Some(fungsi) = instance.kelas.cari_atribut(nama) {
@@ -334,6 +385,19 @@ impl Interpreter {
                                 span,
                             )?;
                             return self.kebenaran(&hasil);
+                        }
+                        // Python mencoba metode tercermin pada operand kanan
+                        // ketika operand kiri tidak menyediakan metode.
+                        if let Nilai::Instance(kanan_instance) = kanan {
+                            if let Some(fungsi) = kanan_instance.kelas.cari_atribut(balik) {
+                                let hasil = self.panggil(
+                                    &fungsi,
+                                    vec![Nilai::Instance(kanan_instance.clone()), kiri.clone()],
+                                    Vec::new(),
+                                    span,
+                                )?;
+                                return self.kebenaran(&hasil);
+                            }
                         }
                         Err(self.lempar_pesan(
                             "KesalahanTipe",
@@ -1974,6 +2038,40 @@ impl Interpreter {
                     .map(|d| Nilai::teks(d.clone()))
                     .unwrap_or(Nilai::Kosong)),
                 "__modul__" => Ok(Nilai::teks(fungsi.berkas.clone())),
+                "__parameter__" => {
+                    let mut parameter = Vec::new();
+                    for p in fungsi.parameter_semua() {
+                        parameter.push(Nilai::teks(p.nama.clone()));
+                    }
+                    if let Some(nama) = &fungsi.vararg {
+                        parameter.push(Nilai::teks(nama.clone()));
+                    }
+                    if let Some(nama) = &fungsi.kwarg {
+                        parameter.push(Nilai::teks(nama.clone()));
+                    }
+                    Ok(Nilai::daftar(parameter))
+                }
+                "__bawaan__" => {
+                    let mut pasangan = Vec::new();
+                    for p in fungsi.parameter_semua() {
+                        if let Some(nilai) = &p.bawaan {
+                            pasangan.push((Nilai::teks(p.nama.clone()), nilai.clone()));
+                        }
+                    }
+                    Ok(Nilai::kamus(pasangan))
+                }
+                "__anotasi__" => {
+                    let mut pasangan = Vec::new();
+                    for p in fungsi.parameter_semua() {
+                        if let Some(nilai) = &p.anotasi {
+                            pasangan.push((Nilai::teks(p.nama.clone()), nilai.clone()));
+                        }
+                    }
+                    if let Some(nilai) = &fungsi.anotasi_kembali {
+                        pasangan.push((Nilai::teks("kembali"), nilai.clone()));
+                    }
+                    Ok(Nilai::kamus(pasangan))
+                }
                 _ => Err(self.lempar_pesan(
                     "KesalahanAtribut",
                     format!("fungsi tidak memiliki atribut `{nama}`"),

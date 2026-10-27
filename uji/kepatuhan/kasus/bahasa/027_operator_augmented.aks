@@ -1,0 +1,15 @@
+# Operator augmented
+
+x = 5
+x += 3
+x -= 1
+x *= 2
+x //= 3
+x %= 4
+x **= 2
+pastikan (x) == (0), "x"
+s = "a"
+s += "b"
+pastikan (s) == ("ab"), "s"
+
+cetak("OK")

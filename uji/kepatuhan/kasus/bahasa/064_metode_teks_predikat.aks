@@ -1,0 +1,15 @@
+# Predikat teks
+
+pastikan ("abc".adalah_alfabet()) == (benar), "\"abc\".adalah_alfabet()"
+pastikan ("abc1".adalah_alfanumerik()) == (benar), "\"abc1\".adalah_alfanumerik()"
+pastikan ("123".adalah_angka()) == (benar), "\"123\".adalah_angka()"
+pastikan ("   ".adalah_spasi()) == (benar), "\"   \".adalah_spasi()"
+pastikan ("abc".adalah_huruf_kecil()) == (benar), "\"abc\".adalah_huruf_kecil()"
+pastikan ("ABC".adalah_huruf_besar()) == (benar), "\"ABC\".adalah_huruf_besar()"
+pastikan ("Halo Dunia".adalah_judul()) == (benar), "\"Halo Dunia\".adalah_judul()"
+pastikan ("123".adalah_desimal()) == (benar), "\"123\".adalah_desimal()"
+pastikan ("abc".adalah_identifier()) == (benar), "\"abc\".adalah_identifier()"
+pastikan ("a b".adalah_identifier()) == (salah), "\"a b\".adalah_identifier()"
+pastikan ("halo".adalah_cetak()) == (benar), "\"halo\".adalah_cetak()"
+
+cetak("OK")

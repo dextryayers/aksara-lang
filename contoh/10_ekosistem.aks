@@ -12,8 +12,15 @@ impor python "functools" sebagai functools
 impor python "itertools" sebagai itertools
 impor python "numpy" sebagai np
 impor python "pandas" sebagai pd
+impor python "matplotlib" sebagai mpl
+mpl.use("Agg")
 impor python "matplotlib.pyplot" sebagai plt
-impor python "cv2" sebagai cv2
+
+# OpenCV bersifat opsional. Contoh tetap berjalan bila pustaka tidak ada.
+coba:
+    impor python "cv2" sebagai cv2
+tangkap KesalahanImpor:
+    cv2 = kosong
 
 # Pustaka standar
 cetak("Akar:", math.sqrt(144))
@@ -73,7 +80,10 @@ cetak("Jumlah seri:", seri.sum())
 # Matplotlib dan OpenCV: objek Python dipakai dengan nama aslinya
 plt.plot([1, 2, 3], [1, 4, 9])
 plt.title("Contoh Grafik")
-plt.show()
+plt.close()
 
-gambar = cv2.imread("contoh/gambar.png")
-cetak("Bentuk gambar:", gambar.shape jika gambar != kosong lainnya kosong)
+jika cv2 != kosong:
+    gambar = cv2.imread("contoh/gambar.png")
+    cetak("Bentuk gambar:", gambar.shape jika gambar != kosong lainnya kosong)
+lainnya:
+    cetak("OpenCV tidak tersedia; bagian gambar dilewati.")

@@ -1,0 +1,8 @@
+# Indeks teks
+
+coba:
+    x = "abc"[10]
+tangkap KesalahanIndeks:
+    pastikan benar, "indeks teks"
+
+cetak("OK")

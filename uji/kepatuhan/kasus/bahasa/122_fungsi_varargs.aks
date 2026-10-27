@@ -1,0 +1,12 @@
+# Varargs
+
+fungsi jumlahkan(*angka):
+    total = 0
+    untuk n dalam angka:
+        total += n
+    kembalikan total
+pastikan (jumlahkan()) == (0), "jumlahkan()"
+pastikan (jumlahkan(1, 2, 3)) == (6), "jumlahkan(1, 2, 3)"
+pastikan (jumlahkan(*[4, 5])) == (9), "jumlahkan(*[4, 5])"
+
+cetak("OK")

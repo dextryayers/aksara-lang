@@ -1,0 +1,10 @@
+# Global
+
+nilai = 1
+fungsi ubah():
+    global nilai
+    nilai = 10
+ubah()
+pastikan (nilai) == (10), "nilai"
+
+cetak("OK")

@@ -1,0 +1,12 @@
+# Hentikan dan lanjutkan
+
+hasil = []
+untuk i dalam rentang(10):
+    jika i == 3:
+        lanjutkan
+    jika i == 6:
+        hentikan
+    hasil.tambah(i)
+pastikan (hasil) == ([0, 1, 2, 4, 5]), "hasil"
+
+cetak("OK")

@@ -1,0 +1,15 @@
+# Truthiness
+
+pastikan (logika(kosong)) == (salah), "logika(kosong)"
+pastikan (logika(0)) == (salah), "logika(0)"
+pastikan (logika(0.0)) == (salah), "logika(0.0)"
+pastikan (logika("")) == (salah), "logika(\"\")"
+pastikan (logika([])) == (salah), "logika([])"
+pastikan (logika(())) == (salah), "logika(())"
+pastikan (logika({})) == (salah), "logika({})"
+pastikan (logika(susunan())) == (salah), "logika(susunan())"
+pastikan (logika(rentang(0))) == (salah), "logika(rentang(0))"
+pastikan (logika([0])) == (benar), "logika([0])"
+pastikan (logika(rentang(1))) == (benar), "logika(rentang(1))"
+
+cetak("OK")

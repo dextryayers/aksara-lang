@@ -1,18 +1,28 @@
 use crate::nilai::{Kesalahan, Nilai};
 
 pub fn repr_teks(teks: &str) -> String {
+    // Python memilih kutip tunggal, kecuali teks memuat kutip tunggal tetapi
+    // tidak memuat kutip ganda. Aturan ini menjaga `repr` tetap familiar.
+    let kutip = if teks.contains('\'') && !teks.contains('"') {
+        '"'
+    } else {
+        '\''
+    };
     let mut hasil = String::with_capacity(teks.len() + 2);
-    hasil.push('\'');
+    hasil.push(kutip);
     for ch in teks.chars() {
         match ch {
             '\\' => hasil.push_str("\\\\"),
-            '\'' => hasil.push_str("\\'"),
             '\n' => hasil.push_str("\\n"),
             '\r' => hasil.push_str("\\r"),
             '\t' => hasil.push_str("\\t"),
             '\u{0008}' => hasil.push_str("\\b"),
             '\u{000c}' => hasil.push_str("\\f"),
             '\u{000b}' => hasil.push_str("\\v"),
+            ch if ch == kutip => {
+                hasil.push('\\');
+                hasil.push(ch);
+            }
             ch if ch.is_control() => {
                 use std::fmt::Write as _;
                 let _ = write!(hasil, "\\u{:04x}", ch as u32);
@@ -20,7 +30,7 @@ pub fn repr_teks(teks: &str) -> String {
             ch => hasil.push(ch),
         }
     }
-    hasil.push('\'');
+    hasil.push(kutip);
     hasil
 }
 
@@ -314,12 +324,33 @@ pub fn format_nilai(nilai: &Nilai, spec: &str) -> Result<String, String> {
             }
             teks
         }
-        (Nilai::Bilangan(angka), Some('x')) => format!("{:x}", angka),
-        (Nilai::Bilangan(angka), Some('X')) => format!("{:X}", angka),
-        (Nilai::Bilangan(angka), Some('o')) => format!("{:o}", angka),
-        (Nilai::Bilangan(angka), Some('b')) => format!("{:b}", angka),
-        (Nilai::Bilangan(angka), Some('f') | Some('F')) => {
-            format!("{:.*}", presisi.unwrap_or(6), *angka as f64)
+        (Nilai::Bilangan(angka), Some('x')) => {
+            if alternatif {
+                format!("{angka:#x}")
+            } else {
+                format!("{angka:x}")
+            }
+        }
+        (Nilai::Bilangan(angka), Some('X')) => {
+            if alternatif {
+                format!("{angka:#X}")
+            } else {
+                format!("{angka:X}")
+            }
+        }
+        (Nilai::Bilangan(angka), Some('o')) => {
+            if alternatif {
+                format!("{angka:#o}")
+            } else {
+                format!("{angka:o}")
+            }
+        }
+        (Nilai::Bilangan(angka), Some('b')) => {
+            if alternatif {
+                format!("{angka:#b}")
+            } else {
+                format!("{angka:b}")
+            }
         }
         (Nilai::Pecahan(angka), Some('f') | Some('F') | None) => {
             format!("{:.*}", presisi.unwrap_or(6), angka)
@@ -335,9 +366,6 @@ pub fn format_nilai(nilai: &Nilai, spec: &str) -> Result<String, String> {
         }
         (Nilai::Pecahan(angka), Some('%')) => {
             format!("{:.*}%", presisi.unwrap_or(6), angka * 100.0)
-        }
-        (Nilai::Bilangan(angka), Some('f') | Some('F')) => {
-            format!("{:.*}", presisi.unwrap_or(6), *angka as f64)
         }
         (Nilai::Bilangan(angka), Some('e')) => {
             format!("{:.*e}", presisi.unwrap_or(6), *angka as f64)

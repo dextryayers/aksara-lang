@@ -1,0 +1,15 @@
+# Positional only
+
+fungsi bagi(a, b, /, *, bulatkan=salah):
+    hasil = a / b
+    jika bulatkan:
+        kembalikan bulat(hasil)
+    kembalikan hasil
+pastikan (bagi(10, 4)) == (2.5), "bagi(10, 4)"
+pastikan (bagi(10, 4, bulatkan=benar)) == (2), "bagi(10, 4, bulatkan=benar)"
+coba:
+    bagi(a=10, b=2)
+tangkap KesalahanTipe:
+    pastikan benar, "positional only"
+
+cetak("OK")

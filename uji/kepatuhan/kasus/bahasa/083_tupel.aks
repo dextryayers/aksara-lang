@@ -1,0 +1,13 @@
+# Tupel
+
+pastikan ((1, 2, 3)) == ((1, 2, 3)), "(1, 2, 3)"
+pastikan ((1,)) == ((1,)), "(1,)"
+pastikan (()) == (()), "()"
+pastikan (panjang((1, 2))) == (2), "panjang((1, 2))"
+pastikan ((1, 2)[1]) == (2), "(1, 2)[1]"
+pastikan ((1, 2) + (3,)) == ((1, 2, 3)), "(1, 2) + (3,)"
+pastikan ((1, 2) * 2) == ((1, 2, 1, 2)), "(1, 2) * 2"
+pastikan (2 dalam (1, 2)) == (benar), "2 dalam (1, 2)"
+pastikan (tupel([1, 2])) == ((1, 2)), "tupel([1, 2])"
+
+cetak("OK")

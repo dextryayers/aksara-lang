@@ -1,0 +1,13 @@
+# Rentang
+
+pastikan (daftar(rentang(5))) == ([0, 1, 2, 3, 4]), "daftar(rentang(5))"
+pastikan (daftar(rentang(2, 5))) == ([2, 3, 4]), "daftar(rentang(2, 5))"
+pastikan (daftar(rentang(0, 10, 3))) == ([0, 3, 6, 9]), "daftar(rentang(0, 10, 3))"
+pastikan (daftar(rentang(5, 0, -1))) == ([5, 4, 3, 2, 1]), "daftar(rentang(5, 0, -1))"
+pastikan (panjang(rentang(5))) == (5), "panjang(rentang(5))"
+pastikan (3 dalam rentang(5)) == (benar), "3 dalam rentang(5)"
+pastikan (5 dalam rentang(5)) == (salah), "5 dalam rentang(5)"
+pastikan (rentang(3)[1]) == (1), "rentang(3)[1]"
+pastikan (rentang(5)[1:3]) == (rentang(1, 3, 1)), "rentang(5)[1:3]"
+
+cetak("OK")

@@ -1,0 +1,16 @@
+# Kesalahan koleksi
+
+coba:
+    x = [1, 2][5]
+tangkap KesalahanIndeks:
+    pastikan benar, "indeks daftar"
+coba:
+    x = {"a": 1}["b"]
+tangkap KesalahanKunci:
+    pastikan benar, "kunci kamus"
+coba:
+    x = [].ambil()
+tangkap KesalahanIndeks:
+    pastikan benar, "pop kosong"
+
+cetak("OK")

@@ -389,7 +389,7 @@ pub struct Fungsi {
     pub dekorator: Vec<Nilai>,
     pub deklarasi_global: HashSet<String>,
     pub deklarasi_nonlokal: HashSet<String>,
-    pub anotasi_kembali: Option<String>,
+    pub anotasi_kembali: Option<Nilai>,
     pub berkas: String,
 }
 

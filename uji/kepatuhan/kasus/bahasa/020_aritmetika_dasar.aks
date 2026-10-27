@@ -1,0 +1,13 @@
+# Aritmetika dasar
+
+pastikan (2 + 3) == (5), "2 + 3"
+pastikan (7 - 10) == (-3), "7 - 10"
+pastikan (4 * 6) == (24), "4 * 6"
+pastikan (7 / 2) == (3.5), "7 / 2"
+pastikan (7 // 2) == (3), "7 // 2"
+pastikan (7 % 2) == (1), "7 % 2"
+pastikan (2 ** 8) == (256), "2 ** 8"
+pastikan (-2 ** 2) == (-4), "-2 ** 2"
+pastikan ((-2) ** 2) == (4), "(-2) ** 2"
+
+cetak("OK")

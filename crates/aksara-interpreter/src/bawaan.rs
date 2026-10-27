@@ -8,10 +8,10 @@ use std::fs::OpenOptions;
 use std::io::{Read, Write};
 use std::rc::Rc;
 
-use aksara_ast::{CmpOp, Span};
+use aksara_ast::CmpOp;
 
-use crate::format::{format_nilai, nilai_ke_repr, nilai_ke_teks, teks_kesalahan};
-use crate::interpreter::{kelas_penentu, Interpreter};
+use crate::format::{format_nilai, nilai_ke_teks, teks_kesalahan};
+use crate::interpreter::Interpreter;
 use crate::nilai::*;
 
 /// Memasang seluruh nama bawaan pada lingkungan bawaan.
@@ -740,8 +740,8 @@ fn bawaan_bilangan(
         1 => interpreter.ke_bilangan(&args[0], interpreter.span_aktif),
         2 => {
             let basis = interpreter.nilai_ke_i64(&args[1], interpreter.span_aktif)?;
-            if !(2..=36).contains(&basis) {
-                return galat_nilai(interpreter, "basis harus antara 2 dan 36");
+            if basis != 0 && !(2..=36).contains(&basis) {
+                return galat_nilai(interpreter, "basis harus 0 atau antara 2 dan 36");
             }
             let teks = teks_arg(interpreter, &args[0], "nilai")?;
             let bersih = teks.trim().replace('_', "");
@@ -749,7 +749,27 @@ fn bawaan_bilangan(
                 Some(sisa) => (true, sisa.to_string()),
                 None => (false, bersih),
             };
-            match i64::from_str_radix(&isi, basis as u32) {
+            let (basis_efektif, isi) = if basis == 0 {
+                let (awalan, sisa) = if let Some(sisa) = isi.strip_prefix("0x") {
+                    (16, sisa)
+                } else if let Some(sisa) = isi.strip_prefix("0X") {
+                    (16, sisa)
+                } else if let Some(sisa) = isi.strip_prefix("0o") {
+                    (8, sisa)
+                } else if let Some(sisa) = isi.strip_prefix("0O") {
+                    (8, sisa)
+                } else if let Some(sisa) = isi.strip_prefix("0b") {
+                    (2, sisa)
+                } else if let Some(sisa) = isi.strip_prefix("0B") {
+                    (2, sisa)
+                } else {
+                    (10, isi.as_str())
+                };
+                (awalan, sisa.to_string())
+            } else {
+                (basis, isi)
+            };
+            match i64::from_str_radix(&isi, basis_efektif as u32) {
                 Ok(nilai) => Ok(Nilai::Bilangan(if negatif { -nilai } else { nilai })),
                 Err(_) => galat_nilai(
                     interpreter,
@@ -997,10 +1017,12 @@ pub fn urutkan_nilai(
         while j > 0 {
             let a = kunci_nilai(interpreter, kunci, &daftar[j - 1])?;
             let b = kunci_nilai(interpreter, kunci, &daftar[j])?;
+            // Python hanya memakai `__lt__` untuk pengurutan. Urutan menurun
+            // dicapai dengan membalik operand, bukan dengan `__gt__`.
             let lebih = if terbalik {
                 interpreter.bandingkan(CmpOp::Lt, &a, &b, interpreter.span_aktif)?
             } else {
-                interpreter.bandingkan(CmpOp::Gt, &a, &b, interpreter.span_aktif)?
+                interpreter.bandingkan(CmpOp::Lt, &b, &a, interpreter.span_aktif)?
             };
             if !lebih {
                 break;

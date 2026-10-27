@@ -1,0 +1,13 @@
+# Pengurutan daftar
+
+d = [3, 1, 2]
+d.urutkan(reverse=benar)
+pastikan (d) == ([3, 2, 1]), "d"
+d.urutkan()
+pastikan (d) == ([1, 2, 3]), "d"
+pastikan (sorted([3, 1, 2])) == ([1, 2, 3]), "sorted([3, 1, 2])"
+pastikan (sorted([3, 1, 2], reverse=benar)) == ([3, 2, 1]), "sorted([3, 1, 2], reverse=benar)"
+pastikan (sorted(["bb", "a", "ccc"], key=lambda x: panjang(x))) == (['a', 'bb', 'ccc']), "sorted([\"bb\", \"a\", \"ccc\"], key=lambda x: panjang(x))"
+pastikan (daftar(reversed([1, 2, 3]))) == ([3, 2, 1]), "daftar(reversed([1, 2, 3]))"
+
+cetak("OK")

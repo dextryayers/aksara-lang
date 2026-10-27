@@ -1,0 +1,10 @@
+# Jenis nilai
+
+pastikan (jenis([]).__nama__) == ("Daftar"), "jenis([]).__nama__"
+pastikan (jenis(()).__nama__) == ("Tupel"), "jenis(()).__nama__"
+pastikan (jenis({}).__nama__) == ("Kamus"), "jenis({}).__nama__"
+pastikan (jenis(susunan()).__nama__) == ("Himpunan"), "jenis(susunan()).__nama__"
+pastikan (jenis(rentang(3)).__nama__) == ("Rentang"), "jenis(rentang(3)).__nama__"
+pastikan (jenis(lambda x: x).__nama__) == ("Fungsi"), "jenis(lambda x: x).__nama__"
+
+cetak("OK")

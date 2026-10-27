@@ -1,0 +1,11 @@
+# Representasi teks
+
+pastikan (repr("a")) == ("'a'"), "repr(\"a\")"
+pastikan (repr("a\nb")) == ("'a\\nb'"), "repr(\"a\\nb\")"
+pastikan (repr("it's")) == ("\"it's\""), "repr(\"it's\")"
+pastikan (teks(42)) == ("42"), "teks(42)"
+pastikan (teks(3.5)) == ("3.5"), "teks(3.5)"
+pastikan (teks(benar)) == ("benar"), "teks(benar)"
+pastikan (teks(kosong)) == ("kosong"), "teks(kosong)"
+
+cetak("OK")

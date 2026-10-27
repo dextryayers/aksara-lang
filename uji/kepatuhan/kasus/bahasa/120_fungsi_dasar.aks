@@ -1,0 +1,8 @@
+# Fungsi dasar
+
+fungsi tambah(a, b):
+    kembalikan a + b
+pastikan (tambah(2, 3)) == (5), "tambah(2, 3)"
+pastikan (tambah(b=3, a=2)) == (5), "tambah(b=3, a=2)"
+
+cetak("OK")

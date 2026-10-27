@@ -1,0 +1,13 @@
+# Pernyataan hapus
+
+nilai = 10
+hapus nilai
+pastikan ("nilai" dalam globals()) == (salah), "\"nilai\" dalam globals()"
+d = [1, 2, 3]
+hapus d[1]
+pastikan (d) == ([1, 3]), "d"
+k = {"a": 1, "b": 2}
+hapus k["a"]
+pastikan (k) == ({'b': 2}), "k"
+
+cetak("OK")

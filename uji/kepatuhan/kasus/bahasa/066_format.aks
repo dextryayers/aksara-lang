@@ -1,0 +1,12 @@
+# Fungsi format
+
+pastikan (format(42, "05d")) == ("00042"), "format(42, \"05d\")"
+pastikan (format(3.14159, ".2f")) == ("3.14"), "format(3.14159, \".2f\")"
+pastikan (format("x", ">5")) == ("    x"), "format(\"x\", \">5\")"
+pastikan (format("x", "<5")) == ("x    "), "format(\"x\", \"<5\")"
+pastikan (format("x", "^5")) == ("  x  "), "format(\"x\", \"^5\")"
+pastikan (format(255, "x")) == ("ff"), "format(255, \"x\")"
+pastikan (format(255, "b")) == ("11111111"), "format(255, \"b\")"
+pastikan (format(255, "o")) == ("377"), "format(255, \"o\")"
+
+cetak("OK")

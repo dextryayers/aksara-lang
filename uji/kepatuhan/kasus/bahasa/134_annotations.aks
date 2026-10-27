@@ -1,0 +1,9 @@
+# Anotasi
+
+fungsi tambah(a: Bilangan, b: Bilangan = 0) -> Bilangan:
+    kembalikan a + b
+pastikan (tambah(1, 2)) == (3), "tambah(1, 2)"
+pastikan (tambah.__anotasi__['a'].__nama__) == ("Bilangan"), "tambah.__anotasi__['a'].__nama__"
+pastikan (tambah.__anotasi__['kembali'].__nama__) == ("Bilangan"), "tambah.__anotasi__['kembali'].__nama__"
+
+cetak("OK")

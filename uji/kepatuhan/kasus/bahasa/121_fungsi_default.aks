@@ -1,0 +1,9 @@
+# Nilai default
+
+fungsi sapa(nama, sapaan="Halo"):
+    kembalikan f"{sapaan}, {nama}"
+pastikan (sapa("Ani")) == ("Halo, Ani"), "sapa(\"Ani\")"
+pastikan (sapa("Ani", "Hai")) == ("Hai, Ani"), "sapa(\"Ani\", \"Hai\")"
+pastikan (sapa("Ani", sapaan="Selamat")) == ("Selamat, Ani"), "sapa(\"Ani\", sapaan=\"Selamat\")"
+
+cetak("OK")

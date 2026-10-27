@@ -1,0 +1,9 @@
+# Aritmetika negatif
+
+pastikan (-7 // 2) == (-4), "-7 // 2"
+pastikan (7 // -2) == (-4), "7 // -2"
+pastikan (-7 % 3) == (2), "-7 % 3"
+pastikan (7 % -3) == (-2), "7 % -3"
+pastikan (-7 / 2) == (-3.5), "-7 / 2"
+
+cetak("OK")

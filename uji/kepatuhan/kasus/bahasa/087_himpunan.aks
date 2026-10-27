@@ -1,0 +1,18 @@
+# Himpunan
+
+h = {1, 2, 3}
+pastikan (panjang(h)) == (3), "panjang(h)"
+pastikan (2 dalam h) == (benar), "2 dalam h"
+h.tambah(4)
+pastikan (4 dalam h) == (benar), "4 dalam h"
+h.buang(1)
+pastikan (1 dalam h) == (salah), "1 dalam h"
+pastikan (h | {5}) == ({2, 3, 4, 5}), "h | {5}"
+pastikan (h & {2, 9}) == ({2}), "h & {2, 9}"
+pastikan (h - {2}) == ({3, 4}), "h - {2}"
+pastikan (h ^ {3, 9}) == ({2, 4, 9}), "h ^ {3, 9}"
+pastikan ({1, 2}.adalah_subhimpunan({1, 2, 3})) == (benar), "{1, 2}.adalah_subhimpunan({1, 2, 3})"
+pastikan ({1, 2, 3}.adalah_superhimpunan({1, 2})) == (benar), "{1, 2, 3}.adalah_superhimpunan({1, 2})"
+pastikan ({1}.terpisah({2, 3})) == (benar), "{1}.terpisah({2, 3})"
+
+cetak("OK")

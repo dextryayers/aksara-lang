@@ -1,0 +1,18 @@
+# Kamus
+
+d = {"a": 1, "b": 2}
+pastikan (d) == ({'a': 1, 'b': 2}), "d"
+pastikan (d["a"]) == (1), "d[\"a\"]"
+pastikan (panjang(d)) == (2), "panjang(d)"
+pastikan ("a" dalam d) == (benar), "\"a\" dalam d"
+d["c"] = 3
+pastikan (d["c"]) == (3), "d[\"c\"]"
+pastikan (d.get("a")) == (1), "d.get(\"a\")"
+pastikan (d.get("z", 99)) == (99), "d.get(\"z\", 99)"
+pastikan (d.setdefault("d", 4)) == (4), "d.setdefault(\"d\", 4)"
+pastikan (d["d"]) == (4), "d[\"d\"]"
+pastikan (d.keys()) == (['a', 'b', 'c', 'd']), "d.keys()"
+pastikan (d.values()) == ([1, 2, 3, 4]), "d.values()"
+pastikan (d.items()) == ([('a', 1), ('b', 2), ('c', 3), ('d', 4)]), "d.items()"
+
+cetak("OK")

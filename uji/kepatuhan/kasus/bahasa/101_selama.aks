@@ -1,0 +1,11 @@
+# Perulangan selama
+
+i = 0
+total = 0
+selama i < 5:
+    total += i
+    i += 1
+pastikan (total) == (10), "total"
+pastikan (i) == (5), "i"
+
+cetak("OK")

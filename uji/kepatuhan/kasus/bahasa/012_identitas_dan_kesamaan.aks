@@ -1,0 +1,11 @@
+# Identitas dan kesamaan
+
+pastikan (1 == 1), "1 == 1"
+pastikan (1 == 1.0), "1 == 1.0"
+pastikan (1 != 2), "1 != 2"
+pastikan ("a" == "a"), "\"a\" == \"a\""
+pastikan ([1, 2] == [1, 2]), "[1, 2] == [1, 2]"
+pastikan ({1: 2} == {1: 2}), "{1: 2} == {1: 2}"
+pastikan ((1, 2) == (1, 2)), "(1, 2) == (1, 2)"
+
+cetak("OK")

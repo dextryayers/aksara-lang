@@ -1,0 +1,10 @@
+# Lambda
+
+kali = lambda x, y=2: x * y
+pastikan (kali(3)) == (6), "kali(3)"
+pastikan (kali(3, 4)) == (12), "kali(3, 4)"
+identitas = lambda x: x
+pastikan (identitas(5)) == (5), "identitas(5)"
+pastikan ((lambda: 42)()) == (42), "(lambda: 42)()"
+
+cetak("OK")

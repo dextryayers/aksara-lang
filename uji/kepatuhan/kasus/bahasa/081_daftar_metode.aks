@@ -1,0 +1,26 @@
+# Metode daftar
+
+d = [3, 1, 2]
+d.tambah(4)
+pastikan (d) == ([3, 1, 2, 4]), "d"
+d.sisip(0, 0)
+pastikan (d) == ([0, 3, 1, 2, 4]), "d"
+d.remove(3)
+pastikan (d) == ([0, 1, 2, 4]), "d"
+pastikan (d.ambil()) == (4), "d.ambil()"
+pastikan (d) == ([0, 1, 2]), "d"
+d.perluas([5, 6])
+pastikan (d) == ([0, 1, 2, 5, 6]), "d"
+d.urutkan()
+pastikan (d) == ([0, 1, 2, 5, 6]), "d"
+d.balik()
+pastikan (d) == ([6, 5, 2, 1, 0]), "d"
+pastikan (d.hitung(2)) == (1), "d.hitung(2)"
+pastikan (d.indeks(5)) == (1), "d.indeks(5)"
+s = d.salin()
+s.tambah(99)
+pastikan (d) == ([6, 5, 2, 1, 0]), "d"
+d.bersihkan()
+pastikan (d) == ([]), "d"
+
+cetak("OK")

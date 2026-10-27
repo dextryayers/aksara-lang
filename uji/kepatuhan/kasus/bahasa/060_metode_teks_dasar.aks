@@ -1,0 +1,13 @@
+# Metode teks dasar
+
+pastikan ("  halo  ".strip()) == ("halo"), "\"  halo  \".strip()"
+pastikan ("  halo  ".lstrip()) == ("halo  "), "\"  halo  \".lstrip()"
+pastikan ("  halo  ".rstrip()) == ("  halo"), "\"  halo  \".rstrip()"
+pastikan ("halo".huruf_besar()) == ("HALO"), "\"halo\".huruf_besar()"
+pastikan ("HALO".huruf_kecil()) == ("halo"), "\"HALO\".huruf_kecil()"
+pastikan ("halo dunia".judul()) == ("Halo Dunia"), "\"halo dunia\".judul()"
+pastikan ("halo dunia".kapital()) == ("Halo dunia"), "\"halo dunia\".kapital()"
+pastikan ("AbC".swapcase()) == ("aBc"), "\"AbC\".swapcase()"
+pastikan ("AbC".casefold()) == ("abc"), "\"AbC\".casefold()"
+
+cetak("OK")

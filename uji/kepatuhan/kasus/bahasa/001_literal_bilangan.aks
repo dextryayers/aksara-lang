@@ -1,0 +1,11 @@
+# Literal bilangan
+
+pastikan (42) == (42), "42"
+pastikan (-17) == (-17), "-17"
+pastikan (0xFF) == (255), "0xFF"
+pastikan (0b1010) == (10), "0b1010"
+pastikan (0o755) == (493), "0o755"
+pastikan (1_000_000) == (1000000), "1_000_000"
+pastikan (jenis(42).__nama__) == ("Bilangan"), "jenis(42).__nama__"
+
+cetak("OK")

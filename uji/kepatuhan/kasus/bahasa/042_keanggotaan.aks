@@ -1,0 +1,11 @@
+# Keanggotaan
+
+pastikan (2 dalam [1, 2, 3]), "2 dalam [1, 2, 3]"
+pastikan (4 bukan dalam [1, 2, 3]), "4 bukan dalam [1, 2, 3]"
+pastikan ("a" dalam "halo"), "\"a\" dalam \"halo\""
+pastikan ("z" bukan dalam "halo"), "\"z\" bukan dalam \"halo\""
+pastikan ("a" dalam {"a": 1}), "\"a\" dalam {\"a\": 1}"
+pastikan (2 dalam {1, 2, 3}), "2 dalam {1, 2, 3}"
+pastikan (3 dalam rentang(5)), "3 dalam rentang(5)"
+
+cetak("OK")

@@ -1,0 +1,14 @@
+# F-string
+
+nama = "Ani"
+umur = 25
+pastikan (f"Halo, {nama}!") == ("Halo, Ani!"), "f\"Halo, {nama}!\""
+pastikan (f"{umur + 1}") == ("26"), "f\"{umur + 1}\""
+pastikan (f"{umur:03d}") == ("025"), "f\"{umur:03d}\""
+pastikan (f"{3.14159:.2f}") == ("3.14"), "f\"{3.14159:.2f}\""
+pastikan (f"{255:x}") == ("ff"), "f\"{255:x}\""
+pastikan (f"{255:#x}") == ("0xff"), "f\"{255:#x}\""
+pastikan (f"{nama!r}") == ("'Ani'"), "f\"{nama!r}\""
+pastikan (f"{{literal}}") == ("{literal}"), "f\"{{literal}}\""
+
+cetak("OK")

@@ -1,0 +1,7 @@
+# Penggabungan teks
+
+nilai = "a" "b" "c"
+pastikan (nilai) == ("abc"), "nilai"
+pastikan ("x" + "y" + "z") == ("xyz"), "\"x\" + \"y\" + \"z\""
+
+cetak("OK")

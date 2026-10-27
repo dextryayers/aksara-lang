@@ -1,0 +1,11 @@
+# Unicode
+
+pastikan (ord("A")) == (65), "ord(\"A\")"
+pastikan (chr(65)) == ("A"), "chr(65)"
+pastikan (ord("é")) == (233), "ord(\"é\")"
+pastikan (chr(233)) == ("é"), "chr(233)"
+pastikan (panjang("日本語")) == (3), "panjang(\"日本語\")"
+pastikan ("日本語"[1]) == ("本"), "\"日本語\"[1]"
+pastikan ("aé日".encode().decode()) == ("aé日"), "\"aé日\".encode().decode()"
+
+cetak("OK")

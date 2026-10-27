@@ -1,0 +1,8 @@
+# Untuk sebanyak
+
+hasil = []
+untuk i sebanyak 4:
+    hasil.tambah(i)
+pastikan (hasil) == ([0, 1, 2, 3]), "hasil"
+
+cetak("OK")

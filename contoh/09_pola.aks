@@ -39,7 +39,7 @@ fungsi jelaskan(nilai):
             kembalikan f"titik dengan kata kunci ({px}, {py})"
         kasus Warna.MERAH:
             kembalikan "warna merah"
-        kasus x jika isinstance(x, bilangan) dan x > 100:
+        kasus x jika isinstance(x, Bilangan) dan x > 100:
             kembalikan f"bilangan besar: {x}"
         kasus _:
             kembalikan "tidak dikenal"

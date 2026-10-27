@@ -1,0 +1,11 @@
+# Literal teks
+
+pastikan ("halo") == ("halo"), "\"halo\""
+pastikan ('halo') == ("halo"), "'halo'"
+pastikan ("a" + "b") == ("ab"), "\"a\" + \"b\""
+pastikan ("ha" * 3) == ("hahaha"), "\"ha\" * 3"
+pastikan (panjang("halo")) == (4), "panjang(\"halo\")"
+pastikan ("halo"[0]) == ("h"), "\"halo\"[0]"
+pastikan ("halo"[-1]) == ("o"), "\"halo\"[-1]"
+
+cetak("OK")

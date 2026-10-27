@@ -1,0 +1,10 @@
+# Operator antara
+
+pastikan (5 antara 1 dan 10), "5 antara 1 dan 10"
+pastikan (1 antara 1 dan 10), "1 antara 1 dan 10"
+pastikan (10 antara 1 dan 10), "10 antara 1 dan 10"
+pastikan (bukan (0 antara 1 dan 10)), "bukan (0 antara 1 dan 10)"
+pastikan (0 bukan antara 1 dan 10), "0 bukan antara 1 dan 10"
+pastikan ("b" antara "a" dan "c"), "\"b\" antara \"a\" dan \"c\""
+
+cetak("OK")

@@ -8,7 +8,7 @@ use aksara_lexer::Lexer;
 use aksara_parser::parse_tokens;
 
 use crate::bawaan;
-use crate::format::{format_nilai, nilai_ke_repr, nilai_ke_teks};
+use crate::format::{format_nilai, nilai_ke_teks};
 use crate::nilai::*;
 use crate::pola;
 
@@ -1641,10 +1641,7 @@ impl Interpreter {
         let is_generator = mengandung_hasil(&def.body);
         let doc = ambil_dokumen(&def.body);
         let anotasi_kembali = match &def.returns {
-            Some(expr) => self
-                .eval(expr, env)
-                .ok()
-                .map(|nilai| nilai_ke_teks(&nilai)),
+            Some(expr) => self.eval(expr, env).ok(),
             None => None,
         };
         let fungsi = Rc::new(Fungsi {
@@ -1841,13 +1838,6 @@ impl Interpreter {
                 span,
             )),
         }
-    }
-
-    fn kelas_dari_nilai(&mut self, _fungsi: &Rc<Fungsi>) -> Hasil<Rc<Kelas>> {
-        Err(Lemparan::baru(
-            self.kesalahan_baru("KesalahanRuntime", "konteks kelas tidak tersedia"),
-            Span::empty(0),
-        ))
     }
 
     pub fn panggil_fungsi(

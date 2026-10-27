@@ -1,0 +1,8 @@
+# Teks multibaris
+
+teks = """baris satu
+baris dua"""
+pastikan (panjang(teks.pisah_baris())) == (2), "panjang(teks.pisah_baris())"
+pastikan (teks.pisah_baris()[1]) == ("baris dua"), "teks.pisah_baris()[1]"
+
+cetak("OK")

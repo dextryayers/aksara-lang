@@ -40,3 +40,7 @@ cetak("Simbol publik:", __semua__)
 # Impor relatif dalam paket Aksara
 dari .alat impor bantuan
 dari ..paket impor fungsi_umum
+
+cetak(bantuan("Ani"))
+cetak(fungsi_umum.sapa("Budi"))
+cetak("Jumlah paket:", fungsi_umum.jumlahkan(2, 3))

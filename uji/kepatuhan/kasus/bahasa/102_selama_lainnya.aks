@@ -1,0 +1,15 @@
+# Selama dengan lainnya
+
+i = 0
+selama i < 3:
+    i += 1
+lainnya:
+    selesai = benar
+pastikan (selesai) == (benar), "selesai"
+selama benar:
+    hentikan
+lainnya:
+    tidak_jalan = benar
+pastikan ("tidak_jalan" dalam globals()) == (salah), "\"tidak_jalan\" dalam globals()"
+
+cetak("OK")

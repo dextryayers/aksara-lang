@@ -1,0 +1,11 @@
+# Perulangan bersarang
+
+hasil = []
+untuk i dalam rentang(3):
+    untuk j dalam rentang(2):
+        hasil.tambah((i, j))
+pastikan (panjang(hasil)) == (6), "panjang(hasil)"
+pastikan (hasil[0]) == ((0, 0)), "hasil[0]"
+pastikan (hasil[-1]) == ((2, 1)), "hasil[-1]"
+
+cetak("OK")

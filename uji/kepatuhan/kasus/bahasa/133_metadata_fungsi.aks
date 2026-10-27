@@ -1,0 +1,11 @@
+# Metadata fungsi
+
+fungsi contoh(a, b=2):
+    """Dokumentasi contoh."""
+    kembalikan a + b
+pastikan (contoh.__nama__) == ("contoh"), "contoh.__nama__"
+pastikan (contoh.__dok__) == ("Dokumentasi contoh."), "contoh.__dok__"
+pastikan (daftar(contoh.__parameter__)) == (['a', 'b']), "daftar(contoh.__parameter__)"
+pastikan (contoh.__bawaan__['b']) == (2), "contoh.__bawaan__['b']"
+
+cetak("OK")

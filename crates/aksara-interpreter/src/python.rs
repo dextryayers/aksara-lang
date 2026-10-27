@@ -295,21 +295,21 @@ fn dari_python(obj: &Bound<'_, PyAny>, kedalaman: usize) -> Nilai {
         }
         return Nilai::Python(daftarkan(obj));
     }
-    if let Ok(daftar) = obj.downcast::<PyList>() {
+    if let Ok(daftar) = obj.downcast_exact::<PyList>() {
         let mut isi = Vec::with_capacity(daftar.len());
         for item in daftar.iter() {
             isi.push(dari_python(&item, kedalaman + 1));
         }
         return Nilai::daftar(isi);
     }
-    if let Ok(tupel) = obj.downcast::<PyTuple>() {
+    if let Ok(tupel) = obj.downcast_exact::<PyTuple>() {
         let mut isi = Vec::with_capacity(tupel.len());
         for item in tupel.iter() {
             isi.push(dari_python(&item, kedalaman + 1));
         }
         return Nilai::tupel(isi);
     }
-    if let Ok(kamus) = obj.downcast::<PyDict>() {
+    if let Ok(kamus) = obj.downcast_exact::<PyDict>() {
         let mut isi = Vec::with_capacity(kamus.len());
         for (kunci, nilai) in kamus.iter() {
             isi.push((
@@ -319,14 +319,14 @@ fn dari_python(obj: &Bound<'_, PyAny>, kedalaman: usize) -> Nilai {
         }
         return Nilai::kamus(isi);
     }
-    if let Ok(himpunan) = obj.downcast::<PySet>() {
+    if let Ok(himpunan) = obj.downcast_exact::<PySet>() {
         let mut isi = Vec::with_capacity(himpunan.len());
         for item in himpunan.iter() {
             isi.push(dari_python(&item, kedalaman + 1));
         }
         return Nilai::himpunan(isi);
     }
-    if let Ok(himpunan) = obj.downcast::<PyFrozenSet>() {
+    if let Ok(himpunan) = obj.downcast_exact::<PyFrozenSet>() {
         let mut isi = Vec::with_capacity(himpunan.len());
         for item in himpunan.iter() {
             isi.push(dari_python(&item, kedalaman + 1));
@@ -785,7 +785,7 @@ pub fn kamus_pasangan(nilai: &Nilai) -> Hasil<Vec<(Nilai, Nilai)>> {
     let indeks = objek(nilai, Span::empty(0), "kamus")?;
     jalankan_py(Span::empty(0), |py| {
         let objek = objek_python(py, indeks)?;
-        if let Ok(kamus) = objek.downcast::<PyDict>() {
+        if let Ok(kamus) = objek.downcast_exact::<PyDict>() {
             let mut hasil = Vec::with_capacity(kamus.len());
             for (kunci, nilai) in kamus.iter() {
                 hasil.push((dari_python(&kunci, 0), dari_python(&nilai, 0)));
