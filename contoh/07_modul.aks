@@ -1,0 +1,42 @@
+# 07_modul.aks
+# Impor modul Aksara dan modul Python melalui jembatan.
+
+impor matematika
+impor matematika sebagai mtk
+dari matematika impor akar, pangkat
+dari matematika impor *
+
+impor python "os" sebagai os
+impor python "json" sebagai json
+dari python "os.path" impor join sebagai gabung_jalur
+dari python "json" impor loads, dumps
+
+cetak("Akar 16:", matematika.akar(16))
+cetak("Pangkat:", mtk.pangkat(2, 10))
+cetak("Akar langsung:", akar(81))
+cetak("Pangkat langsung:", pangkat(3, 4))
+
+jalur = gabung_jalur("folder", "berkas.txt")
+cetak("Jalur:", jalur)
+
+pengguna = os.environ.get("USER", "pengguna")
+cetak("Pengguna:", pengguna)
+
+data = {"nama": "Ani", "umur": 25}
+teks_json = dumps(data, ensure_ascii=salah)
+cetak("JSON:", teks_json)
+cetak("Kembali:", loads(teks_json))
+
+cetak("Versi Python:", os.sys.version)
+cetak("Direktori kerja:", os.getcwd())
+
+# Metadata modul
+cetak("Nama modul:", __nama__)
+cetak("Berkas modul:", __berkas__)
+cetak("Paket modul:", __paket__)
+cetak("Dokumentasi modul:", __dok__)
+cetak("Simbol publik:", __semua__)
+
+# Impor relatif dalam paket Aksara
+dari .alat impor bantuan
+dari ..paket impor fungsi_umum

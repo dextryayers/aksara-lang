@@ -16,14 +16,27 @@ impl Parser {
 
     fn parse_pattern_inner(&mut self) -> Pattern {
         let first = self.parse_closed_pattern();
-        if !self.at(&TokenKind::Pipe) {
-            return first;
+        let mut pattern = if !self.at(&TokenKind::Pipe) {
+            first
+        } else {
+            let mut patterns = vec![first];
+            while self.eat(&TokenKind::Pipe) {
+                patterns.push(self.parse_closed_pattern());
+            }
+            Pattern::Or(patterns)
+        };
+
+        if self.eat(&TokenKind::Sebagai) {
+            let name = self
+                .expect_name("nama pengikat pola `sebagai`")
+                .map(|(name, _)| name)
+                .unwrap_or_else(|| "_".to_string());
+            pattern = Pattern::As {
+                pattern: Box::new(pattern),
+                name,
+            };
         }
-        let mut patterns = vec![first];
-        while self.eat(&TokenKind::Pipe) {
-            patterns.push(self.parse_closed_pattern());
-        }
-        Pattern::Or(patterns)
+        pattern
     }
 
     fn parse_closed_pattern(&mut self) -> Pattern {

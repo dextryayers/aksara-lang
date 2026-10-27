@@ -1,0 +1,97 @@
+# 06_eksepsi.aks
+# Eksepsi, klaim, pembersihan, dan context manager.
+
+kelas KesalahanSaldo(KesalahanNilai):
+    """Kesalahan khusus untuk saldo tidak cukup."""
+
+    fungsi __init__(diri, saldo, jumlah):
+        pesan = f"Saldo {saldo} tidak cukup untuk mengambil {jumlah}"
+        induk().__init__(pesan)
+        diri.saldo = saldo
+        diri.jumlah = jumlah
+
+
+kelas Rekening:
+    """Rekening dengan validasi dan context manager."""
+
+    fungsi __init__(diri, saldo=0):
+        diri.saldo = saldo
+        diri.terbuka = benar
+
+    fungsi ambil(diri, jumlah):
+        jika jumlah <= 0:
+            lempar KesalahanNilai("jumlah harus positif")
+        jika jumlah > diri.saldo:
+            lempar KesalahanSaldo(diri.saldo, jumlah) dari kosong
+        diri.saldo -= jumlah
+        kembalikan diri.saldo
+
+    fungsi __enter__(diri):
+        diri.terbuka = benar
+        kembalikan diri
+
+    fungsi __exit__(diri, jenis_kesalahan, nilai, jejak):
+        diri.terbuka = salah
+        cetak("Rekening ditutup")
+        kembalikan salah
+
+
+rekening = Rekening(100)
+
+coba:
+    cetak("Saldo awal:", rekening.saldo)
+    rekening.ambil(30)
+    cetak("Saldo setelah ambil:", rekening.saldo)
+tangkap KesalahanSaldo sebagai kesalahan:
+    cetak("Kesalahan saldo:", kesalahan)
+    cetak("Kurang:", kesalahan.jumlah - kesalahan.saldo)
+tangkap KesalahanNilai sebagai kesalahan:
+    cetak("Kesalahan nilai:", kesalahan)
+lainnya:
+    cetak("Tidak ada kesalahan")
+akhirnya:
+    cetak("Blok coba selesai")
+
+coba:
+    rekening.ambil(1000)
+tangkap (KesalahanSaldo, KesalahanNilai) sebagai kesalahan:
+    cetak("Tertangkap:", jenis(kesalahan).__nama__)
+
+coba:
+    rekening.ambil(-5)
+tangkap KesalahanNilai:
+    cetak("Jumlah negatif ditolak")
+
+coba:
+    cetak("Operasi berhasil")
+lainnya:
+    cetak("Cabang lainnya berjalan")
+akhirnya:
+    cetak("Pembersihan berjalan")
+
+# Klaim dan hapus
+nilai = 10
+pastikan nilai > 0, "nilai harus positif"
+cetak("Klaim lolos")
+
+sementara = [1, 2, 3]
+hapus sementara[0]
+hapus sementara
+cetak("Setelah hapus:", "sementara" dalam globals())
+
+# Context manager
+dengan Rekening(50) sebagai aktif:
+    aktif.ambil(20)
+    cetak("Saldo di dalam konteks:", aktif.saldo)
+
+cetak("Saldo di luar konteks:", aktif.saldo)
+
+# Lempar ulang
+coba:
+    coba:
+        lempar KesalahanNilai("asli")
+    tangkap KesalahanNilai:
+        cetak("Menangkap lalu melempar ulang")
+        lempar
+tangkap KesalahanNilai sebagai kesalahan:
+    cetak("Ditangkap di luar:", kesalahan)

@@ -1,0 +1,22 @@
+# Semua bentuk impor.
+impor a
+impor a.b.c
+impor a.b sebagai c
+impor a, b.c sebagai d
+
+dari a impor b
+dari a impor b, c sebagai d
+dari a impor *
+dari a impor (b, c)
+dari a impor (b, c,)
+
+dari . impor a
+dari .. impor a
+dari ... impor a
+dari .a.b impor c
+
+impor python "os" sebagai os
+impor python "os.path"
+dari python "os.path" impor join
+dari python "os.path" impor join sebagai gabung
+dari python "os.path" impor *

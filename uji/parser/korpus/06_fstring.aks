@@ -1,0 +1,23 @@
+# F-string, format spec, conversion, dan penggabungan teks.
+nama = "Ani"
+lebar = 8
+nilai = 3.14159
+
+a = f"{nama}"
+b = f"{nama!s}"
+c = f"{nama!r}"
+d = f"{nama!a}"
+e = f"{nilai:.2f}"
+f = f"{nilai:0{lebar}.2f}"
+g = f"{nama:>{lebar}}"
+h = f"{{literal}}"
+i = f"{nama + '!'}"
+j = f"{ {'k': 1}['k'] }"
+k = f"{nama}"
+l = f"{f'{nama}'}"
+m = f"{nama}" f"{lebar}"
+n = f"""{nama}
+baris kedua"""
+o = rf"{nama}\n"
+p = fr"{nama!r}"
+q = "a" "b" f"{nama}" 'c'

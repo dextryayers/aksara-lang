@@ -1,0 +1,10 @@
+# Identifier Unicode dan teks Unicode.
+nama_ä = "Ani"
+π = 3.14
+hasil = π * 2
+cetak(f"Nama: {nama_ä}, hasil: {hasil}")
+variabel_日本 = 1
+fungsi halo_dunia():
+    kembalikan "halo"
+kelas Kendaraan_Baru:
+    lewati

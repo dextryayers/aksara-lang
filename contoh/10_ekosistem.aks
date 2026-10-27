@@ -1,0 +1,79 @@
+# 10_ekosistem.aks
+# Jembatan Python: pustaka standar dan pustaka pihak ketiga.
+
+impor python "json" sebagai json
+impor python "math" sebagai math
+impor python "os" sebagai os
+impor python "sys" sebagai sys
+impor python "datetime" sebagai datetime
+impor python "pathlib" sebagai pathlib
+impor python "collections" sebagai collections
+impor python "functools" sebagai functools
+impor python "itertools" sebagai itertools
+impor python "numpy" sebagai np
+impor python "pandas" sebagai pd
+impor python "matplotlib.pyplot" sebagai plt
+impor python "cv2" sebagai cv2
+
+# Pustaka standar
+cetak("Akar:", math.sqrt(144))
+cetak("Faktorial:", math.factorial(6))
+cetak("GCD:", math.gcd(24, 36))
+cetak("Versi Python:", sys.version_info)
+cetak("Rumah:", os.environ.get("HOME", "/"))
+cetak("Waktu:", datetime.datetime.now().isoformat())
+cetak("Jalur:", pathlib.Path("contoh/10_ekosistem.aks").resolve())
+cetak("Ada:", pathlib.Path("contoh").exists())
+
+penghitung = collections.Counter("abrakadabra")
+cetak("Paling umum:", penghitung.most_common(3))
+
+jumlah = functools.reduce(lambda a, b: a + b, [1, 2, 3, 4, 5], 0)
+cetak("Jumlah reduce:", jumlah)
+
+gabungan = daftar(itertools.chain([1, 2], [3, 4], [5]))
+cetak("Chain:", gabungan)
+
+teks_json = json.dumps({"nama": "Ani", "aktif": benar}, ensure_ascii=salah)
+cetak("JSON:", teks_json)
+cetak("Kembali:", json.loads(teks_json))
+
+# NumPy: operasi vektor dan matriks
+vektor = np.array([1, 2, 3, 4])
+cetak("Vektor:", vektor)
+cetak("Bentuk:", vektor.shape)
+cetak("Rata-rata:", np.mean(vektor))
+cetak("Norma:", np.linalg.norm(vektor))
+cetak("Dot:", np.dot(vektor, vektor))
+
+matriks = np.array([[1, 2], [3, 4]])
+cetak("Matriks:")
+cetak(matriks)
+cetak("Transpose:")
+cetak(matriks.T)
+cetak("Kali matriks:")
+cetak(matriks @ matriks)
+
+rng = np.random.default_rng(42)
+contoh_acak = rng.normal(size=5)
+cetak("Acak:", contoh_acak)
+
+# Pandas: tabel dan agregasi
+tabel = pd.DataFrame({
+    "nama": ["Ani", "Budi", "Citra"],
+    "nilai": [85, 90, 78],
+})
+cetak(tabel)
+cetak("Rata-rata nilai:", tabel["nilai"].mean())
+cetak("Nilai maksimum:", tabel["nilai"].max())
+
+seri = pd.Series([1, 2, 3, 4])
+cetak("Jumlah seri:", seri.sum())
+
+# Matplotlib dan OpenCV: objek Python dipakai dengan nama aslinya
+plt.plot([1, 2, 3], [1, 4, 9])
+plt.title("Contoh Grafik")
+plt.show()
+
+gambar = cv2.imread("contoh/gambar.png")
+cetak("Bentuk gambar:", gambar.shape jika gambar != kosong lainnya kosong)

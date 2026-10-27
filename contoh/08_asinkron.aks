@@ -1,0 +1,64 @@
+# 08_asinkron.aks
+# Fungsi asinkron, tunggu, asinkron untuk, asinkron dengan, dan generator asinkron.
+
+impor alur_asinkron
+impor python "asyncio" sebagai asyncio
+
+
+asinkron fungsi ambil_data(nama):
+    """Simulasi pengambilan data dari jaringan."""
+    cetak("Mulai mengambil", nama)
+    tunggu asyncio.sleep(0.05)
+    kembalikan f"data-{nama}"
+
+
+asinkron fungsi ambil_banyak(nama_daftar):
+    """Mengambil beberapa data secara berurutan."""
+    hasil = []
+    untuk nama dalam nama_daftar:
+        data = tunggu ambil_data(nama)
+        hasil.tambah(data)
+    kembalikan hasil
+
+
+asinkron fungsi baca_aliran(aliran):
+    """Contoh asinkron untuk."""
+    hasil = []
+    asinkron untuk item dalam aliran:
+        hasil.tambah(item)
+    kembalikan hasil
+
+
+asinkron fungsi pakai_konteks(konteks):
+    """Contoh asinkron dengan."""
+    asinkron dengan konteks sebagai nilai:
+        cetak("Nilai konteks:", nilai)
+        kembalikan nilai
+
+
+asinkron fungsi hitung_mundur(n):
+    """Generator asinkron."""
+    selama n > 0:
+        tunggu asyncio.sleep(0)
+        hasilkan n
+        n -= 1
+
+
+asinkron fungsi kumpulkan(n):
+    hasil = []
+    asinkron untuk nilai dalam hitung_mundur(n):
+        hasil.tambah(nilai)
+    kembalikan hasil
+
+
+asinkron fungsi utama():
+    hasil = tunggu ambil_banyak(["a", "b", "c"])
+    cetak("Hasil:", hasil)
+
+    mundur = tunggu kumpulkan(3)
+    cetak("Mundur:", mundur)
+
+    cetak("Selesai")
+
+
+alur_asinkron.jalankan(utama())

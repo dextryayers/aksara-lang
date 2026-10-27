@@ -1,0 +1,56 @@
+# Kasus tepi sintaks.
+# Baris kosong dan komentar tidak mengubah indentasi.
+
+total = 1 + \
+    2 + \
+    3
+
+daftar = [
+    1,
+    2,
+    3,
+]
+kamus = {
+    "a": 1,
+    "b": 2,
+}
+panggilan = panggil(
+    1,
+    2,
+)
+
+a = ()
+b = (1,)
+c = []
+d = {}
+e = {1,}
+f = {"k": 1,}
+g = panggil(1,)
+h = panggil(a=1,)
+i = panggil(*a,)
+j = panggil(**b,)
+k = lambda a, b=1: a + b
+l = ...
+m = "a" "b" "c"
+n = a[1,]
+o = a[1:2,]
+p = f(a, b=1, *c, **d)
+q = [x untuk x dalam a]
+r = [x untuk x dalam a jika x]
+s = [x untuk x dalam a jika x untuk y dalam b jika y]
+t = {k: v untuk k, v dalam a jika k}
+u = {x untuk x dalam a jika x}
+v = (x untuk x dalam a jika x)
+
+fungsi stub(): ...
+fungsi dengan_koma(a, b,): lewati
+kelas Kosong: lewati
+
+jika benar: lewati
+selama salah: lewati
+untuk i dalam a: lewati
+dengan a: lewati
+coba: lewati
+akhirnya: lewati
+cocokkan a:
+    kasus _: lewati

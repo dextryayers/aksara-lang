@@ -1,0 +1,140 @@
+# 05_kelas.aks
+# Kelas, pewarisan, properti, metode kelas, dan protokol Python.
+
+kelas Kendaraan:
+    """Kelas dasar dengan atribut dan metode."""
+
+    jumlah_kendaraan = 0
+
+    fungsi __init__(diri, nama, kecepatan=0):
+        diri.nama = nama
+        diri.kecepatan = kecepatan
+        Kendaraan.jumlah_kendaraan += 1
+
+    fungsi __str__(diri):
+        kembalikan f"{diri.nama} ({diri.kecepatan} km/jam)"
+
+    fungsi __repr__(diri):
+        kembalikan f"Kendaraan(nama={diri.nama!r}, kecepatan={diri.kecepatan!r})"
+
+    fungsi percepat(diri, tambahan):
+        diri.kecepatan += tambahan
+        kembalikan diri
+
+    fungsi rem(diri, pengurangan):
+        diri.kecepatan = maks(0, diri.kecepatan - pengurangan)
+        kembalikan diri
+
+    @staticmethod
+    fungsi jenis_bahan_bakar():
+        kembalikan "tidak diketahui"
+
+    @classmethod
+    fungsi dari_kosong(kelas_ini, nama):
+        kembalikan kelas_ini(nama)
+
+
+kelas Mobil(Kendaraan):
+    """Mobil mewarisi Kendaraan."""
+
+    fungsi __init__(diri, nama, kecepatan=0, pintu=4):
+        induk().__init__(nama, kecepatan)
+        diri.pintu = pintu
+
+    fungsi __str__(diri):
+        kembalikan f"Mobil {diri.nama} dengan {diri.pintu} pintu"
+
+    @staticmethod
+    fungsi jenis_bahan_bakar():
+        kembalikan "bensin"
+
+
+kelas Motor(Kendaraan):
+    """Motor mewarisi Kendaraan."""
+
+    fungsi __init__(diri, nama, kecepatan=0, roda=2):
+        induk().__init__(nama, kecepatan)
+        diri.roda = roda
+
+    @staticmethod
+    fungsi jenis_bahan_bakar():
+        kembalikan "bensin"
+
+
+mobil = Mobil("Avanza", 60)
+motor = Motor("Vario", 40)
+cetak(mobil)
+cetak(motor)
+cetak(repr(mobil))
+cetak("Jumlah kendaraan:", Kendaraan.jumlah_kendaraan)
+cetak("Bahan bakar mobil:", Mobil.jenis_bahan_bakar())
+cetak("Bahan bakar motor:", Motor.jenis_bahan_bakar())
+
+mobil.percepat(20).rem(10)
+cetak("Kecepatan mobil:", mobil.kecepatan)
+cetak("Apakah mobil Kendaraan:", isinstance(mobil, Kendaraan))
+
+kendaraan_baru = Kendaraan.dari_kosong("Sepeda")
+cetak("Kendaraan baru:", kendaraan_baru)
+
+
+kelas Lingkaran:
+    """Properti dan validasi sederhana."""
+
+    def_pi = 3.141592653589793
+
+    fungsi __init__(diri, jari_jari):
+        diri.jari_jari = jari_jari
+
+    @property
+    fungsi luas(diri):
+        kembalikan Lingkaran.def_pi * diri.jari_jari ** 2
+
+    @luas.setter
+    fungsi luas(diri, nilai):
+        diri.jari_jari = (nilai / Lingkaran.def_pi) ** 0.5
+
+    fungsi __len__(diri):
+        kembalikan bulat(diri.jari_jari)
+
+    fungsi __iter__(diri):
+        diri._i = 0
+        kembalikan diri
+
+    fungsi __next__(diri):
+        jika diri._i >= 3:
+            lempar HentikanIterasi
+        diri._i += 1
+        kembalikan diri._i
+
+
+lingkaran = Lingkaran(2)
+cetak("Luas:", lingkaran.luas)
+lingkaran.luas = 50
+cetak("Jari-jari baru:", lingkaran.jari_jari)
+cetak("Panjang:", panjang(lingkaran))
+cetak("Iterasi:", daftar(lingkaran))
+
+
+kelas Titik:
+    """Protokol perbandingan dan penjumlahan."""
+
+    fungsi __init__(diri, x, y):
+        diri.x = x
+        diri.y = y
+
+    fungsi __eq__(diri, lain):
+        kembalikan diri.x == lain.x dan diri.y == lain.y
+
+    fungsi __add__(diri, lain):
+        kembalikan Titik(diri.x + lain.x, diri.y + lain.y)
+
+    fungsi __repr__(diri):
+        kembalikan f"Titik({diri.x}, {diri.y})"
+
+
+titik_a = Titik(1, 2)
+titik_b = Titik(3, 4)
+cetak(titik_a + titik_b)
+cetak(titik_a == Titik(1, 2))
+cetak(titik_a == titik_b)

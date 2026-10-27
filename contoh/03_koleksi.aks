@@ -1,0 +1,103 @@
+# 03_koleksi.aks
+# Daftar, tupel, kamus, himpunan, comprehension, dan slicing.
+
+angka = [3, 1, 4, 1, 5, 9, 2, 6]
+angka.tambah(7)
+angka.urutkan()
+cetak("Daftar:", angka)
+cetak("Panjang:", panjang(angka))
+cetak("Elemen pertama:", angka[0])
+cetak("Elemen terakhir:", angka[-1])
+cetak("Slice:", angka[1:5])
+cetak("Slice langkah:", angka[0:8:2])
+cetak("Terbalik:", angka[::-1])
+
+salinan = angka[:]
+salinan.tambah(100)
+cetak("Asli:", angka)
+cetak("Salinan:", salinan)
+
+koordinat = (10, 20)
+x, y = koordinat
+cetak("Koordinat:", x, y)
+
+kepala, *ekor = [1, 2, 3, 4, 5]
+cetak("Kepala:", kepala)
+cetak("Ekor:", ekor)
+
+a, b = 1, 2
+a, b = b, a
+cetak("Tukar:", a, b)
+
+data_siswa = {
+    "nama": "Ani",
+    "umur": 25,
+    "kota": "Bandung",
+}
+data_siswa["pekerjaan"] = "insinyur"
+cetak("Nama:", data_siswa["nama"])
+cetak("Kunci:", data_siswa.kunci())
+cetak("Nilai:", data_siswa.nilai())
+cetak("Ambil aman:", data_siswa.ambil("alamat", "tidak diketahui"))
+cetak("Apakah ada:", "umur" dalam data_siswa)
+
+himpunan = {1, 2, 3, 4}
+himpunan.tambah(5)
+cetak("Himpunan:", himpunan)
+cetak("Gabungan:", himpunan | {4, 5, 6})
+cetak("Irisan:", himpunan & {3, 4, 5})
+cetak("Selisih:", himpunan - {1, 2})
+
+# Unpacking pada literal
+depan = [1, 2]
+belakang = [4, 5]
+gabungan = [0, *depan, 3, *belakang]
+cetak("Gabungan daftar:", gabungan)
+
+awal = {"a": 1, "b": 2}
+akhir = {"b": 3, "c": 4}
+gabung_kamus = {**awal, **akhir}
+cetak("Gabungan kamus:", gabung_kamus)
+
+# Comprehension
+kuadrat_genap = [n * n untuk n dalam rentang(10) jika n % 2 == 0]
+cetak("Kuadrat genap:", kuadrat_genap)
+
+peta_kuadrat = {n: n * n untuk n dalam rentang(5)}
+cetak("Peta kuadrat:", peta_kuadrat)
+
+himpunan_sisa = {n % 3 untuk n dalam rentang(10)}
+cetak("Sisa:", himpunan_sisa)
+
+pasangan = [(x, y) untuk x dalam rentang(3) untuk y dalam rentang(3) jika x != y]
+cetak("Pasangan:", pasangan)
+
+generator_angka = (n * 2 untuk n dalam rentang(5))
+cetak("Generator:", daftar(generator_angka))
+
+# Operator tambahan
+nilai = kosong
+nilai ??= 10
+cetak("Nilai pengganti:", nilai)
+
+pengguna = kosong
+nama_pengguna = pengguna?.profil?.nama ?? "Tamu"
+cetak("Nama pengguna:", nama_pengguna)
+
+indeks_aman = pengguna?[0] ?? -1
+cetak("Indeks aman:", indeks_aman)
+
+batas = 75
+di_dalam = batas antara 0 dan 100
+di_luar = batas bukan antara 0 dan 100
+cetak("Di dalam:", di_dalam, "Di luar:", di_luar)
+
+# Matriks sederhana
+matriks = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+]
+cetak("Baris kedua:", matriks[1])
+cetak("Elemen tengah:", matriks[1][1])
+cetak("Kolom kedua:", [baris[1] untuk baris dalam matriks])

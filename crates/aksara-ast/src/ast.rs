@@ -444,4 +444,9 @@ pub enum Pattern {
         keywords: Vec<(String, Pattern)>,
     },
     Or(Vec<Pattern>),
+    /// Pola yang mengikat hasil cocok ke nama, misalnya `str() sebagai teks`.
+    As {
+        pattern: Box<Pattern>,
+        name: String,
+    },
 }

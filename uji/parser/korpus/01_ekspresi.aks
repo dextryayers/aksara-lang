@@ -1,0 +1,33 @@
+# Ekspresi dan prioritas operator.
+a = 1 + 2 * 3 ** 4 // 5 % 6
+b = -a + +a - ~a
+c = a << 2 | a >> 1 ^ a & 0xF
+d = a == b != c < d <= e > f >= g
+e = a dalam b
+f = a bukan dalam b
+g = a adalah b
+h = a bukan adalah b
+i = a antara 1 dan 10
+j = a bukan antara 1 dan 10
+k = benar dan salah atau bukan benar
+l = a ?? b ?? c
+m = a?.b?[0]?()
+n = "x" jika a lainnya "y" jika b lainnya "z"
+o = (x := 10)
+p = lambda x, y=1, *args, **kwargs: x + y
+q = [1, *a, 2]
+r = (*a,)
+s = {"k": 1, **kamus}
+t = {*a, 1}
+u = [n untuk n dalam a jika n > 0]
+v = {k: v untuk k, v dalam a}
+w = {n untuk n dalam a}
+x1 = (n untuk n dalam a)
+x2 = a[1:2:3]
+x3 = a[1:2, 3]
+x4 = a[:]
+x5 = f"{a!r:>{lebar}}"
+x6 = 0x1F + 0o17 + 0b1010 + 1_000 + .5 + 1. + 1e-9 + 2j
+x7 = (10 + 5) * 2 ** 2
+x8 = 2 ** -3 ** 2
+x9 = a @ b

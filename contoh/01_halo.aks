@@ -1,0 +1,46 @@
+# 01_halo.aks
+# Program pertama: variabel, literal, teks, dan keluaran.
+
+nama = "Dunia"
+tahun = 2026
+versi = 1.0
+aktif = benar
+belum_ada = kosong
+
+cetak("Halo, " + nama + "!")
+cetak(f"Selamat datang di Aksara {versi:.1f}.")
+cetak(f"Tahun {tahun}, aktif: {aktif}.")
+cetak(f"Nilai kosong: {belum_ada}.")
+
+angka = 42
+pecahan = 3.14
+imajiner = 2j
+heksadesimal = 0xFF
+biner = 0b1010
+oktal = 0o755
+besar = 1_000_000
+
+cetak(angka, pecahan, imajiner)
+cetak(heksadesimal, biner, oktal, besar)
+
+sapaan = "Halo"
+sapaan += ", "
+sapaan += nama
+cetak(sapaan)
+cetak("Panjang sapaan:", panjang(sapaan))
+
+daftar_angka = daftar(1, 2, 3)
+kamus_data = kamus(nama="Ani", umur=25)
+himpunan_data = susunan(1, 2, 2, 3)
+cetak(daftar_angka, kamus_data, himpunan_data)
+
+# Escape dan teks mentah
+baris_baru = "baris pertama\nbaris kedua"
+mentah = r"folder\berkas.txt"
+cetak(baris_baru)
+cetak(mentah)
+
+# Teks multi baris
+paragraf = """Aksara adalah bahasa
+yang membaca seperti bahasa Indonesia."""
+cetak(paragraf)

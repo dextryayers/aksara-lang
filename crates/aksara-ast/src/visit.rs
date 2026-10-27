@@ -412,5 +412,6 @@ pub fn walk_pattern<V: Visitor + ?Sized>(visitor: &mut V, pattern: &Pattern) {
                 visitor.visit_pattern(pattern);
             }
         }
+        Pattern::As { pattern, .. } => visitor.visit_pattern(pattern),
     }
 }

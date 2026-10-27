@@ -1,0 +1,56 @@
+# Semua bentuk pola.
+cocokkan x:
+    kasus 1:
+        lewati
+    kasus -1:
+        lewati
+    kasus 1.5:
+        lewati
+    kasus 2j:
+        lewati
+    kasus "teks":
+        lewati
+    kasus b"bytes":
+        lewati
+    kasus benar:
+        lewati
+    kasus salah:
+        lewati
+    kasus kosong:
+        lewati
+    kasus 1 | 2 | 3:
+        lewati
+    kasus [a, b]:
+        lewati
+    kasus [a, *sisa]:
+        lewati
+    kasus (a, b):
+        lewati
+    kasus (a):
+        lewati
+    kasus []:
+        lewati
+    kasus {}:
+        lewati
+    kasus {"k": v}:
+        lewati
+    kasus {"k": v, **sisa}:
+        lewati
+    kasus Titik(x, y):
+        lewati
+    kasus Titik(x=0, y=0):
+        lewati
+    kasus Warna.MERAH:
+        lewati
+    kasus str():
+        lewati
+    kasus x jika x > 0:
+        lewati
+    kasus _:
+        lewati
+    kasus [x] | (x,):
+        lewati
+    kasus str() sebagai teks:
+        lewati
+    kasus [x sebagai y]:
+        lewati

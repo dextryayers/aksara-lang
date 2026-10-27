@@ -1,0 +1,44 @@
+# Fungsi, parameter, dekorator, kelas, dan asinkron.
+fungsi tanpa_isi():
+    lewati
+
+fungsi semua(a, b=1, /, c=2, *args, d, e=3, **kwargs) -> teks:
+    """Dokumentasi fungsi."""
+    kembalikan f"{a}{b}{c}{args}{d}{e}{kwargs}"
+
+@dekorator
+@dekorator(1, nama="x")
+kelas Anak(Induk1, Induk2, metaclass=Meta):
+    atribut: bilangan = 1
+    _privat = 2
+
+    fungsi __init__(diri, x, /, *, y=0):
+        induk().__init__()
+        diri.x = x
+        diri.y = y
+
+    @staticmethod
+    fungsi statis():
+        lewati
+
+    @classmethod
+    fungsi kelas_ini(kelas_ini):
+        kembalikan kelas_ini()
+
+    @property
+    fungsi nilai(diri):
+        kembalikan diri.x
+
+    @nilai.setter
+    fungsi nilai(diri, baru):
+        diri.x = baru
+
+asinkron fungsi asink(a, /, *, b=1):
+    tunggu a
+    hasilkan b
+
+asinkron fungsi aliran(stream):
+    asinkron untuk item dalam stream:
+        cetak(item)
+    asinkron dengan stream sebagai nilai:
+        cetak(nilai)

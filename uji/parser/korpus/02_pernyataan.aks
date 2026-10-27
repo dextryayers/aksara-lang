@@ -1,0 +1,70 @@
+# Pernyataan, penugasan, kendali, dan kendali alur.
+a = 1; b = 2; c = 3
+a += 1; a -= 1; a *= 2; a /= 2; a //= 2; a %= 2; a **= 2
+a @= b; a &= b; a |= b; a ^= b; a <<= 1; a >>= 1
+a = b = c = 0
+a, b = b, a
+kepala, *ekor = [1, 2, 3]
+x: bilangan = 5
+x: teks
+
+jika a:
+    lewati
+lainnya jika b:
+    lewati
+lainnya:
+    lewati
+
+selama a:
+    hentikan
+lainnya:
+    lewati
+
+untuk i dalam a:
+    lanjutkan
+lainnya:
+    lewati
+
+untuk setiap i dalam a:
+    lewati
+untuk i sebanyak 3:
+    lewati
+untuk i dari 1 sampai 3:
+    lewati
+untuk i dari 3 sampai 1 langkah -1:
+    lewati
+
+coba:
+    lewati
+tangkap:
+    lewati
+
+coba:
+    lewati
+akhirnya:
+    lewati
+
+coba:
+    lewati
+tangkap A:
+    lewati
+lainnya:
+    lewati
+akhirnya:
+    lewati
+
+dengan a sebagai b:
+    lewati
+dengan a sebagai b, c sebagai d:
+    lewati
+
+pastikan a, "pesan"
+hapus a, b[0]
+lempar A("x") dari b
+lempar
+global a, b
+nonlokal c
+kembalikan a, b
+hasilkan a
+hasilkan dari a
+hasilkan

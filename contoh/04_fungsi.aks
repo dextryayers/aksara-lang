@@ -1,0 +1,108 @@
+# 04_fungsi.aks
+# Fungsi, parameter, closure, dekorator, lambda, dan generator.
+
+fungsi faktorial(n: bilangan) -> bilangan:
+    """Hitung faktorial secara rekursif."""
+    jika n <= 1:
+        kembalikan 1
+    kembalikan n * faktorial(n - 1)
+
+cetak("Faktorial 5:", faktorial(5))
+
+
+fungsi gabung(*bagian, pemisah=", ", **opsi):
+    """Gabungkan beberapa teks dengan opsi tambahan."""
+    hasil = pemisah.gabung(bagian)
+    jika opsi.ambil("huruf_besar", salah):
+        hasil = hasil.huruf_besar()
+    kembalikan hasil
+
+cetak(gabung("a", "b", "c"))
+cetak(gabung("a", "b", "c", pemisah=" - ", huruf_besar=benar))
+
+
+fungsi bagi(a, b, /, *, bulatkan=salah):
+    """Parameter positional-only dan keyword-only."""
+    hasil = a / b
+    jika bulatkan:
+        kembalikan bulat(hasil)
+    kembalikan hasil
+
+cetak(bagi(10, 3))
+cetak(bagi(10, 3, bulatkan=benar))
+
+
+fungsi hitung_mundur(n):
+    """Generator yang menghasilkan urutan menurun."""
+    selama n > 0:
+        hasilkan n
+        n -= 1
+
+cetak(daftar(hitung_mundur(5)))
+
+
+fungsi ratakan(daftar_bersarang):
+    """Contoh hasilkan dari."""
+    untuk item dalam daftar_bersarang:
+        jika jenis(item) == daftar:
+            hasilkan dari ratakan(item)
+        lainnya:
+            hasilkan item
+
+cetak(daftar(ratakan([1, [2, [3, 4]], 5])))
+
+
+def_buat_penambah = lambda nilai: lambda x: x + nilai
+penambah_lima = def_buat_penambah(5)
+cetak("Lambda:", penambah_lima(10))
+
+kali_dua = lambda x: x * 2
+cetak("Kali dua:", kali_dua(21))
+
+
+fungsi buat_penghitung(mulai=0):
+    """Closure dengan nonlokal."""
+    nilai = mulai
+
+    fungsi tambah(langkah=1):
+        nonlokal nilai
+        nilai += langkah
+        kembalikan nilai
+
+    kembalikan tambah
+
+penghitung = buat_penghitung(10)
+cetak("Penghitung:", penghitung())
+cetak("Penghitung:", penghitung(5))
+
+
+fungsi catat_panggilan(fungsi_asli):
+    """Dekorator sederhana."""
+    fungsi pembungkus(*args, **kwargs):
+        cetak("Memanggil", fungsi_asli.__nama__)
+        hasil = fungsi_asli(*args, **kwargs)
+        cetak("Selesai", fungsi_asli.__nama__)
+        kembalikan hasil
+
+    kembalikan pembungkus
+
+@catat_panggilan
+fungsi sapa(nama):
+    kembalikan f"Halo, {nama}"
+
+cetak(sapa("Ani"))
+
+
+fungsi jumlahkan_semua(*angka):
+    total = 0
+    untuk n dalam angka:
+        total += n
+    kembalikan total
+
+cetak("Jumlah:", jumlahkan_semua(1, 2, 3, 4, 5))
+
+# Fungsi dengan anotasi kompleks
+fungsi olah(data: daftar[bilangan], pengali: bilangan = 2) -> daftar[bilangan]:
+    kembalikan [n * pengali untuk n dalam data]
+
+cetak(olah([1, 2, 3]))

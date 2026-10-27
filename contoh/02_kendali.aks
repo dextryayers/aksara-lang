@@ -1,0 +1,66 @@
+# 02_kendali.aks
+# Percabangan, perulangan bahasa alami, dan kendali alur.
+
+nilai = 85
+status = "lulus" jika nilai >= 70 lainnya "gagal"
+cetak(status)
+
+jika nilai >= 90:
+    cetak("Predikat A")
+lainnya jika nilai >= 80:
+    cetak("Predikat B")
+lainnya jika nilai >= 70:
+    cetak("Predikat C")
+lainnya:
+    cetak("Belum lulus")
+
+# Perulangan dengan klausa lainnya
+hitungan = 3
+selama hitungan > 0:
+    cetak("Hitung:", hitungan)
+    hitungan -= 1
+lainnya:
+    cetak("Perulangan selesai tanpa hentikan")
+
+for_selesai = benar
+untuk i dalam rentang(5):
+    jika i == 3:
+        for_selesai = salah
+        hentikan
+lainnya:
+    cetak("Semua iterasi berjalan")
+
+# Empat bentuk perulangan bahasa alami
+untuk setiap siswa dalam ["Ani", "Budi", "Citra"]:
+    cetak("Siswa:", siswa)
+
+untuk i sebanyak 3:
+    cetak("Ulangi:", i)
+
+untuk i dari 1 sampai 5:
+    cetak("Rentang naik:", i)
+
+untuk i dari 5 sampai 1:
+    cetak("Rentang turun:", i)
+
+untuk i dari 1 sampai 10 langkah 2:
+    cetak("Rentang langkah:", i)
+
+# lanjutkan melewati iterasi, hentikan mengakhiri perulangan
+total = 0
+untuk n dalam rentang(10):
+    jika n % 2 == 0:
+        lanjutkan
+    total += n
+cetak("Jumlah ganjil:", total)
+
+# Perulangan bersarang dengan label logika
+ditemukan = salah
+untuk baris dalam rentang(3):
+    untuk kolom dalam rentang(3):
+        jika baris == 1 dan kolom == 1:
+            ditemukan = benar
+            hentikan
+    jika ditemukan:
+        hentikan
+cetak("Ditemukan:", ditemukan)

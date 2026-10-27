@@ -1,0 +1,105 @@
+# 09_pola.aks
+# Pencocokan pola: literal, urutan, kamus, kelas, penjaga, dan alternatif.
+
+kelas Titik:
+    fungsi __init__(diri, x, y):
+        diri.x = x
+        diri.y = y
+
+
+kelas Warna:
+    MERAH = 1
+    HIJAU = 2
+    BIRU = 3
+
+
+fungsi jelaskan(nilai):
+    cocokkan nilai:
+        kasus 1:
+            kembalikan "satu"
+        kasus 2 | 3:
+            kembalikan "dua atau tiga"
+        kasus -1:
+            kembalikan "negatif satu"
+        kasus benar:
+            kembalikan "benar"
+        kasus kosong:
+            kembalikan "kosong"
+        kasus [x, y]:
+            kembalikan f"daftar dua elemen: {x}, {y}"
+        kasus [kepala, *ekor]:
+            kembalikan f"daftar dengan kepala {kepala} dan {panjang(ekor)} ekor"
+        kasus {"kunci": v}:
+            kembalikan f"kamus dengan kunci: {v}"
+        kasus {"kunci": v, **sisa}:
+            kembalikan f"kamus dengan kunci {v} dan sisa {sisa}"
+        kasus Titik(x, y):
+            kembalikan f"titik ({x}, {y})"
+        kasus Titik(x=px, y=py):
+            kembalikan f"titik dengan kata kunci ({px}, {py})"
+        kasus Warna.MERAH:
+            kembalikan "warna merah"
+        kasus x jika x > 100:
+            kembalikan f"bilangan besar: {x}"
+        kasus _:
+            kembalikan "tidak dikenal"
+
+
+cetak(jelaskan(1))
+cetak(jelaskan(3))
+cetak(jelaskan(-1))
+cetak(jelaskan(benar))
+cetak(jelaskan(kosong))
+cetak(jelaskan([10, 20]))
+cetak(jelaskan([1, 2, 3, 4]))
+cetak(jelaskan({"kunci": 42}))
+cetak(jelaskan({"kunci": 42, "lain": 7}))
+cetak(jelaskan(Titik(3, 4)))
+cetak(jelaskan(Warna.MERAH))
+cetak(jelaskan(150))
+cetak(jelaskan("teks bebas"))
+
+
+fungsi klasifikasi(koordinat):
+    cocokkan koordinat:
+        kasus (0, 0):
+            kembalikan "titik asal"
+        kasus (x, 0):
+            kembalikan f"sumbu x di {x}"
+        kasus (0, y):
+            kembalikan f"sumbu y di {y}"
+        kasus (x, y) jika x == y:
+            kembalikan f"diagonal pada {x}"
+        kasus (x, y):
+            kembalikan f"kuadran umum ({x}, {y})"
+        kasus _:
+            kembalikan "bukan koordinat"
+
+
+cetak(klasifikasi((0, 0)))
+cetak(klasifikasi((5, 0)))
+cetak(klasifikasi((0, 5)))
+cetak(klasifikasi((3, 3)))
+cetak(klasifikasi((3, 4)))
+cetak(klasifikasi("bukan tupel"))
+
+
+fungsi cocok_alternatif(nilai):
+    cocokkan nilai:
+        kasus [x] | (x,):
+            kembalikan f"satu elemen: {x}"
+        kasus [] | ():
+            kembalikan "kosong"
+        kasus str() sebagai teks:
+            kembalikan f"teks: {teks}"
+        kasus int() sebagai angka:
+            kembalikan f"angka: {angka}"
+        kasus _:
+            kembalikan "tipe lain"
+
+
+cetak(cocok_alternatif([7]))
+cetak(cocok_alternatif((7,)))
+cetak(cocok_alternatif([]))
+cetak(cocok_alternatif("halo"))
+cetak(cocok_alternatif(99))
