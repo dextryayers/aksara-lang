@@ -1,0 +1,624 @@
+{
+  "id": 46,
+  "span": {
+    "start": 19,
+    "end": 369
+  },
+  "body": [
+    {
+      "id": 45,
+      "span": {
+        "start": 19,
+        "end": 369
+      },
+      "kind": {
+        "Match": {
+          "subject": {
+            "id": 0,
+            "span": {
+              "start": 28,
+              "end": 33
+            },
+            "kind": {
+              "Name": "nilai"
+            }
+          },
+          "cases": [
+            {
+              "pattern": {
+                "Literal": {
+                  "id": 1,
+                  "span": {
+                    "start": 45,
+                    "end": 46
+                  },
+                  "kind": {
+                    "Int": "0"
+                  }
+                }
+              },
+              "guard": null,
+              "body": [
+                {
+                  "id": 5,
+                  "span": {
+                    "start": 56,
+                    "end": 68
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 4,
+                      "span": {
+                        "start": 56,
+                        "end": 68
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 2,
+                            "span": {
+                              "start": 56,
+                              "end": 61
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 3,
+                                "span": {
+                                  "start": 62,
+                                  "end": 67
+                                },
+                                "kind": {
+                                  "Str": {
+                                    "prefix": "",
+                                    "quote": "Double",
+                                    "raw": "nol"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 39,
+                "end": 68
+              }
+            },
+            {
+              "pattern": {
+                "Or": [
+                  {
+                    "Literal": {
+                      "id": 6,
+                      "span": {
+                        "start": 79,
+                        "end": 80
+                      },
+                      "kind": {
+                        "Int": "1"
+                      }
+                    }
+                  },
+                  {
+                    "Literal": {
+                      "id": 7,
+                      "span": {
+                        "start": 83,
+                        "end": 84
+                      },
+                      "kind": {
+                        "Int": "2"
+                      }
+                    }
+                  },
+                  {
+                    "Literal": {
+                      "id": 8,
+                      "span": {
+                        "start": 87,
+                        "end": 88
+                      },
+                      "kind": {
+                        "Int": "3"
+                      }
+                    }
+                  }
+                ]
+              },
+              "guard": null,
+              "body": [
+                {
+                  "id": 12,
+                  "span": {
+                    "start": 98,
+                    "end": 112
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 11,
+                      "span": {
+                        "start": 98,
+                        "end": 112
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 9,
+                            "span": {
+                              "start": 98,
+                              "end": 103
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 10,
+                                "span": {
+                                  "start": 104,
+                                  "end": 111
+                                },
+                                "kind": {
+                                  "Str": {
+                                    "prefix": "",
+                                    "quote": "Double",
+                                    "raw": "kecil"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 73,
+                "end": 112
+              }
+            },
+            {
+              "pattern": {
+                "Sequence": [
+                  {
+                    "Capture": "kepala"
+                  },
+                  {
+                    "Star": "ekor"
+                  }
+                ]
+              },
+              "guard": {
+                "id": 16,
+                "span": {
+                  "start": 144,
+                  "end": 154
+                },
+                "kind": {
+                  "Compare": {
+                    "left": {
+                      "id": 14,
+                      "span": {
+                        "start": 144,
+                        "end": 150
+                      },
+                      "kind": {
+                        "Name": "kepala"
+                      }
+                    },
+                    "ops": [
+                      "Gt"
+                    ],
+                    "comparators": [
+                      {
+                        "id": 15,
+                        "span": {
+                          "start": 153,
+                          "end": 154
+                        },
+                        "kind": {
+                          "Int": "0"
+                        }
+                      }
+                    ]
+                  }
+                }
+              },
+              "body": [
+                {
+                  "id": 21,
+                  "span": {
+                    "start": 164,
+                    "end": 183
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 20,
+                      "span": {
+                        "start": 164,
+                        "end": 183
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 17,
+                            "span": {
+                              "start": 164,
+                              "end": 169
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 18,
+                                "span": {
+                                  "start": 170,
+                                  "end": 176
+                                },
+                                "kind": {
+                                  "Name": "kepala"
+                                }
+                              }
+                            },
+                            {
+                              "Positional": {
+                                "id": 19,
+                                "span": {
+                                  "start": 178,
+                                  "end": 182
+                                },
+                                "kind": {
+                                  "Name": "ekor"
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 117,
+                "end": 183
+              }
+            },
+            {
+              "pattern": {
+                "Mapping": {
+                  "items": [
+                    [
+                      {
+                        "id": 22,
+                        "span": {
+                          "start": 195,
+                          "end": 198
+                        },
+                        "kind": {
+                          "Str": {
+                            "prefix": "",
+                            "quote": "Double",
+                            "raw": "k"
+                          }
+                        }
+                      },
+                      {
+                        "Capture": "v"
+                      }
+                    ]
+                  ],
+                  "rest": "sisa"
+                }
+              },
+              "guard": null,
+              "body": [
+                {
+                  "id": 28,
+                  "span": {
+                    "start": 220,
+                    "end": 234
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 27,
+                      "span": {
+                        "start": 220,
+                        "end": 234
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 24,
+                            "span": {
+                              "start": 220,
+                              "end": 225
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 25,
+                                "span": {
+                                  "start": 226,
+                                  "end": 227
+                                },
+                                "kind": {
+                                  "Name": "v"
+                                }
+                              }
+                            },
+                            {
+                              "Positional": {
+                                "id": 26,
+                                "span": {
+                                  "start": 229,
+                                  "end": 233
+                                },
+                                "kind": {
+                                  "Name": "sisa"
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 188,
+                "end": 234
+              }
+            },
+            {
+              "pattern": {
+                "Class": {
+                  "name": "Titik",
+                  "positional": [],
+                  "keywords": [
+                    [
+                      "x",
+                      {
+                        "Literal": {
+                          "id": 30,
+                          "span": {
+                            "start": 253,
+                            "end": 254
+                          },
+                          "kind": {
+                            "Int": "0"
+                          }
+                        }
+                      }
+                    ],
+                    [
+                      "y",
+                      {
+                        "Literal": {
+                          "id": 31,
+                          "span": {
+                            "start": 258,
+                            "end": 259
+                          },
+                          "kind": {
+                            "Int": "0"
+                          }
+                        }
+                      }
+                    ]
+                  ]
+                }
+              },
+              "guard": null,
+              "body": [
+                {
+                  "id": 35,
+                  "span": {
+                    "start": 270,
+                    "end": 283
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 34,
+                      "span": {
+                        "start": 270,
+                        "end": 283
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 32,
+                            "span": {
+                              "start": 270,
+                              "end": 275
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 33,
+                                "span": {
+                                  "start": 276,
+                                  "end": 282
+                                },
+                                "kind": {
+                                  "Str": {
+                                    "prefix": "",
+                                    "quote": "Double",
+                                    "raw": "asal"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 239,
+                "end": 283
+              }
+            },
+            {
+              "pattern": {
+                "As": {
+                  "pattern": {
+                    "Class": {
+                      "name": "str",
+                      "positional": [],
+                      "keywords": []
+                    }
+                  },
+                  "name": "teks"
+                }
+              },
+              "guard": null,
+              "body": [
+                {
+                  "id": 40,
+                  "span": {
+                    "start": 322,
+                    "end": 333
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 39,
+                      "span": {
+                        "start": 322,
+                        "end": 333
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 37,
+                            "span": {
+                              "start": 322,
+                              "end": 327
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 38,
+                                "span": {
+                                  "start": 328,
+                                  "end": 332
+                                },
+                                "kind": {
+                                  "Name": "teks"
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 288,
+                "end": 333
+              }
+            },
+            {
+              "pattern": "Wildcard",
+              "guard": null,
+              "body": [
+                {
+                  "id": 44,
+                  "span": {
+                    "start": 355,
+                    "end": 368
+                  },
+                  "kind": {
+                    "Expr": {
+                      "id": 43,
+                      "span": {
+                        "start": 355,
+                        "end": 368
+                      },
+                      "kind": {
+                        "Call": {
+                          "func": {
+                            "id": 41,
+                            "span": {
+                              "start": 355,
+                              "end": 360
+                            },
+                            "kind": {
+                              "Name": "cetak"
+                            }
+                          },
+                          "args": [
+                            {
+                              "Positional": {
+                                "id": 42,
+                                "span": {
+                                  "start": 361,
+                                  "end": 367
+                                },
+                                "kind": {
+                                  "Str": {
+                                    "prefix": "",
+                                    "quote": "Double",
+                                    "raw": "lain"
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "safe": false
+                        }
+                      }
+                    }
+                  }
+                }
+              ],
+              "span": {
+                "start": 338,
+                "end": 368
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

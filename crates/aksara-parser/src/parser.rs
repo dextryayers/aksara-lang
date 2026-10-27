@@ -11,8 +11,16 @@ pub struct ParseResult {
 
 /// Melakukan lexing dan parsing pada teks sumber.
 pub fn parse(source: &str) -> ParseResult {
-    let normalized = normalize_source(source);
-    let lexed = Lexer::new(&normalized).tokenize();
+    // Normalisasi hanya perlu salinan bila sumber memuat BOM atau akhir baris
+    // CRLF. Berkas biasa langsung dipakai agar tidak menyalin seluruh isi.
+    let normalized;
+    let source = if source.starts_with('\u{feff}') || source.contains('\r') {
+        normalized = normalize_source(source);
+        normalized.as_str()
+    } else {
+        source
+    };
+    let lexed = Lexer::new(source).tokenize();
     parse_tokens(lexed.tokens, lexed.diagnostics)
 }
 

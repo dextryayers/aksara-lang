@@ -1,0 +1,28 @@
+# Kendali alur dan perulangan.
+jika nilai > 10:
+    cetak("besar")
+lainnya jika nilai == 10:
+    cetak("pas")
+lainnya:
+    cetak("kecil")
+
+selama nilai > 0:
+    nilai -= 1
+lainnya:
+    cetak("selesai")
+
+untuk setiap item dalam data:
+    jika item == kosong:
+        lanjutkan
+    cetak(item)
+lainnya:
+    cetak("habis")
+
+untuk i sebanyak 3:
+    cetak(i)
+
+untuk i dari 1 sampai 5 langkah 2:
+    cetak(i)
+
+untuk i dari 5 sampai 1 langkah -1:
+    cetak(i)

@@ -1,0 +1,16 @@
+# Pencocokan pola.
+cocokkan nilai:
+    kasus 0:
+        cetak("nol")
+    kasus 1 | 2 | 3:
+        cetak("kecil")
+    kasus [kepala, *ekor] jika kepala > 0:
+        cetak(kepala, ekor)
+    kasus {"k": v, **sisa}:
+        cetak(v, sisa)
+    kasus Titik(x=0, y=0):
+        cetak("asal")
+    kasus str() sebagai teks:
+        cetak(teks)
+    kasus _:
+        cetak("lain")

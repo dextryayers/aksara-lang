@@ -1,0 +1,19 @@
+# Ekspresi dan prioritas operator.
+hasil = 1 + 2 * 3 ** 2 - 4 // 2 % 3
+banding = 0 < hasil <= 100
+logika = benar dan bukan salah atau kosong
+gabung = kosong ?? hasil ?? 0
+di_antara = hasil antara 1 dan 100
+bukan_antara = hasil bukan antara 200 dan 300
+keanggotaan = hasil dalam data dan hasil bukan dalam lain
+identitas = hasil adalah nilai dan hasil bukan adalah kosong
+pilihan = "besar" jika hasil > 10 lainnya "kecil"
+akses = objek?.atribut?[0]?()
+irisan = data[1:5:2]
+ganda = data[1:2, 3]
+daftar = [n * n untuk n dalam data jika n > 0]
+kamus = {k: v untuk k, v dalam pasangan}
+himpunan = {n untuk n dalam data}
+generator = (n untuk n dalam data)
+teks = f"Halo {nama!r:>{lebar}} dan {{literal}}"
+gabungan = "a" f"{nama}" 'c'

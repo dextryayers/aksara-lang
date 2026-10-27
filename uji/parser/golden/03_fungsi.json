@@ -1,0 +1,607 @@
+{
+  "id": 42,
+  "span": {
+    "start": 43,
+    "end": 374
+  },
+  "body": [
+    {
+      "id": 22,
+      "span": {
+        "start": 43,
+        "end": 222
+      },
+      "kind": {
+        "Function": {
+          "name": "jumlahkan",
+          "params": {
+            "posonly": [
+              {
+                "name": "a",
+                "kind": "PosOnly",
+                "annotation": null,
+                "default": null,
+                "span": {
+                  "start": 95,
+                  "end": 96
+                }
+              },
+              {
+                "name": "b",
+                "kind": "PosOnly",
+                "annotation": null,
+                "default": {
+                  "id": 5,
+                  "span": {
+                    "start": 100,
+                    "end": 101
+                  },
+                  "kind": {
+                    "Int": "1"
+                  }
+                },
+                "span": {
+                  "start": 98,
+                  "end": 101
+                }
+              }
+            ],
+            "args": [
+              {
+                "name": "c",
+                "kind": "PosOrKw",
+                "annotation": null,
+                "default": {
+                  "id": 6,
+                  "span": {
+                    "start": 108,
+                    "end": 109
+                  },
+                  "kind": {
+                    "Int": "2"
+                  }
+                },
+                "span": {
+                  "start": 106,
+                  "end": 109
+                }
+              }
+            ],
+            "vararg": {
+              "name": "args",
+              "kind": "VarArg",
+              "annotation": null,
+              "default": null,
+              "span": {
+                "start": 111,
+                "end": 116
+              }
+            },
+            "kwonly": [
+              {
+                "name": "d",
+                "kind": "KwOnly",
+                "annotation": null,
+                "default": {
+                  "id": 7,
+                  "span": {
+                    "start": 120,
+                    "end": 121
+                  },
+                  "kind": {
+                    "Int": "3"
+                  }
+                },
+                "span": {
+                  "start": 118,
+                  "end": 121
+                }
+              }
+            ],
+            "kwarg": {
+              "name": "kwargs",
+              "kind": "KwArg",
+              "annotation": null,
+              "default": null,
+              "span": {
+                "start": 123,
+                "end": 131
+              }
+            }
+          },
+          "returns": {
+            "id": 8,
+            "span": {
+              "start": 136,
+              "end": 144
+            },
+            "kind": {
+              "Name": "bilangan"
+            }
+          },
+          "body": [
+            {
+              "id": 10,
+              "span": {
+                "start": 150,
+                "end": 175
+              },
+              "kind": {
+                "Expr": {
+                  "id": 9,
+                  "span": {
+                    "start": 150,
+                    "end": 175
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "TripleDouble",
+                      "raw": "Menjumlahkan nilai."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 19,
+              "span": {
+                "start": 180,
+                "end": 201
+              },
+              "kind": {
+                "Assign": {
+                  "targets": [
+                    {
+                      "id": 11,
+                      "span": {
+                        "start": 180,
+                        "end": 185
+                      },
+                      "kind": {
+                        "Name": "hasil"
+                      }
+                    }
+                  ],
+                  "value": {
+                    "id": 18,
+                    "span": {
+                      "start": 188,
+                      "end": 201
+                    },
+                    "kind": {
+                      "Binary": {
+                        "left": {
+                          "id": 16,
+                          "span": {
+                            "start": 188,
+                            "end": 197
+                          },
+                          "kind": {
+                            "Binary": {
+                              "left": {
+                                "id": 14,
+                                "span": {
+                                  "start": 188,
+                                  "end": 193
+                                },
+                                "kind": {
+                                  "Binary": {
+                                    "left": {
+                                      "id": 12,
+                                      "span": {
+                                        "start": 188,
+                                        "end": 189
+                                      },
+                                      "kind": {
+                                        "Name": "a"
+                                      }
+                                    },
+                                    "op": "Add",
+                                    "right": {
+                                      "id": 13,
+                                      "span": {
+                                        "start": 192,
+                                        "end": 193
+                                      },
+                                      "kind": {
+                                        "Name": "b"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "Add",
+                              "right": {
+                                "id": 15,
+                                "span": {
+                                  "start": 196,
+                                  "end": 197
+                                },
+                                "kind": {
+                                  "Name": "c"
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "op": "Add",
+                        "right": {
+                          "id": 17,
+                          "span": {
+                            "start": 200,
+                            "end": 201
+                          },
+                          "kind": {
+                            "Name": "d"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 21,
+              "span": {
+                "start": 206,
+                "end": 222
+              },
+              "kind": {
+                "Return": {
+                  "id": 20,
+                  "span": {
+                    "start": 217,
+                    "end": 222
+                  },
+                  "kind": {
+                    "Name": "hasil"
+                  }
+                }
+              }
+            }
+          ],
+          "decorators": [
+            {
+              "id": 0,
+              "span": {
+                "start": 44,
+                "end": 53
+              },
+              "kind": {
+                "Name": "dekorator"
+              }
+            },
+            {
+              "id": 4,
+              "span": {
+                "start": 55,
+                "end": 77
+              },
+              "kind": {
+                "Call": {
+                  "func": {
+                    "id": 1,
+                    "span": {
+                      "start": 55,
+                      "end": 64
+                    },
+                    "kind": {
+                      "Name": "dekorator"
+                    }
+                  },
+                  "args": [
+                    {
+                      "Positional": {
+                        "id": 2,
+                        "span": {
+                          "start": 65,
+                          "end": 66
+                        },
+                        "kind": {
+                          "Int": "1"
+                        }
+                      }
+                    },
+                    {
+                      "Keyword": {
+                        "name": "nama",
+                        "value": {
+                          "id": 3,
+                          "span": {
+                            "start": 73,
+                            "end": 76
+                          },
+                          "kind": {
+                            "Str": {
+                              "prefix": "",
+                              "quote": "Double",
+                              "raw": "x"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "safe": false
+                }
+              }
+            }
+          ],
+          "is_async": false
+        }
+      }
+    },
+    {
+      "id": 34,
+      "span": {
+        "start": 224,
+        "end": 337
+      },
+      "kind": {
+        "Function": {
+          "name": "ambil",
+          "params": {
+            "posonly": [
+              {
+                "name": "url",
+                "kind": "PosOnly",
+                "annotation": null,
+                "default": null,
+                "span": {
+                  "start": 246,
+                  "end": 249
+                }
+              }
+            ],
+            "args": [],
+            "vararg": null,
+            "kwonly": [
+              {
+                "name": "batas",
+                "kind": "KwOnly",
+                "annotation": null,
+                "default": {
+                  "id": 23,
+                  "span": {
+                    "start": 263,
+                    "end": 265
+                  },
+                  "kind": {
+                    "Int": "10"
+                  }
+                },
+                "span": {
+                  "start": 257,
+                  "end": 265
+                }
+              }
+            ],
+            "kwarg": null
+          },
+          "returns": null,
+          "body": [
+            {
+              "id": 29,
+              "span": {
+                "start": 272,
+                "end": 296
+              },
+              "kind": {
+                "Assign": {
+                  "targets": [
+                    {
+                      "id": 24,
+                      "span": {
+                        "start": 272,
+                        "end": 276
+                      },
+                      "kind": {
+                        "Name": "data"
+                      }
+                    }
+                  ],
+                  "value": {
+                    "id": 28,
+                    "span": {
+                      "start": 279,
+                      "end": 296
+                    },
+                    "kind": {
+                      "Await": {
+                        "id": 27,
+                        "span": {
+                          "start": 286,
+                          "end": 296
+                        },
+                        "kind": {
+                          "Call": {
+                            "func": {
+                              "id": 25,
+                              "span": {
+                                "start": 286,
+                                "end": 291
+                              },
+                              "kind": {
+                                "Name": "unduh"
+                              }
+                            },
+                            "args": [
+                              {
+                                "Positional": {
+                                  "id": 26,
+                                  "span": {
+                                    "start": 292,
+                                    "end": 295
+                                  },
+                                  "kind": {
+                                    "Name": "url"
+                                  }
+                                }
+                              }
+                            ],
+                            "safe": false
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 31,
+              "span": {
+                "start": 301,
+                "end": 314
+              },
+              "kind": {
+                "Yield": {
+                  "value": {
+                    "id": 30,
+                    "span": {
+                      "start": 310,
+                      "end": 314
+                    },
+                    "kind": {
+                      "Name": "data"
+                    }
+                  },
+                  "from": false
+                }
+              }
+            },
+            {
+              "id": 33,
+              "span": {
+                "start": 319,
+                "end": 337
+              },
+              "kind": {
+                "Yield": {
+                  "value": {
+                    "id": 32,
+                    "span": {
+                      "start": 333,
+                      "end": 337
+                    },
+                    "kind": {
+                      "Name": "data"
+                    }
+                  },
+                  "from": true
+                }
+              }
+            }
+          ],
+          "decorators": [],
+          "is_async": true
+        }
+      }
+    },
+    {
+      "id": 41,
+      "span": {
+        "start": 339,
+        "end": 373
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 35,
+              "span": {
+                "start": 339,
+                "end": 350
+              },
+              "kind": {
+                "Name": "lambda_naik"
+              }
+            }
+          ],
+          "value": {
+            "id": 40,
+            "span": {
+              "start": 353,
+              "end": 373
+            },
+            "kind": {
+              "Lambda": {
+                "params": {
+                  "posonly": [],
+                  "args": [
+                    {
+                      "name": "x",
+                      "kind": "PosOrKw",
+                      "annotation": null,
+                      "default": null,
+                      "span": {
+                        "start": 360,
+                        "end": 361
+                      }
+                    },
+                    {
+                      "name": "y",
+                      "kind": "PosOrKw",
+                      "annotation": null,
+                      "default": {
+                        "id": 36,
+                        "span": {
+                          "start": 365,
+                          "end": 366
+                        },
+                        "kind": {
+                          "Int": "1"
+                        }
+                      },
+                      "span": {
+                        "start": 363,
+                        "end": 366
+                      }
+                    }
+                  ],
+                  "vararg": null,
+                  "kwonly": [],
+                  "kwarg": null
+                },
+                "body": {
+                  "id": 39,
+                  "span": {
+                    "start": 368,
+                    "end": 373
+                  },
+                  "kind": {
+                    "Binary": {
+                      "left": {
+                        "id": 37,
+                        "span": {
+                          "start": 368,
+                          "end": 369
+                        },
+                        "kind": {
+                          "Name": "x"
+                        }
+                      },
+                      "op": "Add",
+                      "right": {
+                        "id": 38,
+                        "span": {
+                          "start": 372,
+                          "end": 373
+                        },
+                        "kind": {
+                          "Name": "y"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

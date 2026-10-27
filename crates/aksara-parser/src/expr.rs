@@ -166,6 +166,25 @@ impl Parser {
         let mut comparators = Vec::new();
 
         loop {
+            if self.at(&TokenKind::Adalah) {
+                self.bump();
+                if self.at(&TokenKind::Bukan) {
+                    let span = self.current().span;
+                    self.error_help(
+                        "E-SINTAKS",
+                        "urutan operator `adalah bukan` tidak dikenal",
+                        span,
+                        "gunakan `bukan adalah` untuk negasi identitas",
+                    );
+                    self.bump();
+                    ops.push(CmpOp::IsNot);
+                } else {
+                    ops.push(CmpOp::Is);
+                }
+                comparators.push(self.parse_bit_or());
+                continue;
+            }
+
             let op = match self.current().kind {
                 TokenKind::EqEq => Some(CmpOp::Eq),
                 TokenKind::NotEq => Some(CmpOp::NotEq),
@@ -174,7 +193,6 @@ impl Parser {
                 TokenKind::Gt => Some(CmpOp::Gt),
                 TokenKind::Ge => Some(CmpOp::Ge),
                 TokenKind::Dalam => Some(CmpOp::In),
-                TokenKind::Adalah => Some(CmpOp::Is),
                 _ => None,
             };
             if let Some(op) = op {

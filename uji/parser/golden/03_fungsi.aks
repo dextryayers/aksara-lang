@@ -1,0 +1,14 @@
+# Fungsi, parameter, dekorator, dan hasil.
+@dekorator
+@dekorator(1, nama="x")
+fungsi jumlahkan(a, b=1, /, c=2, *args, d=3, **kwargs) -> bilangan:
+    """Menjumlahkan nilai."""
+    hasil = a + b + c + d
+    kembalikan hasil
+
+asinkron fungsi ambil(url, /, *, batas=10):
+    data = tunggu unduh(url)
+    hasilkan data
+    hasilkan dari data
+
+lambda_naik = lambda x, y=1: x + y

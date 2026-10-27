@@ -1,0 +1,880 @@
+{
+  "id": 73,
+  "span": {
+    "start": 31,
+    "end": 453
+  },
+  "body": [
+    {
+      "id": 19,
+      "span": {
+        "start": 31,
+        "end": 137
+      },
+      "kind": {
+        "If": {
+          "condition": {
+            "id": 2,
+            "span": {
+              "start": 36,
+              "end": 46
+            },
+            "kind": {
+              "Compare": {
+                "left": {
+                  "id": 0,
+                  "span": {
+                    "start": 36,
+                    "end": 41
+                  },
+                  "kind": {
+                    "Name": "nilai"
+                  }
+                },
+                "ops": [
+                  "Gt"
+                ],
+                "comparators": [
+                  {
+                    "id": 1,
+                    "span": {
+                      "start": 44,
+                      "end": 46
+                    },
+                    "kind": {
+                      "Int": "10"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 6,
+              "span": {
+                "start": 52,
+                "end": 66
+              },
+              "kind": {
+                "Expr": {
+                  "id": 5,
+                  "span": {
+                    "start": 52,
+                    "end": 66
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 3,
+                        "span": {
+                          "start": 52,
+                          "end": 57
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 4,
+                            "span": {
+                              "start": 58,
+                              "end": 65
+                            },
+                            "kind": {
+                              "Str": {
+                                "prefix": "",
+                                "quote": "Double",
+                                "raw": "besar"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [
+            {
+              "id": 18,
+              "span": {
+                "start": 67,
+                "end": 137
+              },
+              "kind": {
+                "If": {
+                  "condition": {
+                    "id": 9,
+                    "span": {
+                      "start": 80,
+                      "end": 91
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 7,
+                          "span": {
+                            "start": 80,
+                            "end": 85
+                          },
+                          "kind": {
+                            "Name": "nilai"
+                          }
+                        },
+                        "ops": [
+                          "Eq"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 8,
+                            "span": {
+                              "start": 89,
+                              "end": 91
+                            },
+                            "kind": {
+                              "Int": "10"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "body": [
+                    {
+                      "id": 13,
+                      "span": {
+                        "start": 97,
+                        "end": 109
+                      },
+                      "kind": {
+                        "Expr": {
+                          "id": 12,
+                          "span": {
+                            "start": 97,
+                            "end": 109
+                          },
+                          "kind": {
+                            "Call": {
+                              "func": {
+                                "id": 10,
+                                "span": {
+                                  "start": 97,
+                                  "end": 102
+                                },
+                                "kind": {
+                                  "Name": "cetak"
+                                }
+                              },
+                              "args": [
+                                {
+                                  "Positional": {
+                                    "id": 11,
+                                    "span": {
+                                      "start": 103,
+                                      "end": 108
+                                    },
+                                    "kind": {
+                                      "Str": {
+                                        "prefix": "",
+                                        "quote": "Double",
+                                        "raw": "pas"
+                                      }
+                                    }
+                                  }
+                                }
+                              ],
+                              "safe": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "orelse": [
+                    {
+                      "id": 17,
+                      "span": {
+                        "start": 123,
+                        "end": 137
+                      },
+                      "kind": {
+                        "Expr": {
+                          "id": 16,
+                          "span": {
+                            "start": 123,
+                            "end": 137
+                          },
+                          "kind": {
+                            "Call": {
+                              "func": {
+                                "id": 14,
+                                "span": {
+                                  "start": 123,
+                                  "end": 128
+                                },
+                                "kind": {
+                                  "Name": "cetak"
+                                }
+                              },
+                              "args": [
+                                {
+                                  "Positional": {
+                                    "id": 15,
+                                    "span": {
+                                      "start": 129,
+                                      "end": 136
+                                    },
+                                    "kind": {
+                                      "Str": {
+                                        "prefix": "",
+                                        "quote": "Double",
+                                        "raw": "kecil"
+                                      }
+                                    }
+                                  }
+                                }
+                              ],
+                              "safe": false
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 30,
+      "span": {
+        "start": 139,
+        "end": 201
+      },
+      "kind": {
+        "While": {
+          "condition": {
+            "id": 22,
+            "span": {
+              "start": 146,
+              "end": 155
+            },
+            "kind": {
+              "Compare": {
+                "left": {
+                  "id": 20,
+                  "span": {
+                    "start": 146,
+                    "end": 151
+                  },
+                  "kind": {
+                    "Name": "nilai"
+                  }
+                },
+                "ops": [
+                  "Gt"
+                ],
+                "comparators": [
+                  {
+                    "id": 21,
+                    "span": {
+                      "start": 154,
+                      "end": 155
+                    },
+                    "kind": {
+                      "Int": "0"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 25,
+              "span": {
+                "start": 161,
+                "end": 171
+              },
+              "kind": {
+                "AugAssign": {
+                  "target": {
+                    "id": 23,
+                    "span": {
+                      "start": 161,
+                      "end": 166
+                    },
+                    "kind": {
+                      "Name": "nilai"
+                    }
+                  },
+                  "op": "Sub",
+                  "value": {
+                    "id": 24,
+                    "span": {
+                      "start": 170,
+                      "end": 171
+                    },
+                    "kind": {
+                      "Int": "1"
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [
+            {
+              "id": 29,
+              "span": {
+                "start": 185,
+                "end": 201
+              },
+              "kind": {
+                "Expr": {
+                  "id": 28,
+                  "span": {
+                    "start": 185,
+                    "end": 201
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 26,
+                        "span": {
+                          "start": 185,
+                          "end": 190
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 27,
+                            "span": {
+                              "start": 191,
+                              "end": 200
+                            },
+                            "kind": {
+                              "Str": {
+                                "prefix": "",
+                                "quote": "Double",
+                                "raw": "selesai"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": 46,
+      "span": {
+        "start": 203,
+        "end": 319
+      },
+      "kind": {
+        "For": {
+          "target": {
+            "id": 31,
+            "span": {
+              "start": 216,
+              "end": 220
+            },
+            "kind": {
+              "Name": "item"
+            }
+          },
+          "iter": {
+            "Each": {
+              "id": 32,
+              "span": {
+                "start": 227,
+                "end": 231
+              },
+              "kind": {
+                "Name": "data"
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 37,
+              "span": {
+                "start": 237,
+                "end": 275
+              },
+              "kind": {
+                "If": {
+                  "condition": {
+                    "id": 35,
+                    "span": {
+                      "start": 242,
+                      "end": 256
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 33,
+                          "span": {
+                            "start": 242,
+                            "end": 246
+                          },
+                          "kind": {
+                            "Name": "item"
+                          }
+                        },
+                        "ops": [
+                          "Eq"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 34,
+                            "span": {
+                              "start": 250,
+                              "end": 256
+                            },
+                            "kind": "None"
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "body": [
+                    {
+                      "id": 36,
+                      "span": {
+                        "start": 266,
+                        "end": 275
+                      },
+                      "kind": "Continue"
+                    }
+                  ],
+                  "orelse": []
+                }
+              }
+            },
+            {
+              "id": 41,
+              "span": {
+                "start": 280,
+                "end": 291
+              },
+              "kind": {
+                "Expr": {
+                  "id": 40,
+                  "span": {
+                    "start": 280,
+                    "end": 291
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 38,
+                        "span": {
+                          "start": 280,
+                          "end": 285
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 39,
+                            "span": {
+                              "start": 286,
+                              "end": 290
+                            },
+                            "kind": {
+                              "Name": "item"
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [
+            {
+              "id": 45,
+              "span": {
+                "start": 305,
+                "end": 319
+              },
+              "kind": {
+                "Expr": {
+                  "id": 44,
+                  "span": {
+                    "start": 305,
+                    "end": 319
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 42,
+                        "span": {
+                          "start": 305,
+                          "end": 310
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 43,
+                            "span": {
+                              "start": 311,
+                              "end": 318
+                            },
+                            "kind": {
+                              "Str": {
+                                "prefix": "",
+                                "quote": "Double",
+                                "raw": "habis"
+                              }
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "is_async": false
+        }
+      }
+    },
+    {
+      "id": 53,
+      "span": {
+        "start": 321,
+        "end": 353
+      },
+      "kind": {
+        "For": {
+          "target": {
+            "id": 47,
+            "span": {
+              "start": 327,
+              "end": 328
+            },
+            "kind": {
+              "Name": "i"
+            }
+          },
+          "iter": {
+            "Times": {
+              "id": 48,
+              "span": {
+                "start": 338,
+                "end": 339
+              },
+              "kind": {
+                "Int": "3"
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 52,
+              "span": {
+                "start": 345,
+                "end": 353
+              },
+              "kind": {
+                "Expr": {
+                  "id": 51,
+                  "span": {
+                    "start": 345,
+                    "end": 353
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 49,
+                        "span": {
+                          "start": 345,
+                          "end": 350
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 50,
+                            "span": {
+                              "start": 351,
+                              "end": 352
+                            },
+                            "kind": {
+                              "Name": "i"
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [],
+          "is_async": false
+        }
+      }
+    },
+    {
+      "id": 62,
+      "span": {
+        "start": 355,
+        "end": 402
+      },
+      "kind": {
+        "For": {
+          "target": {
+            "id": 54,
+            "span": {
+              "start": 361,
+              "end": 362
+            },
+            "kind": {
+              "Name": "i"
+            }
+          },
+          "iter": {
+            "Range": {
+              "start": {
+                "id": 55,
+                "span": {
+                  "start": 368,
+                  "end": 369
+                },
+                "kind": {
+                  "Int": "1"
+                }
+              },
+              "end": {
+                "id": 56,
+                "span": {
+                  "start": 377,
+                  "end": 378
+                },
+                "kind": {
+                  "Int": "5"
+                }
+              },
+              "step": {
+                "id": 57,
+                "span": {
+                  "start": 387,
+                  "end": 388
+                },
+                "kind": {
+                  "Int": "2"
+                }
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 61,
+              "span": {
+                "start": 394,
+                "end": 402
+              },
+              "kind": {
+                "Expr": {
+                  "id": 60,
+                  "span": {
+                    "start": 394,
+                    "end": 402
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 58,
+                        "span": {
+                          "start": 394,
+                          "end": 399
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 59,
+                            "span": {
+                              "start": 400,
+                              "end": 401
+                            },
+                            "kind": {
+                              "Name": "i"
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [],
+          "is_async": false
+        }
+      }
+    },
+    {
+      "id": 72,
+      "span": {
+        "start": 404,
+        "end": 452
+      },
+      "kind": {
+        "For": {
+          "target": {
+            "id": 63,
+            "span": {
+              "start": 410,
+              "end": 411
+            },
+            "kind": {
+              "Name": "i"
+            }
+          },
+          "iter": {
+            "Range": {
+              "start": {
+                "id": 64,
+                "span": {
+                  "start": 417,
+                  "end": 418
+                },
+                "kind": {
+                  "Int": "5"
+                }
+              },
+              "end": {
+                "id": 65,
+                "span": {
+                  "start": 426,
+                  "end": 427
+                },
+                "kind": {
+                  "Int": "1"
+                }
+              },
+              "step": {
+                "id": 67,
+                "span": {
+                  "start": 436,
+                  "end": 438
+                },
+                "kind": {
+                  "Unary": {
+                    "op": "Neg",
+                    "operand": {
+                      "id": 66,
+                      "span": {
+                        "start": 437,
+                        "end": 438
+                      },
+                      "kind": {
+                        "Int": "1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "body": [
+            {
+              "id": 71,
+              "span": {
+                "start": 444,
+                "end": 452
+              },
+              "kind": {
+                "Expr": {
+                  "id": 70,
+                  "span": {
+                    "start": 444,
+                    "end": 452
+                  },
+                  "kind": {
+                    "Call": {
+                      "func": {
+                        "id": 68,
+                        "span": {
+                          "start": 444,
+                          "end": 449
+                        },
+                        "kind": {
+                          "Name": "cetak"
+                        }
+                      },
+                      "args": [
+                        {
+                          "Positional": {
+                            "id": 69,
+                            "span": {
+                              "start": 450,
+                              "end": 451
+                            },
+                            "kind": {
+                              "Name": "i"
+                            }
+                          }
+                        }
+                      ],
+                      "safe": false
+                    }
+                  }
+                }
+              }
+            }
+          ],
+          "orelse": [],
+          "is_async": false
+        }
+      }
+    }
+  ]
+}

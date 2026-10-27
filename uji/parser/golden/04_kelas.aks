@@ -1,0 +1,19 @@
+# Kelas, warisan, metakelas, dan properti.
+@dekorator
+kelas Titik(Induk1, Induk2, metaclass=Meta):
+    """Titik pada bidang."""
+    x: bilangan = 0
+    y: bilangan = 0
+
+    fungsi __init__(diri, x, y=0):
+        induk().__init__()
+        diri.x = x
+        diri.y = y
+
+    @property
+    fungsi jarak(diri):
+        kembalikan (diri.x ** 2 + diri.y ** 2) ** 0.5
+
+    @jarak.setter
+    fungsi jarak(diri, nilai):
+        diri.x = nilai

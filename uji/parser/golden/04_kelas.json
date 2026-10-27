@@ -1,0 +1,687 @@
+{
+  "id": 51,
+  "span": {
+    "start": 43,
+    "end": 435
+  },
+  "body": [
+    {
+      "id": 50,
+      "span": {
+        "start": 43,
+        "end": 434
+      },
+      "kind": {
+        "Class": {
+          "name": "Titik",
+          "bases": [
+            {
+              "id": 1,
+              "span": {
+                "start": 66,
+                "end": 72
+              },
+              "kind": {
+                "Name": "Induk1"
+              }
+            },
+            {
+              "id": 2,
+              "span": {
+                "start": 74,
+                "end": 80
+              },
+              "kind": {
+                "Name": "Induk2"
+              }
+            }
+          ],
+          "keywords": [
+            {
+              "Keyword": {
+                "name": "metaclass",
+                "value": {
+                  "id": 3,
+                  "span": {
+                    "start": 92,
+                    "end": 96
+                  },
+                  "kind": {
+                    "Name": "Meta"
+                  }
+                }
+              }
+            }
+          ],
+          "body": [
+            {
+              "id": 5,
+              "span": {
+                "start": 103,
+                "end": 127
+              },
+              "kind": {
+                "Expr": {
+                  "id": 4,
+                  "span": {
+                    "start": 103,
+                    "end": 127
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "TripleDouble",
+                      "raw": "Titik pada bidang."
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 9,
+              "span": {
+                "start": 132,
+                "end": 147
+              },
+              "kind": {
+                "AnnAssign": {
+                  "target": {
+                    "id": 6,
+                    "span": {
+                      "start": 132,
+                      "end": 133
+                    },
+                    "kind": {
+                      "Name": "x"
+                    }
+                  },
+                  "annotation": {
+                    "id": 7,
+                    "span": {
+                      "start": 135,
+                      "end": 143
+                    },
+                    "kind": {
+                      "Name": "bilangan"
+                    }
+                  },
+                  "value": {
+                    "id": 8,
+                    "span": {
+                      "start": 146,
+                      "end": 147
+                    },
+                    "kind": {
+                      "Int": "0"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 13,
+              "span": {
+                "start": 152,
+                "end": 167
+              },
+              "kind": {
+                "AnnAssign": {
+                  "target": {
+                    "id": 10,
+                    "span": {
+                      "start": 152,
+                      "end": 153
+                    },
+                    "kind": {
+                      "Name": "y"
+                    }
+                  },
+                  "annotation": {
+                    "id": 11,
+                    "span": {
+                      "start": 155,
+                      "end": 163
+                    },
+                    "kind": {
+                      "Name": "bilangan"
+                    }
+                  },
+                  "value": {
+                    "id": 12,
+                    "span": {
+                      "start": 166,
+                      "end": 167
+                    },
+                    "kind": {
+                      "Int": "0"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "id": 28,
+              "span": {
+                "start": 173,
+                "end": 268
+              },
+              "kind": {
+                "Function": {
+                  "name": "__init__",
+                  "params": {
+                    "posonly": [],
+                    "args": [
+                      {
+                        "name": "diri",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": null,
+                        "span": {
+                          "start": 189,
+                          "end": 193
+                        }
+                      },
+                      {
+                        "name": "x",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": null,
+                        "span": {
+                          "start": 195,
+                          "end": 196
+                        }
+                      },
+                      {
+                        "name": "y",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": {
+                          "id": 14,
+                          "span": {
+                            "start": 200,
+                            "end": 201
+                          },
+                          "kind": {
+                            "Int": "0"
+                          }
+                        },
+                        "span": {
+                          "start": 198,
+                          "end": 201
+                        }
+                      }
+                    ],
+                    "vararg": null,
+                    "kwonly": [],
+                    "kwarg": null
+                  },
+                  "returns": null,
+                  "body": [
+                    {
+                      "id": 19,
+                      "span": {
+                        "start": 212,
+                        "end": 230
+                      },
+                      "kind": {
+                        "Expr": {
+                          "id": 18,
+                          "span": {
+                            "start": 212,
+                            "end": 230
+                          },
+                          "kind": {
+                            "Call": {
+                              "func": {
+                                "id": 17,
+                                "span": {
+                                  "start": 212,
+                                  "end": 228
+                                },
+                                "kind": {
+                                  "Attribute": {
+                                    "value": {
+                                      "id": 16,
+                                      "span": {
+                                        "start": 212,
+                                        "end": 219
+                                      },
+                                      "kind": {
+                                        "Call": {
+                                          "func": {
+                                            "id": 15,
+                                            "span": {
+                                              "start": 212,
+                                              "end": 217
+                                            },
+                                            "kind": {
+                                              "Name": "induk"
+                                            }
+                                          },
+                                          "args": [],
+                                          "safe": false
+                                        }
+                                      }
+                                    },
+                                    "attr": "__init__",
+                                    "safe": false
+                                  }
+                                }
+                              },
+                              "args": [],
+                              "safe": false
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": 23,
+                      "span": {
+                        "start": 239,
+                        "end": 249
+                      },
+                      "kind": {
+                        "Assign": {
+                          "targets": [
+                            {
+                              "id": 21,
+                              "span": {
+                                "start": 239,
+                                "end": 245
+                              },
+                              "kind": {
+                                "Attribute": {
+                                  "value": {
+                                    "id": 20,
+                                    "span": {
+                                      "start": 239,
+                                      "end": 243
+                                    },
+                                    "kind": {
+                                      "Name": "diri"
+                                    }
+                                  },
+                                  "attr": "x",
+                                  "safe": false
+                                }
+                              }
+                            }
+                          ],
+                          "value": {
+                            "id": 22,
+                            "span": {
+                              "start": 248,
+                              "end": 249
+                            },
+                            "kind": {
+                              "Name": "x"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "id": 27,
+                      "span": {
+                        "start": 258,
+                        "end": 268
+                      },
+                      "kind": {
+                        "Assign": {
+                          "targets": [
+                            {
+                              "id": 25,
+                              "span": {
+                                "start": 258,
+                                "end": 264
+                              },
+                              "kind": {
+                                "Attribute": {
+                                  "value": {
+                                    "id": 24,
+                                    "span": {
+                                      "start": 258,
+                                      "end": 262
+                                    },
+                                    "kind": {
+                                      "Name": "diri"
+                                    }
+                                  },
+                                  "attr": "y",
+                                  "safe": false
+                                }
+                              }
+                            }
+                          ],
+                          "value": {
+                            "id": 26,
+                            "span": {
+                              "start": 267,
+                              "end": 268
+                            },
+                            "kind": {
+                              "Name": "y"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "decorators": [],
+                  "is_async": false
+                }
+              }
+            },
+            {
+              "id": 42,
+              "span": {
+                "start": 274,
+                "end": 361
+              },
+              "kind": {
+                "Function": {
+                  "name": "jarak",
+                  "params": {
+                    "posonly": [],
+                    "args": [
+                      {
+                        "name": "diri",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": null,
+                        "span": {
+                          "start": 301,
+                          "end": 305
+                        }
+                      }
+                    ],
+                    "vararg": null,
+                    "kwonly": [],
+                    "kwarg": null
+                  },
+                  "returns": null,
+                  "body": [
+                    {
+                      "id": 41,
+                      "span": {
+                        "start": 316,
+                        "end": 361
+                      },
+                      "kind": {
+                        "Return": {
+                          "id": 40,
+                          "span": {
+                            "start": 327,
+                            "end": 361
+                          },
+                          "kind": {
+                            "Binary": {
+                              "left": {
+                                "id": 38,
+                                "span": {
+                                  "start": 327,
+                                  "end": 354
+                                },
+                                "kind": {
+                                  "Binary": {
+                                    "left": {
+                                      "id": 33,
+                                      "span": {
+                                        "start": 328,
+                                        "end": 339
+                                      },
+                                      "kind": {
+                                        "Binary": {
+                                          "left": {
+                                            "id": 31,
+                                            "span": {
+                                              "start": 328,
+                                              "end": 334
+                                            },
+                                            "kind": {
+                                              "Attribute": {
+                                                "value": {
+                                                  "id": 30,
+                                                  "span": {
+                                                    "start": 328,
+                                                    "end": 332
+                                                  },
+                                                  "kind": {
+                                                    "Name": "diri"
+                                                  }
+                                                },
+                                                "attr": "x",
+                                                "safe": false
+                                              }
+                                            }
+                                          },
+                                          "op": "Pow",
+                                          "right": {
+                                            "id": 32,
+                                            "span": {
+                                              "start": 338,
+                                              "end": 339
+                                            },
+                                            "kind": {
+                                              "Int": "2"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    },
+                                    "op": "Add",
+                                    "right": {
+                                      "id": 37,
+                                      "span": {
+                                        "start": 342,
+                                        "end": 353
+                                      },
+                                      "kind": {
+                                        "Binary": {
+                                          "left": {
+                                            "id": 35,
+                                            "span": {
+                                              "start": 342,
+                                              "end": 348
+                                            },
+                                            "kind": {
+                                              "Attribute": {
+                                                "value": {
+                                                  "id": 34,
+                                                  "span": {
+                                                    "start": 342,
+                                                    "end": 346
+                                                  },
+                                                  "kind": {
+                                                    "Name": "diri"
+                                                  }
+                                                },
+                                                "attr": "y",
+                                                "safe": false
+                                              }
+                                            }
+                                          },
+                                          "op": "Pow",
+                                          "right": {
+                                            "id": 36,
+                                            "span": {
+                                              "start": 352,
+                                              "end": 353
+                                            },
+                                            "kind": {
+                                              "Int": "2"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "op": "Pow",
+                              "right": {
+                                "id": 39,
+                                "span": {
+                                  "start": 358,
+                                  "end": 361
+                                },
+                                "kind": {
+                                  "Float": "0.5"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "decorators": [
+                    {
+                      "id": 29,
+                      "span": {
+                        "start": 275,
+                        "end": 283
+                      },
+                      "kind": {
+                        "Name": "property"
+                      }
+                    }
+                  ],
+                  "is_async": false
+                }
+              }
+            },
+            {
+              "id": 49,
+              "span": {
+                "start": 367,
+                "end": 434
+              },
+              "kind": {
+                "Function": {
+                  "name": "jarak",
+                  "params": {
+                    "posonly": [],
+                    "args": [
+                      {
+                        "name": "diri",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": null,
+                        "span": {
+                          "start": 398,
+                          "end": 402
+                        }
+                      },
+                      {
+                        "name": "nilai",
+                        "kind": "PosOrKw",
+                        "annotation": null,
+                        "default": null,
+                        "span": {
+                          "start": 404,
+                          "end": 409
+                        }
+                      }
+                    ],
+                    "vararg": null,
+                    "kwonly": [],
+                    "kwarg": null
+                  },
+                  "returns": null,
+                  "body": [
+                    {
+                      "id": 48,
+                      "span": {
+                        "start": 420,
+                        "end": 434
+                      },
+                      "kind": {
+                        "Assign": {
+                          "targets": [
+                            {
+                              "id": 46,
+                              "span": {
+                                "start": 420,
+                                "end": 426
+                              },
+                              "kind": {
+                                "Attribute": {
+                                  "value": {
+                                    "id": 45,
+                                    "span": {
+                                      "start": 420,
+                                      "end": 424
+                                    },
+                                    "kind": {
+                                      "Name": "diri"
+                                    }
+                                  },
+                                  "attr": "x",
+                                  "safe": false
+                                }
+                              }
+                            }
+                          ],
+                          "value": {
+                            "id": 47,
+                            "span": {
+                              "start": 429,
+                              "end": 434
+                            },
+                            "kind": {
+                              "Name": "nilai"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "decorators": [
+                    {
+                      "id": 44,
+                      "span": {
+                        "start": 368,
+                        "end": 380
+                      },
+                      "kind": {
+                        "Attribute": {
+                          "value": {
+                            "id": 43,
+                            "span": {
+                              "start": 368,
+                              "end": 373
+                            },
+                            "kind": {
+                              "Name": "jarak"
+                            }
+                          },
+                          "attr": "setter",
+                          "safe": false
+                        }
+                      }
+                    }
+                  ],
+                  "is_async": false
+                }
+              }
+            }
+          ],
+          "decorators": [
+            {
+              "id": 0,
+              "span": {
+                "start": 44,
+                "end": 53
+              },
+              "kind": {
+                "Name": "dekorator"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

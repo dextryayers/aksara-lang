@@ -292,6 +292,7 @@ impl Parser {
     fn parse_if(&mut self) -> Stmt {
         let start = self.bump().span;
         let condition = self.parse_expression();
+        let condition = self.recover_condition_assignment(condition);
         self.expect(&TokenKind::Colon, "`:` setelah kondisi `jika`");
         let body = self.parse_suite();
         let orelse = self.parse_else_clause();
@@ -306,6 +307,23 @@ impl Parser {
                 orelse,
             },
         )
+    }
+
+    /// Menangani `jika x = 1:` dengan pesan yang menyarankan `==` atau `:=`.
+    fn recover_condition_assignment(&mut self, condition: aksara_ast::Expr) -> aksara_ast::Expr {
+        if !self.at(&TokenKind::Eq) {
+            return condition;
+        }
+        let span = self.current().span;
+        self.error_help(
+            "E-PENUGASAN",
+            "penugasan tidak diizinkan di dalam kondisi",
+            span,
+            "gunakan `==` untuk perbandingan atau `(x := nilai)` untuk penugasan",
+        );
+        self.bump();
+        let _ = self.parse_expression();
+        condition
     }
 
     fn parse_else_clause(&mut self) -> Vec<Stmt> {
@@ -348,6 +366,7 @@ impl Parser {
     fn parse_while(&mut self) -> Stmt {
         let start = self.bump().span;
         let condition = self.parse_expression();
+        let condition = self.recover_condition_assignment(condition);
         self.expect(&TokenKind::Colon, "`:` setelah kondisi `selama`");
         let body = self.parse_suite();
         let orelse = self.parse_else_suite();

@@ -34,7 +34,7 @@ impl<'a> Lexer<'a> {
             src,
             pos,
             base,
-            tokens: Vec::new(),
+            tokens: Vec::with_capacity(src.len() / 4 + 16),
             diagnostics: Vec::new(),
             indent_stack: vec![0],
             at_line_start: true,
@@ -221,20 +221,44 @@ impl<'a> Lexer<'a> {
         Span::new(self.base + start as u32, self.base + self.pos as u32)
     }
 
+    #[inline]
     fn peek(&self) -> Option<char> {
-        self.src[self.pos..].chars().next()
+        let byte = *self.src.as_bytes().get(self.pos)?;
+        if byte.is_ascii() {
+            Some(byte as char)
+        } else {
+            self.src[self.pos..].chars().next()
+        }
     }
 
+    #[inline]
     fn peek_next(&self) -> Option<char> {
-        let mut chars = self.src[self.pos..].chars();
-        chars.next()?;
-        chars.next()
+        let bytes = self.src.as_bytes();
+        let first = *bytes.get(self.pos)?;
+        let next = self.pos + if first.is_ascii() {
+            1
+        } else {
+            self.src[self.pos..].chars().next()?.len_utf8()
+        };
+        let byte = *bytes.get(next)?;
+        if byte.is_ascii() {
+            Some(byte as char)
+        } else {
+            self.src[next..].chars().next()
+        }
     }
 
+    #[inline]
     fn bump(&mut self) -> Option<char> {
-        let ch = self.peek()?;
-        self.pos += ch.len_utf8();
-        Some(ch)
+        let byte = *self.src.as_bytes().get(self.pos)?;
+        if byte.is_ascii() {
+            self.pos += 1;
+            Some(byte as char)
+        } else {
+            let ch = self.src[self.pos..].chars().next()?;
+            self.pos += ch.len_utf8();
+            Some(ch)
+        }
     }
 
     fn eat(&mut self, expected: char) -> bool {

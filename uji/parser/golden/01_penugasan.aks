@@ -1,0 +1,9 @@
+# Penugasan, anotasi, dan operator.
+nilai = 1 + 2 * 3
+nama: teks = "Aksara"
+salinan = nilai
+nilai += 10
+nilai //= 2
+a, b = b, a
+kepala, *ekor = [1, 2, 3]
+catatan: bilangan

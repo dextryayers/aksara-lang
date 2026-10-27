@@ -1,0 +1,1659 @@
+{
+  "id": 142,
+  "span": {
+    "start": 35,
+    "end": 728
+  },
+  "body": [
+    {
+      "id": 14,
+      "span": {
+        "start": 35,
+        "end": 70
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 0,
+              "span": {
+                "start": 35,
+                "end": 40
+              },
+              "kind": {
+                "Name": "hasil"
+              }
+            }
+          ],
+          "value": {
+            "id": 13,
+            "span": {
+              "start": 43,
+              "end": 70
+            },
+            "kind": {
+              "Binary": {
+                "left": {
+                  "id": 7,
+                  "span": {
+                    "start": 43,
+                    "end": 57
+                  },
+                  "kind": {
+                    "Binary": {
+                      "left": {
+                        "id": 1,
+                        "span": {
+                          "start": 43,
+                          "end": 44
+                        },
+                        "kind": {
+                          "Int": "1"
+                        }
+                      },
+                      "op": "Add",
+                      "right": {
+                        "id": 6,
+                        "span": {
+                          "start": 47,
+                          "end": 57
+                        },
+                        "kind": {
+                          "Binary": {
+                            "left": {
+                              "id": 2,
+                              "span": {
+                                "start": 47,
+                                "end": 48
+                              },
+                              "kind": {
+                                "Int": "2"
+                              }
+                            },
+                            "op": "Mul",
+                            "right": {
+                              "id": 5,
+                              "span": {
+                                "start": 51,
+                                "end": 57
+                              },
+                              "kind": {
+                                "Binary": {
+                                  "left": {
+                                    "id": 3,
+                                    "span": {
+                                      "start": 51,
+                                      "end": 52
+                                    },
+                                    "kind": {
+                                      "Int": "3"
+                                    }
+                                  },
+                                  "op": "Pow",
+                                  "right": {
+                                    "id": 4,
+                                    "span": {
+                                      "start": 56,
+                                      "end": 57
+                                    },
+                                    "kind": {
+                                      "Int": "2"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "op": "Sub",
+                "right": {
+                  "id": 12,
+                  "span": {
+                    "start": 60,
+                    "end": 70
+                  },
+                  "kind": {
+                    "Binary": {
+                      "left": {
+                        "id": 10,
+                        "span": {
+                          "start": 60,
+                          "end": 66
+                        },
+                        "kind": {
+                          "Binary": {
+                            "left": {
+                              "id": 8,
+                              "span": {
+                                "start": 60,
+                                "end": 61
+                              },
+                              "kind": {
+                                "Int": "4"
+                              }
+                            },
+                            "op": "FloorDiv",
+                            "right": {
+                              "id": 9,
+                              "span": {
+                                "start": 65,
+                                "end": 66
+                              },
+                              "kind": {
+                                "Int": "2"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "op": "Mod",
+                      "right": {
+                        "id": 11,
+                        "span": {
+                          "start": 69,
+                          "end": 70
+                        },
+                        "kind": {
+                          "Int": "3"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 20,
+      "span": {
+        "start": 71,
+        "end": 97
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 15,
+              "span": {
+                "start": 71,
+                "end": 78
+              },
+              "kind": {
+                "Name": "banding"
+              }
+            }
+          ],
+          "value": {
+            "id": 19,
+            "span": {
+              "start": 81,
+              "end": 97
+            },
+            "kind": {
+              "Compare": {
+                "left": {
+                  "id": 16,
+                  "span": {
+                    "start": 81,
+                    "end": 82
+                  },
+                  "kind": {
+                    "Int": "0"
+                  }
+                },
+                "ops": [
+                  "Lt",
+                  "Le"
+                ],
+                "comparators": [
+                  {
+                    "id": 17,
+                    "span": {
+                      "start": 85,
+                      "end": 90
+                    },
+                    "kind": {
+                      "Name": "hasil"
+                    }
+                  },
+                  {
+                    "id": 18,
+                    "span": {
+                      "start": 94,
+                      "end": 97
+                    },
+                    "kind": {
+                      "Int": "100"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 28,
+      "span": {
+        "start": 98,
+        "end": 140
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 21,
+              "span": {
+                "start": 98,
+                "end": 104
+              },
+              "kind": {
+                "Name": "logika"
+              }
+            }
+          ],
+          "value": {
+            "id": 27,
+            "span": {
+              "start": 107,
+              "end": 140
+            },
+            "kind": {
+              "BoolOp": {
+                "op": "Or",
+                "values": [
+                  {
+                    "id": 25,
+                    "span": {
+                      "start": 107,
+                      "end": 128
+                    },
+                    "kind": {
+                      "BoolOp": {
+                        "op": "And",
+                        "values": [
+                          {
+                            "id": 22,
+                            "span": {
+                              "start": 107,
+                              "end": 112
+                            },
+                            "kind": {
+                              "Bool": true
+                            }
+                          },
+                          {
+                            "id": 24,
+                            "span": {
+                              "start": 117,
+                              "end": 128
+                            },
+                            "kind": {
+                              "Unary": {
+                                "op": "Not",
+                                "operand": {
+                                  "id": 23,
+                                  "span": {
+                                    "start": 123,
+                                    "end": 128
+                                  },
+                                  "kind": {
+                                    "Bool": false
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "id": 26,
+                    "span": {
+                      "start": 134,
+                      "end": 140
+                    },
+                    "kind": "None"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 35,
+      "span": {
+        "start": 141,
+        "end": 170
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 29,
+              "span": {
+                "start": 141,
+                "end": 147
+              },
+              "kind": {
+                "Name": "gabung"
+              }
+            }
+          ],
+          "value": {
+            "id": 34,
+            "span": {
+              "start": 150,
+              "end": 170
+            },
+            "kind": {
+              "Binary": {
+                "left": {
+                  "id": 32,
+                  "span": {
+                    "start": 150,
+                    "end": 165
+                  },
+                  "kind": {
+                    "Binary": {
+                      "left": {
+                        "id": 30,
+                        "span": {
+                          "start": 150,
+                          "end": 156
+                        },
+                        "kind": "None"
+                      },
+                      "op": "NullCoalesce",
+                      "right": {
+                        "id": 31,
+                        "span": {
+                          "start": 160,
+                          "end": 165
+                        },
+                        "kind": {
+                          "Name": "hasil"
+                        }
+                      }
+                    }
+                  }
+                },
+                "op": "NullCoalesce",
+                "right": {
+                  "id": 33,
+                  "span": {
+                    "start": 169,
+                    "end": 170
+                  },
+                  "kind": {
+                    "Int": "0"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 41,
+      "span": {
+        "start": 171,
+        "end": 205
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 36,
+              "span": {
+                "start": 171,
+                "end": 180
+              },
+              "kind": {
+                "Name": "di_antara"
+              }
+            }
+          ],
+          "value": {
+            "id": 40,
+            "span": {
+              "start": 183,
+              "end": 205
+            },
+            "kind": {
+              "Between": {
+                "value": {
+                  "id": 37,
+                  "span": {
+                    "start": 183,
+                    "end": 188
+                  },
+                  "kind": {
+                    "Name": "hasil"
+                  }
+                },
+                "low": {
+                  "id": 38,
+                  "span": {
+                    "start": 196,
+                    "end": 197
+                  },
+                  "kind": {
+                    "Int": "1"
+                  }
+                },
+                "high": {
+                  "id": 39,
+                  "span": {
+                    "start": 202,
+                    "end": 205
+                  },
+                  "kind": {
+                    "Int": "100"
+                  }
+                },
+                "negated": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 47,
+      "span": {
+        "start": 206,
+        "end": 251
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 42,
+              "span": {
+                "start": 206,
+                "end": 218
+              },
+              "kind": {
+                "Name": "bukan_antara"
+              }
+            }
+          ],
+          "value": {
+            "id": 46,
+            "span": {
+              "start": 221,
+              "end": 251
+            },
+            "kind": {
+              "Between": {
+                "value": {
+                  "id": 43,
+                  "span": {
+                    "start": 221,
+                    "end": 226
+                  },
+                  "kind": {
+                    "Name": "hasil"
+                  }
+                },
+                "low": {
+                  "id": 44,
+                  "span": {
+                    "start": 240,
+                    "end": 243
+                  },
+                  "kind": {
+                    "Int": "200"
+                  }
+                },
+                "high": {
+                  "id": 45,
+                  "span": {
+                    "start": 248,
+                    "end": 251
+                  },
+                  "kind": {
+                    "Int": "300"
+                  }
+                },
+                "negated": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 56,
+      "span": {
+        "start": 252,
+        "end": 309
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 48,
+              "span": {
+                "start": 252,
+                "end": 263
+              },
+              "kind": {
+                "Name": "keanggotaan"
+              }
+            }
+          ],
+          "value": {
+            "id": 55,
+            "span": {
+              "start": 266,
+              "end": 309
+            },
+            "kind": {
+              "BoolOp": {
+                "op": "And",
+                "values": [
+                  {
+                    "id": 51,
+                    "span": {
+                      "start": 266,
+                      "end": 282
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 49,
+                          "span": {
+                            "start": 266,
+                            "end": 271
+                          },
+                          "kind": {
+                            "Name": "hasil"
+                          }
+                        },
+                        "ops": [
+                          "In"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 50,
+                            "span": {
+                              "start": 278,
+                              "end": 282
+                            },
+                            "kind": {
+                              "Name": "data"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "id": 54,
+                    "span": {
+                      "start": 287,
+                      "end": 309
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 52,
+                          "span": {
+                            "start": 287,
+                            "end": 292
+                          },
+                          "kind": {
+                            "Name": "hasil"
+                          }
+                        },
+                        "ops": [
+                          "NotIn"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 53,
+                            "span": {
+                              "start": 305,
+                              "end": 309
+                            },
+                            "kind": {
+                              "Name": "lain"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 65,
+      "span": {
+        "start": 310,
+        "end": 370
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 57,
+              "span": {
+                "start": 310,
+                "end": 319
+              },
+              "kind": {
+                "Name": "identitas"
+              }
+            }
+          ],
+          "value": {
+            "id": 64,
+            "span": {
+              "start": 322,
+              "end": 370
+            },
+            "kind": {
+              "BoolOp": {
+                "op": "And",
+                "values": [
+                  {
+                    "id": 60,
+                    "span": {
+                      "start": 322,
+                      "end": 340
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 58,
+                          "span": {
+                            "start": 322,
+                            "end": 327
+                          },
+                          "kind": {
+                            "Name": "hasil"
+                          }
+                        },
+                        "ops": [
+                          "Is"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 59,
+                            "span": {
+                              "start": 335,
+                              "end": 340
+                            },
+                            "kind": {
+                              "Name": "nilai"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "id": 63,
+                    "span": {
+                      "start": 345,
+                      "end": 370
+                    },
+                    "kind": {
+                      "Compare": {
+                        "left": {
+                          "id": 61,
+                          "span": {
+                            "start": 345,
+                            "end": 350
+                          },
+                          "kind": {
+                            "Name": "hasil"
+                          }
+                        },
+                        "ops": [
+                          "IsNot"
+                        ],
+                        "comparators": [
+                          {
+                            "id": 62,
+                            "span": {
+                              "start": 364,
+                              "end": 370
+                            },
+                            "kind": "None"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 73,
+      "span": {
+        "start": 371,
+        "end": 420
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 66,
+              "span": {
+                "start": 371,
+                "end": 378
+              },
+              "kind": {
+                "Name": "pilihan"
+              }
+            }
+          ],
+          "value": {
+            "id": 72,
+            "span": {
+              "start": 381,
+              "end": 420
+            },
+            "kind": {
+              "IfExpr": {
+                "body": {
+                  "id": 67,
+                  "span": {
+                    "start": 381,
+                    "end": 388
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "Double",
+                      "raw": "besar"
+                    }
+                  }
+                },
+                "condition": {
+                  "id": 70,
+                  "span": {
+                    "start": 394,
+                    "end": 404
+                  },
+                  "kind": {
+                    "Compare": {
+                      "left": {
+                        "id": 68,
+                        "span": {
+                          "start": 394,
+                          "end": 399
+                        },
+                        "kind": {
+                          "Name": "hasil"
+                        }
+                      },
+                      "ops": [
+                        "Gt"
+                      ],
+                      "comparators": [
+                        {
+                          "id": 69,
+                          "span": {
+                            "start": 402,
+                            "end": 404
+                          },
+                          "kind": {
+                            "Int": "10"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "orelse": {
+                  "id": 71,
+                  "span": {
+                    "start": 413,
+                    "end": 420
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "Double",
+                      "raw": "kecil"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 80,
+      "span": {
+        "start": 421,
+        "end": 450
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 74,
+              "span": {
+                "start": 421,
+                "end": 426
+              },
+              "kind": {
+                "Name": "akses"
+              }
+            }
+          ],
+          "value": {
+            "id": 79,
+            "span": {
+              "start": 429,
+              "end": 450
+            },
+            "kind": {
+              "Call": {
+                "func": {
+                  "id": 78,
+                  "span": {
+                    "start": 429,
+                    "end": 447
+                  },
+                  "kind": {
+                    "Subscript": {
+                      "value": {
+                        "id": 76,
+                        "span": {
+                          "start": 429,
+                          "end": 443
+                        },
+                        "kind": {
+                          "Attribute": {
+                            "value": {
+                              "id": 75,
+                              "span": {
+                                "start": 429,
+                                "end": 434
+                              },
+                              "kind": {
+                                "Name": "objek"
+                              }
+                            },
+                            "attr": "atribut",
+                            "safe": true
+                          }
+                        }
+                      },
+                      "index": {
+                        "id": 77,
+                        "span": {
+                          "start": 445,
+                          "end": 446
+                        },
+                        "kind": {
+                          "Int": "0"
+                        }
+                      },
+                      "safe": true
+                    }
+                  }
+                },
+                "args": [],
+                "safe": true
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 88,
+      "span": {
+        "start": 451,
+        "end": 471
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 81,
+              "span": {
+                "start": 451,
+                "end": 457
+              },
+              "kind": {
+                "Name": "irisan"
+              }
+            }
+          ],
+          "value": {
+            "id": 87,
+            "span": {
+              "start": 460,
+              "end": 471
+            },
+            "kind": {
+              "Subscript": {
+                "value": {
+                  "id": 82,
+                  "span": {
+                    "start": 460,
+                    "end": 464
+                  },
+                  "kind": {
+                    "Name": "data"
+                  }
+                },
+                "index": {
+                  "id": 86,
+                  "span": {
+                    "start": 465,
+                    "end": 470
+                  },
+                  "kind": {
+                    "Slice": {
+                      "start": {
+                        "id": 83,
+                        "span": {
+                          "start": 465,
+                          "end": 466
+                        },
+                        "kind": {
+                          "Int": "1"
+                        }
+                      },
+                      "stop": {
+                        "id": 84,
+                        "span": {
+                          "start": 467,
+                          "end": 468
+                        },
+                        "kind": {
+                          "Int": "5"
+                        }
+                      },
+                      "step": {
+                        "id": 85,
+                        "span": {
+                          "start": 469,
+                          "end": 470
+                        },
+                        "kind": {
+                          "Int": "2"
+                        }
+                      }
+                    }
+                  }
+                },
+                "safe": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 97,
+      "span": {
+        "start": 472,
+        "end": 492
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 89,
+              "span": {
+                "start": 472,
+                "end": 477
+              },
+              "kind": {
+                "Name": "ganda"
+              }
+            }
+          ],
+          "value": {
+            "id": 96,
+            "span": {
+              "start": 480,
+              "end": 492
+            },
+            "kind": {
+              "Subscript": {
+                "value": {
+                  "id": 90,
+                  "span": {
+                    "start": 480,
+                    "end": 484
+                  },
+                  "kind": {
+                    "Name": "data"
+                  }
+                },
+                "index": {
+                  "id": 95,
+                  "span": {
+                    "start": 485,
+                    "end": 491
+                  },
+                  "kind": {
+                    "Tuple": [
+                      {
+                        "id": 93,
+                        "span": {
+                          "start": 485,
+                          "end": 488
+                        },
+                        "kind": {
+                          "Slice": {
+                            "start": {
+                              "id": 91,
+                              "span": {
+                                "start": 485,
+                                "end": 486
+                              },
+                              "kind": {
+                                "Int": "1"
+                              }
+                            },
+                            "stop": {
+                              "id": 92,
+                              "span": {
+                                "start": 487,
+                                "end": 488
+                              },
+                              "kind": {
+                                "Int": "2"
+                              }
+                            },
+                            "step": null
+                          }
+                        }
+                      },
+                      {
+                        "id": 94,
+                        "span": {
+                          "start": 490,
+                          "end": 491
+                        },
+                        "kind": {
+                          "Int": "3"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "safe": false
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 108,
+      "span": {
+        "start": 493,
+        "end": 539
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 98,
+              "span": {
+                "start": 493,
+                "end": 499
+              },
+              "kind": {
+                "Name": "daftar"
+              }
+            }
+          ],
+          "value": {
+            "id": 107,
+            "span": {
+              "start": 502,
+              "end": 539
+            },
+            "kind": {
+              "ListComp": {
+                "elt": {
+                  "id": 101,
+                  "span": {
+                    "start": 503,
+                    "end": 508
+                  },
+                  "kind": {
+                    "Binary": {
+                      "left": {
+                        "id": 99,
+                        "span": {
+                          "start": 503,
+                          "end": 504
+                        },
+                        "kind": {
+                          "Name": "n"
+                        }
+                      },
+                      "op": "Mul",
+                      "right": {
+                        "id": 100,
+                        "span": {
+                          "start": 507,
+                          "end": 508
+                        },
+                        "kind": {
+                          "Name": "n"
+                        }
+                      }
+                    }
+                  }
+                },
+                "clauses": [
+                  {
+                    "For": {
+                      "target": {
+                        "id": 102,
+                        "span": {
+                          "start": 515,
+                          "end": 516
+                        },
+                        "kind": {
+                          "Name": "n"
+                        }
+                      },
+                      "iter": {
+                        "id": 103,
+                        "span": {
+                          "start": 523,
+                          "end": 527
+                        },
+                        "kind": {
+                          "Name": "data"
+                        }
+                      },
+                      "is_async": false
+                    }
+                  },
+                  {
+                    "If": {
+                      "id": 106,
+                      "span": {
+                        "start": 533,
+                        "end": 538
+                      },
+                      "kind": {
+                        "Compare": {
+                          "left": {
+                            "id": 104,
+                            "span": {
+                              "start": 533,
+                              "end": 534
+                            },
+                            "kind": {
+                              "Name": "n"
+                            }
+                          },
+                          "ops": [
+                            "Gt"
+                          ],
+                          "comparators": [
+                            {
+                              "id": 105,
+                              "span": {
+                                "start": 537,
+                                "end": 538
+                              },
+                              "kind": {
+                                "Int": "0"
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 117,
+      "span": {
+        "start": 540,
+        "end": 580
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 109,
+              "span": {
+                "start": 540,
+                "end": 545
+              },
+              "kind": {
+                "Name": "kamus"
+              }
+            }
+          ],
+          "value": {
+            "id": 116,
+            "span": {
+              "start": 548,
+              "end": 580
+            },
+            "kind": {
+              "DictComp": {
+                "key": {
+                  "id": 110,
+                  "span": {
+                    "start": 549,
+                    "end": 550
+                  },
+                  "kind": {
+                    "Name": "k"
+                  }
+                },
+                "value": {
+                  "id": 111,
+                  "span": {
+                    "start": 552,
+                    "end": 553
+                  },
+                  "kind": {
+                    "Name": "v"
+                  }
+                },
+                "clauses": [
+                  {
+                    "For": {
+                      "target": {
+                        "id": 114,
+                        "span": {
+                          "start": 560,
+                          "end": 564
+                        },
+                        "kind": {
+                          "Tuple": [
+                            {
+                              "id": 112,
+                              "span": {
+                                "start": 560,
+                                "end": 561
+                              },
+                              "kind": {
+                                "Name": "k"
+                              }
+                            },
+                            {
+                              "id": 113,
+                              "span": {
+                                "start": 563,
+                                "end": 564
+                              },
+                              "kind": {
+                                "Name": "v"
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "iter": {
+                        "id": 115,
+                        "span": {
+                          "start": 571,
+                          "end": 579
+                        },
+                        "kind": {
+                          "Name": "pasangan"
+                        }
+                      },
+                      "is_async": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 123,
+      "span": {
+        "start": 581,
+        "end": 614
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 118,
+              "span": {
+                "start": 581,
+                "end": 589
+              },
+              "kind": {
+                "Name": "himpunan"
+              }
+            }
+          ],
+          "value": {
+            "id": 122,
+            "span": {
+              "start": 592,
+              "end": 614
+            },
+            "kind": {
+              "SetComp": {
+                "elt": {
+                  "id": 119,
+                  "span": {
+                    "start": 593,
+                    "end": 594
+                  },
+                  "kind": {
+                    "Name": "n"
+                  }
+                },
+                "clauses": [
+                  {
+                    "For": {
+                      "target": {
+                        "id": 120,
+                        "span": {
+                          "start": 601,
+                          "end": 602
+                        },
+                        "kind": {
+                          "Name": "n"
+                        }
+                      },
+                      "iter": {
+                        "id": 121,
+                        "span": {
+                          "start": 609,
+                          "end": 613
+                        },
+                        "kind": {
+                          "Name": "data"
+                        }
+                      },
+                      "is_async": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 129,
+      "span": {
+        "start": 615,
+        "end": 649
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 124,
+              "span": {
+                "start": 615,
+                "end": 624
+              },
+              "kind": {
+                "Name": "generator"
+              }
+            }
+          ],
+          "value": {
+            "id": 128,
+            "span": {
+              "start": 627,
+              "end": 649
+            },
+            "kind": {
+              "GeneratorExp": {
+                "elt": {
+                  "id": 125,
+                  "span": {
+                    "start": 628,
+                    "end": 629
+                  },
+                  "kind": {
+                    "Name": "n"
+                  }
+                },
+                "clauses": [
+                  {
+                    "For": {
+                      "target": {
+                        "id": 126,
+                        "span": {
+                          "start": 636,
+                          "end": 637
+                        },
+                        "kind": {
+                          "Name": "n"
+                        }
+                      },
+                      "iter": {
+                        "id": 127,
+                        "span": {
+                          "start": 644,
+                          "end": 648
+                        },
+                        "kind": {
+                          "Name": "data"
+                        }
+                      },
+                      "is_async": false
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 134,
+      "span": {
+        "start": 650,
+        "end": 698
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 130,
+              "span": {
+                "start": 650,
+                "end": 654
+              },
+              "kind": {
+                "Name": "teks"
+              }
+            }
+          ],
+          "value": {
+            "id": 133,
+            "span": {
+              "start": 657,
+              "end": 698
+            },
+            "kind": {
+              "FString": [
+                {
+                  "Text": "Halo "
+                },
+                {
+                  "Expr": {
+                    "value": {
+                      "id": 131,
+                      "span": {
+                        "start": 665,
+                        "end": 669
+                      },
+                      "kind": {
+                        "Name": "nama"
+                      }
+                    },
+                    "conversion": "r",
+                    "format_spec": [
+                      {
+                        "Text": ">"
+                      },
+                      {
+                        "Expr": {
+                          "value": {
+                            "id": 132,
+                            "span": {
+                              "start": 674,
+                              "end": 679
+                            },
+                            "kind": {
+                              "Name": "lebar"
+                            }
+                          },
+                          "conversion": null,
+                          "format_spec": null
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "Text": " dan {literal}"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 141,
+      "span": {
+        "start": 699,
+        "end": 727
+      },
+      "kind": {
+        "Assign": {
+          "targets": [
+            {
+              "id": 135,
+              "span": {
+                "start": 699,
+                "end": 707
+              },
+              "kind": {
+                "Name": "gabungan"
+              }
+            }
+          ],
+          "value": {
+            "id": 140,
+            "span": {
+              "start": 710,
+              "end": 727
+            },
+            "kind": {
+              "StringConcat": [
+                {
+                  "id": 136,
+                  "span": {
+                    "start": 710,
+                    "end": 713
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "Double",
+                      "raw": "a"
+                    }
+                  }
+                },
+                {
+                  "id": 138,
+                  "span": {
+                    "start": 714,
+                    "end": 723
+                  },
+                  "kind": {
+                    "FString": [
+                      {
+                        "Expr": {
+                          "value": {
+                            "id": 137,
+                            "span": {
+                              "start": 717,
+                              "end": 721
+                            },
+                            "kind": {
+                              "Name": "nama"
+                            }
+                          },
+                          "conversion": null,
+                          "format_spec": null
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": 139,
+                  "span": {
+                    "start": 724,
+                    "end": 727
+                  },
+                  "kind": {
+                    "Str": {
+                      "prefix": "",
+                      "quote": "Single",
+                      "raw": "c"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
