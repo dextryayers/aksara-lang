@@ -377,6 +377,28 @@ fn diagnostik_penugasan_di_kondisi() {
 }
 
 #[test]
+fn diagnostik_kurang_titik_dua_memberi_bantuan() {
+    let result = parse("jika benar\n    lewati\n");
+    let diagnostic = result
+        .diagnostics
+        .iter()
+        .find(|diagnostic| diagnostic.code == "E-SINTAKS")
+        .expect("ada diagnostik sintaks");
+    assert!(diagnostic.help.as_deref().unwrap_or("").contains("`:`"));
+}
+
+#[test]
+fn diagnostik_kurung_belum_ditutup_memberi_bantuan() {
+    let result = parse("nilai = [1, 2\n");
+    let diagnostic = result
+        .diagnostics
+        .iter()
+        .find(|diagnostic| diagnostic.code == "E-SINTAKS")
+        .expect("ada diagnostik sintaks");
+    assert!(diagnostic.help.as_deref().unwrap_or("").contains("penutup"));
+}
+
+#[test]
 fn diagnostik_parameter_tanpa_default() {
     let result = parse("fungsi f(a=1, b):\n    lewati\n");
     let diagnostic = result

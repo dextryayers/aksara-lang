@@ -1,6 +1,10 @@
 target/
 build/
 dist/
+a.out
+*.o
+*.obj
+*.exe
 *.akc
 .aksara/
 __pycache__/

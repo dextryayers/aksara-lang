@@ -93,7 +93,12 @@ impl Parser {
             body.extend(statements);
             if self.index == before {
                 let span = self.current().span;
-                self.error("E-SINTAKS", "pernyataan tidak dapat dikenali", span);
+                self.error_help(
+                    "E-SINTAKS",
+                    "pernyataan tidak dapat dikenali",
+                    span,
+                    "periksa ejaan kata kunci, pasangan tanda kurung, dan awal pernyataan",
+                );
                 self.synchronize_statement();
             }
         }
@@ -133,7 +138,12 @@ impl Parser {
             body.extend(statements);
             if self.index == before {
                 let span = self.current().span;
-                self.error("E-SINTAKS", "pernyataan tidak dapat dikenali", span);
+                self.error_help(
+                    "E-SINTAKS",
+                    "pernyataan tidak dapat dikenali",
+                    span,
+                    "periksa ejaan kata kunci, pasangan tanda kurung, dan awal pernyataan",
+                );
                 self.synchronize_statement();
             }
         }
@@ -345,10 +355,11 @@ impl Parser {
             true
         } else {
             let span = self.current().span;
-            self.error(
+            self.error_help(
                 "E-SINTAKS",
                 format!("{} diharapkan, ditemukan {}", what, self.describe_current()),
                 span,
+                expect_help(what),
             );
             false
         }
@@ -364,7 +375,7 @@ impl Parser {
             }
             _ => {
                 let span = self.current().span;
-                self.error(
+                self.error_help(
                     "E-SINTAKS",
                     format!(
                         "nama {} diharapkan, ditemukan {}",
@@ -372,6 +383,7 @@ impl Parser {
                         self.describe_current()
                     ),
                     span,
+                    "gunakan nama yang valid; kata kunci dan literal tidak dapat dipakai sebagai nama",
                 );
                 None
             }
@@ -387,11 +399,6 @@ impl Parser {
             }
             other => format!("`{}`", other.name()),
         }
-    }
-
-    pub(crate) fn error(&mut self, code: &str, message: impl Into<String>, span: Span) {
-        self.diagnostics
-            .push(Diagnostic::error(code, message, span));
     }
 
     pub(crate) fn error_help(
@@ -449,5 +456,17 @@ impl Parser {
 
     pub(crate) fn span_of_statements(&self, statements: &[Stmt], fallback: Span) -> Span {
         statements.last().map(|stmt| stmt.span).unwrap_or(fallback)
+    }
+}
+
+fn expect_help(what: &str) -> &'static str {
+    if what.contains("`:`") {
+        "tambahkan `:` di akhir baris sebelum blok"
+    } else if what.contains("penutup") {
+        "tambahkan penutup yang sesuai atau periksa pasangan tanda kurung"
+    } else if what.contains("akhir baris") {
+        "akhiri pernyataan dengan baris baru; gunakan `;` untuk memisahkan pernyataan pada satu baris"
+    } else {
+        "periksa sintaks di sekitar posisi ini dan lengkapi token yang hilang"
     }
 }

@@ -6,14 +6,14 @@ Repositori ini berisi rencana induk, front end Rust, runtime C, standard library
 
 ## Status
 
-Fase 0 selesai dan Fase 1 selesai pada tingkat front end:
+Fase 0 selesai dan Fase 1 selesai pada tingkat front end, kecuali kampanye fuzz 24 jam yang dijalankan sebelum rilis:
 
 - Fase 0: visi, spesifikasi, ADR, kerangka repositori, CI, dan harness uji.
 - Fase 1: lekser, parser, AST, diagnostik, CLI `aksara periksa`, korpus, golden AST, fuzz smoke, dan benchmark.
 
-Seluruh 10 program di `contoh/` dan 8 berkas korpus parser terparse tanpa diagnostik. Suite Rust menjalankan 59 uji, termasuk 1.200 kasus valid yang dihasilkan secara deterministik dan 16.000 kasus fuzz smoke. Benchmark parser pada mesin pengembangan mencatat median 81,85 ms untuk berkas 1 MB. Kampanye fuzz 24 jam tetap dijalankan pada mesin khusus sebelum rilis; target cargo-fuzz sudah tersedia di `uji/fuzz/`.
+Seluruh 10 program di `contoh/` dan 8 berkas korpus parser terparse tanpa diagnostik. Suite Rust menjalankan 68 uji, termasuk 1.200 kasus valid yang dihasilkan secara deterministik dan 25.000 kasus fuzz smoke. Kampanye fuzz 601 detik menjalankan 3.373.913 eksekusi tanpa crash. Benchmark parser pada mesin pengembangan mencatat median 76,66 ms untuk berkas 1 MB. Baseline CPython 3.12.16 tercatat di `uji/benchmark/cpython_3.12_baseline.json`. Kampanye fuzz 24 jam tetap harus dijalankan pada mesin khusus sebelum rilis; target cargo-fuzz sudah tersedia di `uji/fuzz/`.
 
-Bahasa belum siap dipakai untuk produksi. Spesifikasi yang mengikat berada di `docs/spesifikasi/`.
+Rincian bukti pemenuhan kriteria ada di `docs/status-fase-1.md`. Bahasa belum siap dipakai untuk produksi. Spesifikasi yang mengikat berada di `docs/spesifikasi/`.
 
 ## Struktur
 
@@ -55,4 +55,3 @@ cargo run -p aksara-cli -- periksa --ast contoh/01_halo.aks
 ## Lisensi
 
 MIT. Lihat `LICENSE`.
-# aksara-lang

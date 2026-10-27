@@ -331,11 +331,14 @@ impl<'a> Lexer<'a> {
         let quote_char = match self.peek() {
             Some(ch @ ('"' | '\'')) => ch,
             _ => {
-                self.diagnostics.push(Diagnostic::error(
-                    "E-STRING",
-                    "awalan teks harus diikuti tanda kutip",
-                    self.span(start),
-                ));
+                self.diagnostics.push(
+                    Diagnostic::error(
+                        "E-STRING",
+                        "awalan teks harus diikuti tanda kutip",
+                        self.span(start),
+                    )
+                    .with_help("tulis awalan langsung sebelum tanda kutip, misalnya `f\"...\"`"),
+                );
                 return;
             }
         };
