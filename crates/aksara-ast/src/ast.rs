@@ -17,6 +17,91 @@ pub struct StringLit {
     pub raw: String,
 }
 
+impl StringLit {
+    /// Mengembalikan isi literal teks setelah escape diproses.
+    ///
+    /// Nilai `None` dikembalikan untuk literal bytes dan f-string karena
+    /// keduanya memerlukan penanganan khusus oleh interpreter.
+    pub fn decoded(&self) -> Option<String> {
+        if self.prefix.contains('b') || self.prefix.contains('f') {
+            return None;
+        }
+        if self.prefix.contains('r') {
+            return Some(self.raw.clone());
+        }
+        Some(decode_escapes(&self.raw))
+    }
+
+    /// Mengembalikan isi literal bytes setelah escape diproses.
+    pub fn decoded_bytes(&self) -> Option<Vec<u8>> {
+        if self.prefix.contains('f') {
+            return None;
+        }
+        if self.prefix.contains('r') {
+            return Some(self.raw.as_bytes().to_vec());
+        }
+        Some(decode_escapes(&self.raw).into_bytes())
+    }
+}
+
+fn decode_escapes(raw: &str) -> String {
+    let mut out = String::with_capacity(raw.len());
+    let mut chars = raw.chars().peekable();
+    while let Some(ch) = chars.next() {
+        if ch != '\\' {
+            out.push(ch);
+            continue;
+        }
+        let Some(escape) = chars.next() else {
+            out.push('\\');
+            break;
+        };
+        match escape {
+            '\\' => out.push('\\'),
+            '\'' => out.push('\''),
+            '"' => out.push('"'),
+            'n' => out.push('\n'),
+            'r' => out.push('\r'),
+            't' => out.push('\t'),
+            'b' => out.push('\u{0008}'),
+            'f' => out.push('\u{000c}'),
+            'v' => out.push('\u{000b}'),
+            '0' => out.push('\0'),
+            'x' => {
+                let hex: String = chars.by_ref().take(2).collect();
+                if let Ok(value) = u8::from_str_radix(&hex, 16) {
+                    out.push(value as char);
+                } else {
+                    out.push('\\');
+                    out.push('x');
+                    out.push_str(&hex);
+                }
+            }
+            'u' => {
+                let hex: String = chars.by_ref().take(4).collect();
+                if let Ok(value) = u32::from_str_radix(&hex, 16) {
+                    if let Some(value) = char::from_u32(value) {
+                        out.push(value);
+                    }
+                }
+            }
+            'U' => {
+                let hex: String = chars.by_ref().take(8).collect();
+                if let Ok(value) = u32::from_str_radix(&hex, 16) {
+                    if let Some(value) = char::from_u32(value) {
+                        out.push(value);
+                    }
+                }
+            }
+            other => {
+                out.push('\\');
+                out.push(other);
+            }
+        }
+    }
+    out
+}
+
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Module {
     pub id: NodeId,

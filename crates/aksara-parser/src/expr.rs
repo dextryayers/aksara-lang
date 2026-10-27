@@ -1287,67 +1287,6 @@ impl Parser {
 
     /// Mengubah literal teks sederhana menjadi nilai string untuk nama modul.
     pub(crate) fn simple_string_value(lit: &StringLit) -> Option<String> {
-        if lit.prefix.contains('b') || lit.prefix.contains('f') {
-            return None;
-        }
-        let raw = lit.raw.as_str();
-        if lit.prefix.contains('r') {
-            return Some(raw.to_string());
-        }
-        let mut out = String::with_capacity(raw.len());
-        let mut chars = raw.chars().peekable();
-        while let Some(ch) = chars.next() {
-            if ch != '\\' {
-                out.push(ch);
-                continue;
-            }
-            let Some(escape) = chars.next() else {
-                out.push('\\');
-                break;
-            };
-            match escape {
-                '\\' => out.push('\\'),
-                '\'' => out.push('\''),
-                '"' => out.push('"'),
-                'n' => out.push('\n'),
-                'r' => out.push('\r'),
-                't' => out.push('\t'),
-                'b' => out.push('\u{0008}'),
-                'f' => out.push('\u{000c}'),
-                'v' => out.push('\u{000b}'),
-                '0' => out.push('\0'),
-                'x' => {
-                    let hex: String = chars.by_ref().take(2).collect();
-                    if let Ok(value) = u8::from_str_radix(&hex, 16) {
-                        out.push(value as char);
-                    } else {
-                        out.push('\\');
-                        out.push('x');
-                        out.push_str(&hex);
-                    }
-                }
-                'u' => {
-                    let hex: String = chars.by_ref().take(4).collect();
-                    if let Ok(value) = u32::from_str_radix(&hex, 16) {
-                        if let Some(value) = char::from_u32(value) {
-                            out.push(value);
-                        }
-                    }
-                }
-                'U' => {
-                    let hex: String = chars.by_ref().take(8).collect();
-                    if let Ok(value) = u32::from_str_radix(&hex, 16) {
-                        if let Some(value) = char::from_u32(value) {
-                            out.push(value);
-                        }
-                    }
-                }
-                other => {
-                    out.push('\\');
-                    out.push(other);
-                }
-            }
-        }
-        Some(out)
+        lit.decoded()
     }
 }

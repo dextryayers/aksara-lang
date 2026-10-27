@@ -5,6 +5,8 @@ members = [
     "crates/aksara-diagnostik",
     "crates/aksara-lexer",
     "crates/aksara-parser",
+    "crates/aksara-interpreter",
+    "crates/aksara-repl",
     "crates/aksara-cli",
 ]
 exclude = ["uji/fuzz"]
