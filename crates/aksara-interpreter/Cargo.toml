@@ -10,6 +10,11 @@ aksara-ast = { path = "../aksara-ast" }
 aksara-diagnostik = { path = "../aksara-diagnostik" }
 aksara-lexer = { path = "../aksara-lexer" }
 aksara-parser = { path = "../aksara-parser" }
+pyo3 = { version = "0.23.5", features = ["auto-initialize"], optional = true }
+
+[features]
+default = []
+python = ["dep:pyo3"]
 
 [dev-dependencies]
 serde_json.workspace = true

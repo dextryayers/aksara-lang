@@ -433,21 +433,18 @@ impl Interpreter {
                     ));
                 }
                 let ekor = item.len() - minimum;
-                for (indeks, target) in target.iter().enumerate() {
+                let jumlah_target = target.len();
+                for (indeks, target_item) in target.iter().enumerate() {
                     if indeks == posisi {
-                        let isi = if let ExprKind::Starred(inner) = &target.kind {
-                            item[posisi..posisi + ekor].to_vec()
-                        } else {
-                            Vec::new()
-                        };
-                        if let ExprKind::Starred(inner) = &target.kind {
+                        if let ExprKind::Starred(inner) = &target_item.kind {
+                            let isi = item[posisi..posisi + ekor].to_vec();
                             self.atur_target(inner, Nilai::daftar(isi), env)?;
                         }
                     } else if indeks < posisi {
-                        self.atur_target(target, item[indeks].clone(), env)?;
+                        self.atur_target(target_item, item[indeks].clone(), env)?;
                     } else {
-                        let dari_akhir = target.len() - indeks;
-                        self.atur_target(target, item[item.len() - dari_akhir].clone(), env)?;
+                        let dari_akhir = jumlah_target - indeks;
+                        self.atur_target(target_item, item[item.len() - dari_akhir].clone(), env)?;
                     }
                 }
                 Ok(())

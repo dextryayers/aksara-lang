@@ -1,0 +1,12 @@
+[package]
+name = "aksara-repl"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+aksara-diagnostik = { path = "../aksara-diagnostik" }
+aksara-interpreter = { path = "../aksara-interpreter" }
+aksara-lexer = { path = "../aksara-lexer" }
+aksara-parser = { path = "../aksara-parser" }
