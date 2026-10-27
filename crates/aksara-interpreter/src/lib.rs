@@ -9,6 +9,8 @@ pub mod format;
 pub mod interpreter;
 pub mod metode;
 pub mod modul;
+pub mod modul_bawaan;
+pub mod modul_data;
 pub mod nilai;
 pub mod operasi;
 pub mod pola;
@@ -24,9 +26,20 @@ pub fn python_repr(nilai: &Nilai) -> String {
     python::repr(nilai)
 }
 
+/// Teks objek Python dengan menghormati `__str__`.
+#[cfg(feature = "python")]
+pub fn python_teks(nilai: &Nilai) -> String {
+    python::teks(nilai)
+}
+
 /// Fallback ketika interpreter dibangun tanpa jembatan Python.
 #[cfg(not(feature = "python"))]
 pub fn python_repr(_nilai: &Nilai) -> String {
+    "<objek python>".to_string()
+}
+
+#[cfg(not(feature = "python"))]
+pub fn python_teks(_nilai: &Nilai) -> String {
     "<objek python>".to_string()
 }
 
@@ -38,8 +51,10 @@ pub use python::{
     hapus_indeks as python_hapus_indeks, identik as python_identik, iter as python_iter,
     kamus_pasangan as python_kamus_pasangan, kebenaran as python_kebenaran,
     keluar as python_keluar, masuk as python_masuk, mengandung as python_mengandung,
-    operasi as python_operasi, panggil as python_panggil, panjang as python_panjang,
-    sama as python_sama, tunggu as python_tunggu,
+    operasi as python_operasi, panggil as python_panggil,
+    panggil_metode as python_panggil_metode, panjang as python_panjang,
+    sama as python_sama, tunggu as python_tunggu, hash as python_hash,
+    tulis as python_tulis, impor as python_impor, semua as python_semua,
 };
 
 #[cfg(not(feature = "python"))]
@@ -144,6 +159,32 @@ mod python_tanpa {
     pub fn kamus_pasangan(_nilai: &Nilai) -> Hasil<Vec<(Nilai, Nilai)>> {
         Ok(Vec::new())
     }
+
+    pub fn panggil_metode(
+        _nilai: &Nilai,
+        _nama: &str,
+        _args: Vec<Nilai>,
+        _kwargs: Vec<(String, Nilai)>,
+        span: Span,
+    ) -> Hasil<Nilai> {
+        galat(span)
+    }
+
+    pub fn hash(_nilai: &Nilai) -> Hasil<i64> {
+        Ok(0)
+    }
+
+    pub fn tulis(_nilai: &Nilai, _teks: &str) -> Hasil<Nilai> {
+        Ok(Nilai::Kosong)
+    }
+
+    pub fn impor(_nama: &str, span: Span) -> Hasil<Nilai> {
+        galat(span)
+    }
+
+    pub fn semua(_nilai: &Nilai, span: Span) -> Hasil<Vec<String>> {
+        galat(span)
+    }
 }
 
 #[cfg(not(feature = "python"))]
@@ -154,6 +195,8 @@ pub use python_tanpa::{
     hapus_indeks as python_hapus_indeks, identik as python_identik, iter as python_iter,
     kamus_pasangan as python_kamus_pasangan, kebenaran as python_kebenaran,
     keluar as python_keluar, masuk as python_masuk, mengandung as python_mengandung,
-    operasi as python_operasi, panggil as python_panggil, panjang as python_panjang,
-    sama as python_sama, tunggu as python_tunggu,
+    operasi as python_operasi, panggil as python_panggil,
+    panggil_metode as python_panggil_metode, panjang as python_panjang,
+    sama as python_sama, tunggu as python_tunggu, hash as python_hash,
+    tulis as python_tulis, impor as python_impor, semua as python_semua,
 };

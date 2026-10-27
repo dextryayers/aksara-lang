@@ -37,6 +37,8 @@ fn run() -> Result<ExitCode, String> {
             Ok(ExitCode::SUCCESS)
         }
         "periksa" => periksa(args),
+        "jalankan" | "run" => jalankan(args),
+        "repl" => repl(args),
         perintah => Err(format!("perintah `{perintah}` tidak dikenal")),
     }
 }
@@ -202,6 +204,50 @@ fn periksa(args: Vec<String>) -> Result<ExitCode, String> {
     })
 }
 
+fn jalankan(args: Vec<String>) -> Result<ExitCode, String> {
+    if args.iter().any(|arg| arg == "--bantuan" || arg == "-h") {
+        println!(
+            "Pemakaian: aksara jalankan <berkas.aks> [argumen...]\n\n             Menjalankan program Aksara. Kode keluar 0 berarti sukses, 1 berarti\n             program melempar kesalahan, dan 2 berarti pemakaian salah."
+        );
+        return Ok(ExitCode::SUCCESS);
+    }
+    let mut args = args;
+    let jalur = if args.first().is_some_and(|arg| arg == "--") {
+        args.remove(0);
+        args.first().cloned()
+    } else {
+        args.first().cloned()
+    };
+    let Some(jalur) = jalur else {
+        return Err("`aksara jalankan` membutuhkan berkas".to_string());
+    };
+    let posisi = args.iter().position(|arg| arg == &jalur).unwrap_or(0);
+    let argumen = args.split_off(posisi + 1);
+    let mut interpreter = aksara_interpreter::Interpreter::baru();
+    interpreter.argumen = argumen;
+    let hasil = interpreter.jalankan_berkas(std::path::Path::new(&jalur));
+    print!("{}", hasil.keluaran);
+    if let Some(kesalahan) = &hasil.kesalahan {
+        if !hasil.jejak.is_empty() {
+            eprint!("{}", hasil.jejak);
+        } else {
+            eprintln!("{}: {}", kesalahan.tipe.nama, kesalahan.pesan);
+        }
+        return Ok(ExitCode::from(1));
+    }
+    Ok(ExitCode::SUCCESS)
+}
+
+fn repl(args: Vec<String>) -> Result<ExitCode, String> {
+    if args.iter().any(|arg| arg == "--bantuan" || arg == "-h") {
+        println!("Pemakaian: aksara repl\n\nMembuka REPL interaktif Aksara.");
+        return Ok(ExitCode::SUCCESS);
+    }
+    let mut repl = aksara_repl::Repl::baru();
+    repl.jalankan().map_err(|galat| format!("REPL gagal: {galat}"))?;
+    Ok(ExitCode::SUCCESS)
+}
+
 fn parse_warna(value: &str) -> Result<ColorMode, String> {
     match value {
         "auto" => Ok(ColorMode::Auto),
@@ -251,6 +297,8 @@ fn print_bantuan() {
          \n\
          Pemakaian:\n\
            aksara periksa [opsi] <berkas>...\n\
+           aksara jalankan <berkas.aks> [argumen...]\n\
+           aksara repl\n\
            aksara --versi\n\
            aksara --bantuan\n\
          \n\

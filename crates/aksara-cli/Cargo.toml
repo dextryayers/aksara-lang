@@ -14,4 +14,6 @@ aksara-ast = { path = "../aksara-ast" }
 aksara-diagnostik = { path = "../aksara-diagnostik" }
 aksara-lexer = { path = "../aksara-lexer" }
 aksara-parser = { path = "../aksara-parser" }
+aksara-interpreter = { path = "../aksara-interpreter", features = ["python"] }
+aksara-repl = { path = "../aksara-repl" }
 serde_json.workspace = true

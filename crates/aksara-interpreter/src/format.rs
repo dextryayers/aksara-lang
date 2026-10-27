@@ -171,6 +171,7 @@ pub fn nilai_ke_teks(nilai: &Nilai) -> String {
         ),
         Nilai::Fungsi(fungsi) => format!("<fungsi {}>", fungsi.nama),
         Nilai::Bawaan(bawaan) => format!("<fungsi bawaan {}>", bawaan.nama),
+        Nilai::BawaanKhusus(bawaan) => format!("<fungsi bawaan {}>", bawaan.nama),
         Nilai::Kelas(kelas) => format!("<kelas '{}'>", kelas.nama),
         Nilai::Instance(instance) => {
             format!("<{} objek>", instance.kelas.nama)
@@ -187,13 +188,9 @@ pub fn nilai_ke_teks(nilai: &Nilai) -> String {
         Nilai::Kesalahan(kesalahan) => teks_kesalahan(kesalahan),
         Nilai::Induk(_) => "<induk>".to_string(),
         Nilai::Berkas(berkas) => format!("<berkas '{}'>", berkas.borrow().nama),
-        Nilai::Python(_) => crate::python_repr(nilai),
+        Nilai::Python(_) => crate::python_teks(nilai),
         Nilai::Ellipsis => "Ellipsis".to_string(),
     }
-}
-
-fn python_repr_fallback(_nilai: &Nilai) -> String {
-    "<objek python>".to_string()
 }
 
 pub fn nilai_ke_repr(nilai: &Nilai) -> String {
@@ -202,6 +199,7 @@ pub fn nilai_ke_repr(nilai: &Nilai) -> String {
         Nilai::Bytes(bytes) => repr_bytes(bytes),
         Nilai::Pecahan(nilai) => repr_float(*nilai),
         Nilai::Kompleks(nyata, imajiner) => repr_kompleks(*nyata, *imajiner),
+        Nilai::Python(_) => crate::python_repr(nilai),
         other => nilai_ke_teks(other),
     }
 }

@@ -7,6 +7,6 @@ license.workspace = true
 
 [dependencies]
 aksara-diagnostik = { path = "../aksara-diagnostik" }
-aksara-interpreter = { path = "../aksara-interpreter" }
+aksara-interpreter = { path = "../aksara-interpreter", features = ["python"] }
 aksara-lexer = { path = "../aksara-lexer" }
 aksara-parser = { path = "../aksara-parser" }

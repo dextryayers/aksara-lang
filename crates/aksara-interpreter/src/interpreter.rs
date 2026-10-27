@@ -55,6 +55,8 @@ pub struct Bingkai {
 /// Interpreter referensi Aksara.
 pub struct Interpreter {
     pub global: Env,
+    /// Lingkungan global modul yang sedang dieksekusi.
+    pub global_aktif: Env,
     pub bawaan: Env,
     pub kelas_bawaan: HashMap<String, Rc<Kelas>>,
     pub modul_cache: HashMap<String, Rc<Modul>>,
@@ -73,6 +75,10 @@ pub struct Interpreter {
     pub sumber: Option<SourceFile>,
     pub modul_utama: Option<Rc<Modul>>,
     pub impor_aktif: Vec<String>,
+    /// Direktori modul yang sedang dijalankan, dipakai impor relatif.
+    pub modul_dir: Option<PathBuf>,
+    /// Span pemanggilan terakhir, dipakai bawaan untuk diagnostik.
+    pub span_aktif: Span,
 }
 
 impl Interpreter {
@@ -80,6 +86,7 @@ impl Interpreter {
         let bawaan = Lingkungan::baru();
         let global = Lingkungan::anak(bawaan.clone());
         let mut this = Self {
+            global_aktif: global.clone(),
             global,
             bawaan,
             kelas_bawaan: HashMap::new(),
@@ -99,8 +106,11 @@ impl Interpreter {
             sumber: None,
             modul_utama: None,
             impor_aktif: Vec::new(),
+            modul_dir: None,
+            span_aktif: Span::empty(0),
         };
-        bawaan::pasang(&mut this, &this.bawaan.clone());
+        let env_bawaan = this.bawaan.clone();
+        bawaan::pasang(&mut this, &env_bawaan);
         this.siapkan_utama();
         this
     }
@@ -143,6 +153,7 @@ impl Interpreter {
         e.atur_lokal("__berkas__", Nilai::teks(nama));
         e.atur_lokal("__paket__", Nilai::teks(""));
         e.atur_lokal("__dok__", doc.map(Nilai::teks).unwrap_or(Nilai::Kosong));
+        e.atur_lokal("__semua__", Nilai::Kosong);
     }
 
     /// Menjalankan sumber di lingkungan tertentu.
@@ -167,6 +178,8 @@ impl Interpreter {
             return Err(Lemparan::baru(kesalahan, Span::empty(0)));
         }
         let sumber_lama = self.sumber.replace(source);
+        #[cfg(feature = "python")]
+        let _aktif = crate::python::Aktif::baru(self);
         let hasil = self.exec_block(&parsed.module.body, &env);
         self.sumber = sumber_lama;
         match hasil {
@@ -201,10 +214,14 @@ impl Interpreter {
     pub fn jalankan_berkas(&mut self, jalur: &Path) -> HasilJalan {
         match std::fs::read_to_string(jalur) {
             Ok(sumber) => {
-                self.jalur = vec![
-                    jalur.parent().unwrap_or(Path::new(".")).to_path_buf(),
-                    PathBuf::from("."),
-                ];
+                let direktori = jalur.parent().unwrap_or(Path::new(".")).to_path_buf();
+                self.modul_dir = Some(direktori.clone());
+                self.jalur = vec![direktori, PathBuf::from(".")];
+                if let Ok(ekstra) = std::env::var("AKSARA_PATH") {
+                    for bagian in ekstra.split(':').filter(|bagian| !bagian.is_empty()) {
+                        self.jalur.push(PathBuf::from(bagian));
+                    }
+                }
                 self.jalankan_sumber(&jalur.display().to_string(), &sumber)
             }
             Err(galat) => {
@@ -321,7 +338,7 @@ impl Interpreter {
             )
         };
         if global {
-            self.global.borrow_mut().atur_lokal(nama, nilai);
+            self.global_aktif.borrow_mut().atur_lokal(nama, nilai);
             return;
         }
         if nonlokal {
@@ -523,7 +540,8 @@ impl Interpreter {
                 body,
                 orelse,
             } => {
-                if self.kebenaran(&self.eval(condition, env)?)? {
+                let syarat = self.eval(condition, env)?;
+                if self.kebenaran(&syarat)? {
                     self.exec_block(body, env)
                 } else {
                     self.exec_block(orelse, env)
@@ -536,7 +554,8 @@ impl Interpreter {
             } => {
                 let mut henti = false;
                 loop {
-                    if !self.kebenaran(&self.eval(condition, env)?)? {
+                    let syarat = self.eval(condition, env)?;
+                    if !self.kebenaran(&syarat)? {
                         break;
                     }
                     match self.exec_block(body, env)? {
@@ -724,7 +743,8 @@ impl Interpreter {
                             anak.borrow_mut().atur_lokal(nama, nilai);
                         }
                         if let Some(guard) = &kasus.guard {
-                            if !self.kebenaran(&self.eval(guard, &anak)?)? {
+                            let nilai_guard = self.eval(guard, &anak)?;
+                            if !self.kebenaran(&nilai_guard)? {
                                 continue;
                             }
                         }
@@ -828,6 +848,47 @@ impl Interpreter {
                     ));
                 }
                 Ok(Kesalahan::dari_pesan(kelas, String::new()))
+            }
+            Nilai::Instance(instance) => {
+                let subkelas = instance
+                    .kelas
+                    .mro
+                    .iter()
+                    .any(|kelas| kelas.nama == "Kesalahan");
+                if !subkelas && instance.kelas.nama != "Kesalahan" {
+                    return Err(self.lempar_pesan(
+                        "KesalahanTipe",
+                        format!("`{}` bukan kelas kesalahan", instance.kelas.nama),
+                        span,
+                    ));
+                }
+                let atribut = instance.atribut.borrow().clone();
+                let argumen = match atribut.get("argumen") {
+                    Some(Nilai::Tupel(item)) => item.as_ref().clone(),
+                    _ => Vec::new(),
+                };
+                let pesan = match atribut.get("pesan") {
+                    Some(nilai) => nilai_ke_teks(nilai),
+                    None if !argumen.is_empty() => {
+                        let mut bagian = Vec::with_capacity(argumen.len());
+                        for nilai in &argumen {
+                            bagian.push(self.teks_nilai(nilai, span)?);
+                        }
+                        bagian.join(", ")
+                    }
+                    None => String::new(),
+                };
+                let kesalahan = Kesalahan::baru(instance.kelas.clone(), pesan, argumen);
+                for (nama, nilai) in atribut {
+                    if nama == "argumen" || nama == "pesan" {
+                        continue;
+                    }
+                    kesalahan
+                        .atribut
+                        .borrow_mut()
+                        .insert(nama, nilai);
+                }
+                Ok(kesalahan)
             }
             other => Err(self.lempar_pesan(
                 "KesalahanTipe",
@@ -968,10 +1029,15 @@ impl Interpreter {
                 Ok((0..jumlah).map(Nilai::Bilangan).collect())
             }
             ForIter::Range { start, end, step } => {
-                let mulai = self.nilai_ke_i64(&self.eval(start, env)?, start.span)?;
-                let akhir = self.nilai_ke_i64(&self.eval(end, env)?, end.span)?;
+                let nilai_mulai = self.eval(start, env)?;
+                let mulai = self.nilai_ke_i64(&nilai_mulai, start.span)?;
+                let nilai_akhir = self.eval(end, env)?;
+                let akhir = self.nilai_ke_i64(&nilai_akhir, end.span)?;
                 let langkah = match step {
-                    Some(expr) => self.nilai_ke_i64(&self.eval(expr, env)?, expr.span)?,
+                    Some(expr) => {
+                        let nilai_langkah = self.eval(expr, env)?;
+                        self.nilai_ke_i64(&nilai_langkah, expr.span)?
+                    }
                     None => {
                         if mulai <= akhir {
                             1
@@ -1110,15 +1176,24 @@ impl Interpreter {
             }
             ExprKind::Slice { start, stop, step } => {
                 let mulai = match start {
-                    Some(expr) => Some(self.nilai_ke_i64(&self.eval(expr, env)?, expr.span)?),
+                    Some(expr) => {
+                        let nilai = self.eval(expr, env)?;
+                        Some(self.nilai_ke_i64(&nilai, expr.span)?)
+                    }
                     None => None,
                 };
                 let akhir = match stop {
-                    Some(expr) => Some(self.nilai_ke_i64(&self.eval(expr, env)?, expr.span)?),
+                    Some(expr) => {
+                        let nilai = self.eval(expr, env)?;
+                        Some(self.nilai_ke_i64(&nilai, expr.span)?)
+                    }
                     None => None,
                 };
                 let langkah = match step {
-                    Some(expr) => Some(self.nilai_ke_i64(&self.eval(expr, env)?, expr.span)?),
+                    Some(expr) => {
+                        let nilai = self.eval(expr, env)?;
+                        Some(self.nilai_ke_i64(&nilai, expr.span)?)
+                    }
                     None => None,
                 };
                 Ok(Nilai::Slice(Rc::new(Slice {
@@ -1200,7 +1275,8 @@ impl Interpreter {
                 condition,
                 orelse,
             } => {
-                if self.kebenaran(&self.eval(condition, env)?)? {
+                let syarat = self.eval(condition, env)?;
+                if self.kebenaran(&syarat)? {
                     self.eval(body, env)
                 } else {
                     self.eval(orelse, env)
@@ -1266,9 +1342,9 @@ impl Interpreter {
                             let mut nilai = self.eval(value, env)?;
                             if let Some(konversi) = conversion {
                                 nilai = match konversi {
-                                    'r' => Nilai::teks(nilai_ke_repr(&nilai)),
-                                    's' => Nilai::teks(nilai_ke_teks(&nilai)),
-                                    'a' => Nilai::teks(nilai_ke_repr(&nilai)),
+                                    'r' => Nilai::teks(self.repr_nilai(&nilai, expr.span)?),
+                                    's' => Nilai::teks(self.teks_nilai(&nilai, expr.span)?),
+                                    'a' => Nilai::teks(self.repr_nilai(&nilai, expr.span)?),
                                     _ => nilai,
                                 };
                             }
@@ -1276,14 +1352,18 @@ impl Interpreter {
                                 Some(parts) => self.eval_fstring_parts(parts, env)?,
                                 None => String::new(),
                             };
-                            match format_nilai(&nilai, &spec) {
-                                Ok(teks) => hasil.push_str(&teks),
-                                Err(pesan) => {
-                                    return Err(self.lempar_pesan(
-                                        "KesalahanNilai",
-                                        pesan,
-                                        expr.span,
-                                    ))
+                            if spec.is_empty() {
+                                hasil.push_str(&self.teks_nilai(&nilai, expr.span)?);
+                            } else {
+                                match format_nilai(&nilai, &spec) {
+                                    Ok(teks) => hasil.push_str(&teks),
+                                    Err(pesan) => {
+                                        return Err(self.lempar_pesan(
+                                            "KesalahanNilai",
+                                            pesan,
+                                            expr.span,
+                                        ))
+                                    }
                                 }
                             }
                         }
@@ -1354,7 +1434,8 @@ impl Interpreter {
             match part {
                 FStringPart::Text(teks) => hasil.push_str(teks),
                 FStringPart::Expr { value, .. } => {
-                    hasil.push_str(&nilai_ke_teks(&self.eval(value, env)?));
+                    let nilai = self.eval(value, env)?;
+                    hasil.push_str(&self.teks_nilai(&nilai, value.span)?);
                 }
             }
         }
@@ -1443,7 +1524,8 @@ impl Interpreter {
         }
         match &clauses[indeks] {
             CompClause::If(syarat) => {
-                if self.kebenaran(&self.eval(syarat, env)?)? {
+                let nilai_syarat = self.eval(syarat, env)?;
+                if self.kebenaran(&nilai_syarat)? {
                     self.eval_comp_clause(elt, clauses, indeks + 1, env, hasil, span)?;
                 }
             }
@@ -1476,7 +1558,8 @@ impl Interpreter {
         }
         match &clauses[indeks] {
             CompClause::If(syarat) => {
-                if self.kebenaran(&self.eval(syarat, env)?)? {
+                let nilai_syarat = self.eval(syarat, env)?;
+                if self.kebenaran(&nilai_syarat)? {
                     self.eval_comp_pair_clause(
                         key,
                         value,
@@ -1529,8 +1612,10 @@ impl Interpreter {
                     Some(expr) => Some(ini.eval(expr, env)?),
                     None => None,
                 };
+                // Anotasi bersifat dokumentasi pada runtime. Kesalahan
+                // evaluasi anotasi tidak boleh menggagalkan definisi fungsi.
                 let anotasi = match &param.annotation {
-                    Some(expr) => Some(ini.eval(expr, env)?),
+                    Some(expr) => ini.eval(expr, env).ok(),
                     None => None,
                 };
                 hasil.push(Parameter {
@@ -1556,7 +1641,10 @@ impl Interpreter {
         let is_generator = mengandung_hasil(&def.body);
         let doc = ambil_dokumen(&def.body);
         let anotasi_kembali = match &def.returns {
-            Some(expr) => Some(nilai_ke_teks(&self.eval(expr, env)?)),
+            Some(expr) => self
+                .eval(expr, env)
+                .ok()
+                .map(|nilai| nilai_ke_teks(&nilai)),
             None => None,
         };
         let fungsi = Rc::new(Fungsi {
@@ -1568,7 +1656,7 @@ impl Interpreter {
             kwarg,
             badan: BadanFungsi::Blok(def.body.clone()),
             penutup: env.clone(),
-            global: self.global.clone(),
+            global: self.global_aktif.clone(),
             doc,
             is_async: def.is_async,
             is_generator,
@@ -1617,6 +1705,23 @@ impl Interpreter {
                 .insert("__dok__".to_string(), Nilai::teks(dok));
         }
         let badan_env = Lingkungan::anak(env.clone());
+        let mut anotasi = Vec::new();
+        let mut urutan_anotasi = Vec::new();
+        for stmt in &def.body {
+            if let StmtKind::AnnAssign {
+                target: Expr { kind: ExprKind::Name(nama), .. },
+                annotation,
+                ..
+            } = &stmt.kind
+            {
+                let nilai = self.eval(annotation, &badan_env).ok();
+                anotasi.push((
+                    Nilai::teks(nama.clone()),
+                    nilai.unwrap_or(Nilai::Kosong),
+                ));
+                urutan_anotasi.push(Nilai::teks(nama.clone()));
+            }
+        }
         let hasil = self.exec_block(&def.body, &badan_env);
         if let Err(lemparan) = hasil {
             return Err(lemparan);
@@ -1626,6 +1731,30 @@ impl Interpreter {
             let mut atribut = kelas.atribut.borrow_mut();
             for (nama, nilai) in variabel {
                 atribut.insert(nama, nilai);
+            }
+            if !anotasi.is_empty() {
+                atribut.insert("__anotasi__".to_string(), Nilai::kamus(anotasi));
+                atribut.insert(
+                    "__urutan_anotasi__".to_string(),
+                    Nilai::daftar(urutan_anotasi),
+                );
+            }
+            // Pola kelas posisional mengikuti urutan parameter `__init__`.
+            // Ini membuat `kasus Titik(x, y)` bekerja tanpa mengharuskan
+            // penulis pemula menulis `__match_args__` secara manual.
+            if !atribut.contains_key("__match_args__") {
+                if let Some(Nilai::Fungsi(init)) = atribut.get("__init__") {
+                    let nama: Vec<Nilai> = init
+                        .posonly
+                        .iter()
+                        .chain(init.args.iter())
+                        .skip(1)
+                        .map(|parameter| Nilai::teks(parameter.nama.clone()))
+                        .collect();
+                    if !nama.is_empty() {
+                        atribut.insert("__match_args__".to_string(), Nilai::tupel(nama));
+                    }
+                }
             }
         }
         let mut nilai = Nilai::Kelas(kelas);
@@ -1643,18 +1772,46 @@ impl Interpreter {
         kwargs: Vec<(String, Nilai)>,
         span: Span,
     ) -> Hasil<Nilai> {
+        let span_lama = self.span_aktif;
+        self.span_aktif = span;
+        let global_lama = self.global_aktif.clone();
+        if let Nilai::Fungsi(fungsi) = fungsi {
+            self.global_aktif = fungsi.global.clone();
+        }
+        #[cfg(feature = "python")]
+        let _aktif = crate::python::Aktif::baru(self);
+        let hasil = self.panggil_dalam(fungsi, args, kwargs, span);
+        self.global_aktif = global_lama;
+        self.span_aktif = span_lama;
+        hasil
+    }
+
+    fn panggil_dalam(
+        &mut self,
+        fungsi: &Nilai,
+        args: Vec<Nilai>,
+        kwargs: Vec<(String, Nilai)>,
+        span: Span,
+    ) -> Hasil<Nilai> {
         match fungsi {
-            Nilai::Bawaan(bawaan) => (bawaan.fungsi)(self, &self.global.clone(), args, kwargs),
+            Nilai::Bawaan(bawaan) => (bawaan.fungsi)(self, &self.global_aktif.clone(), args, kwargs),
             Nilai::BawaanKhusus(bawaan) => (bawaan.fungsi)(self, args, kwargs),
             Nilai::Fungsi(fungsi) => self.panggil_fungsi(fungsi, None, None, args, kwargs, span),
-            Nilai::Metode(metode) => self.panggil_fungsi(
-                &metode.fungsi,
-                Some(metode.penerima.clone()),
-                None,
-                args,
-                kwargs,
-                span,
-            ),
+            Nilai::Metode(metode) => {
+                let kelas = match &metode.penerima {
+                    Nilai::Instance(instance) => Some(kelas_penentu(instance, &metode.fungsi)),
+                    Nilai::Kesalahan(kesalahan) => Some(kesalahan.tipe.clone()),
+                    _ => None,
+                };
+                self.panggil_fungsi(
+                    &metode.fungsi,
+                    Some(metode.penerima.clone()),
+                    kelas,
+                    args,
+                    kwargs,
+                    span,
+                )
+            }
             Nilai::MetodeBawaan(metode) => {
                 self.panggil_metode(&metode.penerima, &metode.nama, args, kwargs, span)
             }
@@ -1663,7 +1820,7 @@ impl Interpreter {
             }
             Nilai::MetodeKelas(metode) => self.panggil_fungsi(
                 &metode.fungsi,
-                None,
+                Some(Nilai::Kelas(metode.kelas.clone())),
                 Some(metode.kelas.clone()),
                 args,
                 kwargs,
@@ -1686,7 +1843,7 @@ impl Interpreter {
         }
     }
 
-    fn kelas_dari_nilai(&self, _fungsi: &Rc<Fungsi>) -> Hasil<Rc<Kelas>> {
+    fn kelas_dari_nilai(&mut self, _fungsi: &Rc<Fungsi>) -> Hasil<Rc<Kelas>> {
         Err(Lemparan::baru(
             self.kesalahan_baru("KesalahanRuntime", "konteks kelas tidak tersedia"),
             Span::empty(0),
@@ -2048,6 +2205,24 @@ impl Interpreter {
                 "gunakan `buka()` untuk membuat berkas",
                 span,
             )),
+            JenisKelas::Kesalahan => {
+                let pesan = match args.len() {
+                    0 => String::new(),
+                    1 => self.teks_nilai(&args[0], span)?,
+                    _ => {
+                        let mut bagian = Vec::with_capacity(args.len());
+                        for nilai in &args {
+                            bagian.push(self.teks_nilai(nilai, span)?);
+                        }
+                        bagian.join(", ")
+                    }
+                };
+                Ok(Nilai::Kesalahan(Kesalahan::baru(
+                    kelas.clone(),
+                    pesan,
+                    args,
+                )))
+            }
             _ => Err(self.lempar_pesan(
                 "KesalahanTipe",
                 format!("tipe `{}` tidak dapat dibangun", kelas.nama),
@@ -2205,8 +2380,8 @@ impl Interpreter {
         }
     }
 
-    pub fn ke_teks(&mut self, nilai: &Nilai, _span: Span) -> Hasil<Nilai> {
-        Ok(Nilai::teks(nilai_ke_teks(nilai)))
+    pub fn ke_teks(&mut self, nilai: &Nilai, span: Span) -> Hasil<Nilai> {
+        Ok(Nilai::teks(self.teks_nilai(nilai, span)?))
     }
 
     pub fn ke_bytes(&mut self, nilai: &Nilai, span: Span) -> Hasil<Nilai> {
@@ -2251,6 +2426,20 @@ impl Interpreter {
             )),
         }
     }
+}
+
+/// Menemukan kelas tempat sebuah fungsi didefinisikan pada MRO instance.
+pub fn kelas_penentu(instance: &Rc<Instance>, fungsi: &Rc<Fungsi>) -> Rc<Kelas> {
+    for kelas in mro_lengkap(&instance.kelas) {
+        for nilai in kelas.atribut.borrow().values() {
+            if let Nilai::Fungsi(kandidat) = nilai {
+                if Rc::ptr_eq(kandidat, fungsi) {
+                    return kelas.clone();
+                }
+            }
+        }
+    }
+    instance.kelas.clone()
 }
 
 fn pindai_deklarasi(body: &[Stmt]) -> (HashSet<String>, HashSet<String>) {
@@ -2303,6 +2492,10 @@ fn ambil_dokumen(body: &[Stmt]) -> Option<String> {
         })) => literal.decoded(),
         _ => None,
     }
+}
+
+pub fn dokumen_modul_publik(sumber: &str) -> Option<String> {
+    dokumen_modul_sumber(sumber)
 }
 
 fn dokumen_modul_sumber(sumber: &str) -> Option<String> {

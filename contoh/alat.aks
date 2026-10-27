@@ -1,0 +1,8 @@
+"""Alat bantu untuk contoh impor relatif."""
+
+fungsi bantuan(nama="teman"):
+    """Mengembalikan sapaan dari modul alat."""
+    kembalikan f"Halo, {nama}! Ini bantuan dari contoh/alat.aks."
+
+
+__semua__ = ["bantuan"]

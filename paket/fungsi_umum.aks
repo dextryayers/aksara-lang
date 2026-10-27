@@ -1,0 +1,13 @@
+"""Fungsi umum yang dipakai contoh modul."""
+
+fungsi sapa(nama):
+    """Menyapa nama dengan gaya paket."""
+    kembalikan f"Halo, {nama} dari paket!"
+
+
+fungsi jumlahkan(a, b):
+    """Menjumlahkan dua nilai."""
+    kembalikan a + b
+
+
+__semua__ = ["sapa", "jumlahkan"]

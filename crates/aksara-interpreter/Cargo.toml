@@ -11,10 +11,13 @@ aksara-diagnostik = { path = "../aksara-diagnostik" }
 aksara-lexer = { path = "../aksara-lexer" }
 aksara-parser = { path = "../aksara-parser" }
 pyo3 = { version = "0.23.5", features = ["auto-initialize"], optional = true }
+serde_json.workspace = true
+md-5 = "0.10"
+sha1 = "0.10"
+sha2 = "0.10"
 
 [features]
 default = []
 python = ["dep:pyo3"]
 
 [dev-dependencies]
-serde_json.workspace = true

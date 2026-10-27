@@ -136,7 +136,7 @@ impl Nilai {
         Nilai::Kamus(Rc::new(RefCell::new(nilai)))
     }
 
-    pub fn nama_tipe(&self) -> &'static str {
+    pub fn nama_tipe(&self) -> &str {
         match self {
             Nilai::Kosong => "kosong",
             Nilai::Logika(_) => "logika",

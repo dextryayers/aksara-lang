@@ -1,0 +1,5 @@
+"""Paket contoh untuk impor relatif dan submodul."""
+
+impor fungsi_umum
+
+__semua__ = ["fungsi_umum"]

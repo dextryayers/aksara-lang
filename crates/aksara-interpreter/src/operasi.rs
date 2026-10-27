@@ -182,6 +182,57 @@ impl Interpreter {
         Ok(true)
     }
 
+    /// Mengubah nilai menjadi teks dengan menghormati `__str__` dan `__repr__`.
+    pub fn teks_nilai(&mut self, nilai: &Nilai, span: Span) -> Hasil<String> {
+        match nilai {
+            Nilai::Instance(_) | Nilai::Kesalahan(_) => {
+                if let Some(teks) = self.panggil_dunder_teks(nilai, "__str__", span)? {
+                    return Ok(teks);
+                }
+                if let Some(teks) = self.panggil_dunder_teks(nilai, "__repr__", span)? {
+                    return Ok(teks);
+                }
+                Ok(nilai_ke_teks(nilai))
+            }
+            _ => Ok(nilai_ke_teks(nilai)),
+        }
+    }
+
+    /// Mengubah nilai menjadi representasi dengan menghormati `__repr__`.
+    pub fn repr_nilai(&mut self, nilai: &Nilai, span: Span) -> Hasil<String> {
+        match nilai {
+            Nilai::Instance(_) | Nilai::Kesalahan(_) => {
+                if let Some(teks) = self.panggil_dunder_teks(nilai, "__repr__", span)? {
+                    return Ok(teks);
+                }
+                Ok(nilai_ke_repr(nilai))
+            }
+            _ => Ok(nilai_ke_repr(nilai)),
+        }
+    }
+
+    fn panggil_dunder_teks(
+        &mut self,
+        nilai: &Nilai,
+        nama: &str,
+        span: Span,
+    ) -> Hasil<Option<String>> {
+        let ada = match nilai {
+            Nilai::Instance(instance) => instance.kelas.cari_atribut(nama).is_some(),
+            Nilai::Kesalahan(kesalahan) => kesalahan.tipe.cari_atribut(nama).is_some(),
+            _ => false,
+        };
+        if !ada {
+            return Ok(None);
+        }
+        let fungsi = self.ambil_atribut(nilai, nama, span)?;
+        let hasil = self.panggil(&fungsi, Vec::new(), Vec::new(), span)?;
+        match hasil {
+            Nilai::Teks(teks) => Ok(Some(teks.to_string())),
+            lain => Ok(Some(nilai_ke_teks(&lain))),
+        }
+    }
+
     pub fn identik(&mut self, kiri: &Nilai, kanan: &Nilai) -> Hasil<bool> {
         match (kiri, kanan) {
             (Nilai::Kosong, Nilai::Kosong) => Ok(true),
@@ -192,7 +243,7 @@ impl Interpreter {
             (Nilai::Teks(a), Nilai::Teks(b)) => Ok(Rc::ptr_eq(a, b) || a == b),
             (Nilai::Bytes(a), Nilai::Bytes(b)) => Ok(Rc::ptr_eq(a, b) || a == b),
             (Nilai::Daftar(a), Nilai::Daftar(b)) => Ok(Rc::ptr_eq(a, b)),
-            (Nilai::Tupel(a), Nilai::Tupel(b)) => Ok(Rc::ptr_eq(a, b) || a == b),
+            (Nilai::Tupel(a), Nilai::Tupel(b)) => Ok(Rc::ptr_eq(a, b)),
             (Nilai::Himpunan(a), Nilai::Himpunan(b)) => Ok(Rc::ptr_eq(a, b)),
             (Nilai::Kamus(a), Nilai::Kamus(b)) => Ok(Rc::ptr_eq(a, b)),
             (Nilai::Rentang(a), Nilai::Rentang(b)) => Ok(a == b),
@@ -502,12 +553,8 @@ impl Interpreter {
                                         span,
                                     ));
                                 }
-                                match self.panggil(
-                                    &self.ambil_atribut(&iterator, "__next__", span)?,
-                                    Vec::new(),
-                                    Vec::new(),
-                                    span,
-                                ) {
+                                let berikut = self.ambil_atribut(&iterator, "__next__", span)?;
+                                match self.panggil(&berikut, Vec::new(), Vec::new(), span) {
                                     Ok(nilai) => hasil.push(nilai),
                                     Err(lemparan)
                                         if lemparan.kesalahan.tipe.nama
@@ -1346,7 +1393,7 @@ impl Interpreter {
         }
     }
 
-    fn urutan_mengandung_publik(&mut self, daftar: &[Nilai], item: &Nilai) -> Hasil<bool> {
+    pub fn urutan_mengandung_publik(&mut self, daftar: &[Nilai], item: &Nilai) -> Hasil<bool> {
         for kandidat in daftar {
             if self.sama(kandidat, item)? {
                 return Ok(true);
@@ -1895,10 +1942,28 @@ impl Interpreter {
                     .unwrap_or(Nilai::Kosong)),
                 _ => {
                     if let Some(nilai) = kesalahan.atribut.borrow().get(nama) {
-                        Ok(nilai.clone())
-                    } else {
-                        self.atribut_metode(objek, "kesalahan", nama, span)
+                        return Ok(nilai.clone());
                     }
+                    if let Some(nilai) = kesalahan.tipe.cari_atribut(nama) {
+                        let penerima = Nilai::Kesalahan(kesalahan.clone());
+                        return match nilai {
+                            Nilai::Fungsi(fungsi) => Ok(Nilai::Metode(Rc::new(Metode {
+                                fungsi,
+                                penerima,
+                            }))),
+                            Nilai::BawaanKhusus(bawaan) => {
+                                Ok(self.ikat_bawaan_khusus(&bawaan, penerima))
+                            }
+                            Nilai::Properti(properti) => self.panggil(
+                                &properti.getter,
+                                vec![penerima],
+                                Vec::new(),
+                                span,
+                            ),
+                            other => Ok(other),
+                        };
+                    }
+                    self.atribut_metode(objek, "kesalahan", nama, span)
                 }
             },
             Nilai::Fungsi(fungsi) => match nama {
@@ -1974,8 +2039,28 @@ impl Interpreter {
                 Vec::new(),
                 span,
             ),
+            Nilai::BawaanKhusus(bawaan) => {
+                let penerima = Nilai::Instance(instance.clone());
+                Ok(self.ikat_bawaan_khusus(&bawaan, penerima))
+            }
             other => Ok(other),
         }
+    }
+
+    /// Mengikat fungsi bawaan khusus ke penerima, misalnya `__init__` pada
+    /// kelas kesalahan bawaan. Fungsi asli menerima penerima sebagai argumen
+    /// pertama, sama seperti metode Python biasa.
+    fn ikat_bawaan_khusus(&self, bawaan: &Rc<BawaanKhusus>, penerima: Nilai) -> Nilai {
+        let asli = bawaan.clone();
+        Nilai::BawaanKhusus(Rc::new(BawaanKhusus {
+            nama: bawaan.nama.clone(),
+            fungsi: Box::new(move |interpreter, args, kwargs| {
+                let mut semua = Vec::with_capacity(args.len() + 1);
+                semua.push(penerima.clone());
+                semua.extend(args);
+                (asli.fungsi)(interpreter, semua, kwargs)
+            }),
+        }))
     }
 
     fn atribut_metode(
